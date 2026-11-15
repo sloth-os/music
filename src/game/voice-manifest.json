@@ -303,6 +303,180 @@
       "speaker": "pip",
       "duration": 8.16,
       "bytes": 65516
+    },
+    "iona-9cc1345f": {
+      "file": "game/voices/iona-9cc1345f.mp3",
+      "speaker": "iona",
+      "duration": 8.304,
+      "bytes": 66668
+    },
+    "pip-840a26a4": {
+      "file": "game/voices/pip-840a26a4.mp3",
+      "speaker": "pip",
+      "duration": 7.824,
+      "bytes": 62828
+    },
+    "pip-da36f944": {
+      "file": "game/voices/pip-da36f944.mp3",
+      "speaker": "pip",
+      "duration": 8.376,
+      "bytes": 67244
+    },
+    "iona-e4a9e166": {
+      "file": "game/voices/iona-e4a9e166.mp3",
+      "speaker": "iona",
+      "duration": 6.12,
+      "bytes": 49196
+    },
+    "pip-240d2729": {
+      "file": "game/voices/pip-240d2729.mp3",
+      "speaker": "pip",
+      "duration": 6.888,
+      "bytes": 55340
+    },
+    "iona-4fd82f34": {
+      "file": "game/voices/iona-4fd82f34.mp3",
+      "speaker": "iona",
+      "duration": 10.416,
+      "bytes": 83564
+    },
+    "pip-1e6e9309": {
+      "file": "game/voices/pip-1e6e9309.mp3",
+      "speaker": "pip",
+      "duration": 6.456,
+      "bytes": 51884
+    },
+    "iona-5f58e3d9": {
+      "file": "game/voices/iona-5f58e3d9.mp3",
+      "speaker": "iona",
+      "duration": 7.944,
+      "bytes": 63788
+    },
+    "pip-99949c15": {
+      "file": "game/voices/pip-99949c15.mp3",
+      "speaker": "pip",
+      "duration": 9.84,
+      "bytes": 78956
+    },
+    "iona-5be6c35a": {
+      "file": "game/voices/iona-5be6c35a.mp3",
+      "speaker": "iona",
+      "duration": 11.568,
+      "bytes": 92780
+    },
+    "pip-80221dca": {
+      "file": "game/voices/pip-80221dca.mp3",
+      "speaker": "pip",
+      "duration": 7.92,
+      "bytes": 63596
+    },
+    "iona-34984b5f": {
+      "file": "game/voices/iona-34984b5f.mp3",
+      "speaker": "iona",
+      "duration": 10.608,
+      "bytes": 85100
+    },
+    "pip-cc74a63a": {
+      "file": "game/voices/pip-cc74a63a.mp3",
+      "speaker": "pip",
+      "duration": 6.912,
+      "bytes": 55532
+    },
+    "iona-896971fc": {
+      "file": "game/voices/iona-896971fc.mp3",
+      "speaker": "iona",
+      "duration": 11.016,
+      "bytes": 88364
+    },
+    "pip-302e1433": {
+      "file": "game/voices/pip-302e1433.mp3",
+      "speaker": "pip",
+      "duration": 10.608,
+      "bytes": 85100
+    },
+    "iona-6fc186c0": {
+      "file": "game/voices/iona-6fc186c0.mp3",
+      "speaker": "iona",
+      "duration": 10.368,
+      "bytes": 83180
+    },
+    "pip-72014ff1": {
+      "file": "game/voices/pip-72014ff1.mp3",
+      "speaker": "pip",
+      "duration": 9.6,
+      "bytes": 77036
+    },
+    "iona-55cfaf08": {
+      "file": "game/voices/iona-55cfaf08.mp3",
+      "speaker": "iona",
+      "duration": 11.496,
+      "bytes": 92204
+    },
+    "pip-aab9d985": {
+      "file": "game/voices/pip-aab9d985.mp3",
+      "speaker": "pip",
+      "duration": 2.016,
+      "bytes": 16364
+    },
+    "pip-9afcd27b": {
+      "file": "game/voices/pip-9afcd27b.mp3",
+      "speaker": "pip",
+      "duration": 2.616,
+      "bytes": 21164
+    },
+    "pip-a8fdede8": {
+      "file": "game/voices/pip-a8fdede8.mp3",
+      "speaker": "pip",
+      "duration": 2.952,
+      "bytes": 23852
+    },
+    "pip-5f7aabdd": {
+      "file": "game/voices/pip-5f7aabdd.mp3",
+      "speaker": "pip",
+      "duration": 3.096,
+      "bytes": 25004
+    },
+    "pip-6abcfa31": {
+      "file": "game/voices/pip-6abcfa31.mp3",
+      "speaker": "pip",
+      "duration": 5.064,
+      "bytes": 40748
+    },
+    "pip-b03b4c9f": {
+      "file": "game/voices/pip-b03b4c9f.mp3",
+      "speaker": "pip",
+      "duration": 5.952,
+      "bytes": 47852
+    },
+    "pip-d92a24d3": {
+      "file": "game/voices/pip-d92a24d3.mp3",
+      "speaker": "pip",
+      "duration": 7.32,
+      "bytes": 58796
+    },
+    "iona-dcc46b2c": {
+      "file": "game/voices/iona-dcc46b2c.mp3",
+      "speaker": "iona",
+      "duration": 8.568,
+      "bytes": 68780
+    },
+    "iona-c4f23133": {
+      "file": "game/voices/iona-c4f23133.mp3",
+      "speaker": "iona",
+      "duration": 11.112,
+      "bytes": 89132
+    },
+    "iona-21c4cb7e": {
+      "file": "game/voices/iona-21c4cb7e.mp3",
+      "speaker": "iona",
+      "duration": 10.848,
+      "bytes": 87020
+    },
+    "iona-a10116d6": {
+      "file": "game/voices/iona-a10116d6.mp3",
+      "speaker": "iona",
+      "duration": 10.968,
+      "bytes": 87980
     }
   }
 }

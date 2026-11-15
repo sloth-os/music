@@ -7,6 +7,7 @@ import {
   Check,
   ChevronRight,
   CircleHelp,
+  Disc3,
   Save,
   Expand,
   Flag,
@@ -39,21 +40,38 @@ import { narrator } from './narration'
 import { EchoGlyph, Portrait, Resonator } from './GameArt'
 import { Journal } from './Journal'
 import { Finale } from './Finale'
+import { ListeningRoom } from './listening/ListeningRoom'
+import { readListeningProgress } from './listening/progress'
+import type { ListeningProgress } from './listening/progress'
+import { labIntro, missions, songs } from './listening/songs'
+import type { Levels, MissionId } from './listening/songs'
 
 interface InstallPrompt extends Event {
   prompt: () => Promise<void>
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
 }
 type Overlay =
-  'journal' | 'camp' | 'pause' | 'settings' | 'help' | 'install' | 'finale' | 'victory' | null
+  | 'journal'
+  | 'camp'
+  | 'pause'
+  | 'settings'
+  | 'help'
+  | 'install'
+  | 'finale'
+  | 'victory'
+  | 'listening'
+  | null
 type DialogueState = {
-  kind: 'prologue' | 'before' | 'after' | 'ending'
+  kind: 'prologue' | 'before' | 'after' | 'ending' | 'listening'
   chapter?: number
   replay?: boolean
 } | null
 export default function GameApp() {
   const [story, setStory] = useState(readStory)
   const [progress, setProgress] = useState(readProgress)
+  const [listening, setListening] = useState(readListeningProgress)
+  const listeningRef = useRef(listening)
+  listeningRef.current = listening
   const progressRef = useRef(progress)
   progressRef.current = progress
   const [selected, setSelected] = useState(() => Math.min(readStory().cleared.length, 5))
@@ -160,6 +178,46 @@ export default function GameApp() {
     audio.stop()
     setOverlay(next)
   }
+  const saveListening = (next: ListeningProgress) => {
+    listeningRef.current = next
+    setListening(next)
+    try {
+      localStorage.setItem('cadence-listening-v1', JSON.stringify(next))
+    } catch {
+      notify(
+        'Your listening progress is safe this visit, but this browser couldn’t save it for later.',
+      )
+    }
+  }
+  const openListening = () => {
+    audio.stop()
+    setOverlay(null)
+    if (!listeningRef.current.introduced) setDialogue({ kind: 'listening' })
+    else setOverlay('listening')
+  }
+  const clearListeningMission = (
+    songId: string,
+    missionId: MissionId,
+    feelings: string[],
+    mix?: Levels,
+  ) => {
+    const current = listeningRef.current
+    const cleared = current.cleared[songId] || []
+    const index = missions.findIndex((mission) => mission.id === missionId)
+    if (index > cleared.length) return
+    const nextCleared = missions
+      .slice(0, Math.max(cleared.length, index + 1))
+      .map((mission) => mission.id)
+    saveListening({
+      ...current,
+      cleared: { ...current.cleared, [songId]: nextCleared },
+      feelings: { ...current.feelings, [songId]: feelings },
+      mixes: mix ? { ...current.mixes, [songId]: mix } : current.mixes,
+    })
+    if (cleared.length < missions.length && nextCleared.length === missions.length) {
+      setProgress((value) => ({ ...value, xp: value.xp + 100 }))
+    }
+  }
   const beginStory = () => {
     if (!muted) void audio.melody([60, 67, 72], 0.24)
     setDialogue({ kind: 'prologue' })
@@ -196,6 +254,11 @@ export default function GameApp() {
     if (!dialogue) return
     const current = dialogue
     setDialogue(null)
+    if (current.kind === 'listening') {
+      saveListening({ ...listeningRef.current, introduced: true })
+      setOverlay('listening')
+      return
+    }
     if (current.replay) {
       setOverlay('journal')
       return
@@ -341,15 +404,17 @@ export default function GameApp() {
   })
   const activeChapter = chapters[selected]
   const currentDialogueLines =
-    dialogue?.kind === 'prologue'
-      ? prologue
-      : dialogue?.kind === 'ending'
-        ? ending
-        : dialogue?.replay && story.cleared.includes(chapters[dialogue.chapter!].id)
-          ? [...chapters[dialogue.chapter!].before, ...chapters[dialogue.chapter!].after]
-          : dialogue
-            ? chapters[dialogue.chapter!][dialogue.kind === 'before' ? 'before' : 'after']
-            : []
+    dialogue?.kind === 'listening'
+      ? labIntro
+      : dialogue?.kind === 'prologue'
+        ? prologue
+        : dialogue?.kind === 'ending'
+          ? ending
+          : dialogue?.replay && story.cleared.includes(chapters[dialogue.chapter!].id)
+            ? [...chapters[dialogue.chapter!].before, ...chapters[dialogue.chapter!].after]
+            : dialogue
+              ? chapters[dialogue.chapter!][dialogue.kind === 'before' ? 'before' : 'after']
+              : []
   const curiosityEntry = curiosities.find((entry) => entry.id === curiosity)
   return (
     <div
@@ -426,6 +491,14 @@ export default function GameApp() {
             <Music2 size={18} />
             <span>Sound camp</span>
           </button>
+          <button
+            className="hud-labeled listening-hud"
+            aria-label="Take a song apart"
+            onClick={openListening}
+          >
+            <Disc3 size={18} />
+            <span>Inside a song</span>
+          </button>
           <span className="hud-divider" />
           <button
             aria-label={muted ? 'Turn game sound on' : 'Mute game sound'}
@@ -500,7 +573,7 @@ export default function GameApp() {
             </h1>
             <p>
               {story.finale
-                ? 'The island remembers. The next tune is yours.'
+                ? 'Act II awaits. Find out how a whole song fits together.'
                 : story.cleared.length === 6
                   ? 'Return to the Great Resonator for the final concert.'
                   : `Recover the Echo of ${chapters[story.cleared.length].echo}.`}
@@ -531,29 +604,39 @@ export default function GameApp() {
           </div>
           <section className="chapter-dock" aria-label="Selected story chapter">
             <div className="chapter-dock-number">
-              {activeChapter.numeral}
-              <span>CHAPTER</span>
+              {story.finale ? 'II' : activeChapter.numeral}
+              <span>{story.finale ? 'ACT' : 'CHAPTER'}</span>
             </div>
             <div className="chapter-dock-copy">
               <div>
-                <span>{activeChapter.era}</span>
+                <span>{story.finale ? 'THE LISTENING ROOM' : activeChapter.era}</span>
                 <i />
-                {activeChapter.place}
+                {story.finale ? '3 complete records · 24 new missions' : activeChapter.place}
               </div>
-              <h2>{activeChapter.chapterName}</h2>
-              <p>{activeChapter.objective}</p>
+              <h2>{story.finale ? 'Hear inside a whole song.' : activeChapter.chapterName}</h2>
+              <p>
+                {story.finale
+                  ? 'Separate the players. Feel the changes. Repair a performance. Improve the mix.'
+                  : activeChapter.objective}
+              </p>
             </div>
             <button
               className="game-button chapter-enter"
               onClick={() =>
-                story.cleared.length === 6 && !story.finale ? openFinale() : enterChapter(selected)
+                story.finale
+                  ? openListening()
+                  : story.cleared.length === 6
+                    ? openFinale()
+                    : enterChapter(selected)
               }
             >
-              {story.cleared.length === 6 && !story.finale
-                ? 'Play the finale'
-                : story.cleared.includes(activeChapter.id)
-                  ? 'Revisit chapter'
-                  : 'Enter chapter'}
+              {story.finale
+                ? 'Take a song apart'
+                : story.cleared.length === 6
+                  ? 'Play the finale'
+                  : story.cleared.includes(activeChapter.id)
+                    ? 'Revisit chapter'
+                    : 'Enter chapter'}
               <ArrowRight size={17} />
             </button>
           </section>
@@ -590,18 +673,22 @@ export default function GameApp() {
           muted={muted}
           onUnmute={() => setMuted(false)}
           title={
-            dialogue.kind === 'prologue'
-              ? 'The night the music vanished'
-              : dialogue.kind === 'ending'
-                ? 'A song that starts with you'
-                : chapters[dialogue.chapter!].chapterName
+            dialogue.kind === 'listening'
+              ? 'What makes a song a song?'
+              : dialogue.kind === 'prologue'
+                ? 'The night the music vanished'
+                : dialogue.kind === 'ending'
+                  ? 'A song that starts with you'
+                  : chapters[dialogue.chapter!].chapterName
           }
           subtitle={
-            dialogue.kind === 'prologue'
-              ? 'PROLOGUE · THE ARCHIVE OF ECHOES'
-              : dialogue.kind === 'ending'
-                ? 'EPILOGUE · THE WORLD AWAKENS'
-                : `CHAPTER ${chapters[dialogue.chapter!].numeral} · ${chapters[dialogue.chapter!].place} · ${chapters[dialogue.chapter!].era}`
+            dialogue.kind === 'listening'
+              ? 'ACT II · THE LISTENING ROOM'
+              : dialogue.kind === 'prologue'
+                ? 'PROLOGUE · THE ARCHIVE OF ECHOES'
+                : dialogue.kind === 'ending'
+                  ? 'EPILOGUE · THE WORLD AWAKENS'
+                  : `CHAPTER ${chapters[dialogue.chapter!].numeral} · ${chapters[dialogue.chapter!].place} · ${chapters[dialogue.chapter!].era}`
           }
           onClose={() => setDialogue(null)}
           onDone={finishDialogue}
@@ -718,6 +805,16 @@ export default function GameApp() {
         </Dialog>
       )}
       {overlay === 'settings' && <ExperienceSettings onClose={() => setOverlay(null)} />}
+      {overlay === 'listening' && (
+        <ListeningRoom
+          progress={listening}
+          onSelect={(id) => saveListening({ ...listeningRef.current, selected: id })}
+          onClear={clearListeningMission}
+          muted={muted}
+          onUnmute={() => setMuted(false)}
+          onClose={() => setOverlay(null)}
+        />
+      )}
       {overlay === 'pause' && (
         <Dialog title="Journey menu" onClose={() => setOverlay(null)} className="game-pause">
           <div className="pause-emblem">
@@ -734,6 +831,17 @@ export default function GameApp() {
             </button>
             <button onClick={() => setOverlay('camp')}>
               <Music2 size={17} /> Visit the sound camp <ChevronRight size={16} />
+            </button>
+            <button onClick={openListening}>
+              <Disc3 size={17} /> Inside a song{' '}
+              <span>
+                {
+                  songs.filter(
+                    (song) => (listening.cleared[song.id] || []).length === missions.length,
+                  ).length
+                }{' '}
+                / 3
+              </span>
             </button>
             <button onClick={() => setOverlay('settings')}>
               <Settings2 size={17} /> How your world feels <ChevronRight size={16} />
@@ -771,6 +879,11 @@ export default function GameApp() {
           <p>
             Recover all six Echoes to open the Great Resonator. Your finale combines a melody, a
             steady pulse, and a musical choice of your own.
+          </p>
+          <p>
+            Continue in Act II, Inside a song: take apart three complete records, compare
+            arrangements, map returning sections, spot performance slips, and improve the mix. You
+            can also enter from the record icon at any time.
           </p>
           <div className="game-key-bindings">
             <span>
@@ -898,8 +1011,8 @@ export default function GameApp() {
             <button className="game-button quiet" onClick={() => setOverlay(null)}>
               Explore the awakened world
             </button>
-            <button className="game-button" onClick={() => setOverlay('camp')}>
-              Make your next song <ArrowRight size={16} />
+            <button className="game-button" onClick={openListening}>
+              Begin Act II: Inside a song <ArrowRight size={16} />
             </button>
           </div>
         </Dialog>

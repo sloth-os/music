@@ -17,9 +17,9 @@ Open http://localhost:3000. Build with `npm run build`; serve the production bui
 
 The prologue introduces the Great Resonator, the Hush, the new Keeper, archivist Iona, and Pip. Each chapter has an arrival scene, a musical challenge, a story revelation, a recovered artifact, and a historical field note. Dialogue can be skipped or replayed from the journal. The prologue includes a small player choice that changes Pip’s response and is saved.
 
-All 46 dialogue lines are spoken by four distinct neural TTS voices: Iona, Pip, the Keeper, and the living memories. Voices begin when you enter a scene, with captions visible, and the conversation advances after each spoken line. Player choices always wait for input. Pause or replay a line, select **Wait for me** for manual progression, or open the dialogue’s voice options to change volume, speaking pace (0.75×–1.5×), or switch to captions. These preferences also appear in **Your experience** and persist on this device. Game mute controls dialogue too. Music softens while a character speaks, and skipping or leaving a scene stops the voice immediately. Switching away from the game pauses the scene.
+All 75 story and listening-guide lines are spoken by four distinct neural TTS voices: Iona, Pip, the Keeper, and the living memories. Voices begin when you enter a scene, with captions visible, and story conversations advance after each spoken line. Player choices always wait for input. Pause or replay a line, select **Wait for me** for manual progression, or open the dialogue’s voice options to change volume, speaking pace (0.75×–1.5×), or switch to captions. These preferences also appear in **Your experience** and persist on this device. Game mute controls dialogue too. Music softens while a story character speaks; listening missions pause their music before a guide speaks, so comparisons stay clear. Skipping or leaving a scene stops the voice immediately. Switching away from the game pauses the scene.
 
-The voice tracks are generated ahead of time and bundled as MP3s (about 2.4 MiB for the complete cast). They work without installed browser voices, an API key, a speech service, or a model download at runtime. If a browser blocks playback, a visible play button retries it; captions and manual progression remain available.
+The voice tracks are generated ahead of time and bundled as MP3s (about 4.2 MiB for the complete cast). They work without installed browser voices, an API key, a speech service, or a model download at runtime. If a browser blocks playback, a visible play button retries it; captions and manual progression remain available.
 
 | Chapter                | Historical setting                    | Musical skill                        | Echo   |
 | ---------------------- | ------------------------------------- | ------------------------------------ | ------ |
@@ -35,6 +35,33 @@ Recover an Echo by getting at least 60% of a chapter’s rounds right. There are
 The clues reveal that silence is part of music, rather than an enemy to erase. After recovering all six Echoes, enter the Great Resonator. The playable finale combines a four-note melody, four timed taps, and a choice between a major or minor ending. A short original synthesized concert and an epilogue complete the campaign. The restored world remains explorable.
 
 Three optional island curiosities provide little musical discoveries and 10 XP each, once per save. Musical challenges award 20–50 XP per attempt; completing the finale awards a one-time 100 XP bonus.
+
+## Act II: Inside a song
+
+The restored Archive opens a listening room: three complete pieces, each with eight practical missions. **Take a song apart** becomes the main action after the ending. The record icon and journey menu also open it during the earlier campaign; existing players can enter directly without replaying completed chapters.
+
+| Complete piece      | Length at original tempo | Musical setting                                                                                 | What to notice                                                           |
+| ------------------- | ------------------------ | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| **First Light**     | 20 bars / 44 seconds     | Original instrumental pop; C major; four beats per bar                                          | Intro → verse → chorus → verse → chorus → outro; a higher returning hook |
+| **Lantern Waltz**   | 12 bars / 23 seconds     | Original waltz; A minor; three beats per bar                                                    | Bass on beat one, chords on two and three; A → B → A                     |
+| **A Familiar Star** | 12 bars / 29 seconds     | Complete public-domain “Ah! vous dirai-je, maman” / “Twinkle” melody; new C-major accompaniment | A familiar tune, a contrasting middle, and the return of the opening     |
+
+Each record teaches the same listening process, so players can try their ears on a different piece:
+
+1. **Meet the whole song.** Hear the piece through its ending and record a personal reaction. The playhead, bar counter, pulse lights, and original score connect what you hear with where you are.
+2. **Find the players.** Hear four isolated parts and identify melody, chords, bass, and drums by sound. A wrong answer explains the role and allows another try.
+3. **The missing player.** Compare the same passage with and without a musical layer; identify what disappeared.
+4. **Change the combination.** Compare melody plus bass, the full band, and a parallel major/minor version. Rhythm and tempo stay consistent across these comparisons. Describe your own reaction; feelings are never marked right or wrong.
+5. **Map the journey.** Audition the numbered passages and label their section identities. Returning ideas need the same label. Check and revise the whole map.
+6. **Find the way home.** Learn the home chord, then compare a home ending with an open dominant ending. The answer unlocks only after hearing the point where they differ.
+7. **The imperfect performance.** Compare a reference with three takes containing a changed melody pitch, a late drum beat, or a missing melody note. Identify both the difference and its bar. Slow playback and repeating excerpts support focused listening. These are deviations from the intended reference, not a claim that every unusual note is a mistake.
+8. **Make the tune shine.** Hear a mix whose accompaniment buries the tune. Adjust the actual four layer gains, retain the whole band, audition the new balance, and compare it with the original problem. This lesson has a specific goal; its target balance is not a universal rule for a good mix.
+
+The record player uses complete, separately composed note-event layers and local Web Audio synthesis. It supports immediate solo, mute, and volume changes; pause/resume; 0.75×, 1×, and 1.25× listening pace without transposing the notes; and repeatable excerpts. Comparison takes change the sounding notes or timing, rather than just their labels. The piano roll shows the original reference arrangement. The mobile room has separate **The mission** and **Player & faders** views, with a bar counter next to the listening questions.
+
+Mission progress, personal feeling words, and completed-record mixes are saved. Each record awards 100 XP once; revisiting it or saving another mix does not award XP again. Completed records open to a listening summary and the saved mix. Replay any mission, freely remix the full piece, or try the same skills on another record. These teaching arrangements separate four roles clearly; in other music, instruments can share roles, and some of these roles may be absent.
+
+Teaching references include Open Music Theory’s [texture](https://viva.pressbooks.pub/openmusictheory/chapter/texture/) and [verse-chorus form](https://viva.pressbooks.pub/openmusictheory/chapter/verse-chorus-form/) chapters, alongside the harmony, meter, and keyboard sources below. The two original pieces are modern teaching examples; the familiar melody has an original synthesized accompaniment. No commercial recording, external audio stream, microphone, or uploaded song is required.
 
 ## World controls
 
@@ -73,24 +100,25 @@ The earlier open practice library remains available at `?mode=practice` for stan
 
 Everything stays in the current browser on the current device; there is no cross-device sync.
 
-| Key                   | Contents                                                                                                                 |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `cadence-story-v1`    | Started campaign, contiguous cleared chapters, discovered field notes, optional curiosities, prologue choice, and ending |
-| `cadence-progress-v1` | XP, practice history, streaks, and saved-idea count                                                                      |
-| `cadence-ideas`       | The latest 12 recorded note-event ideas                                                                                  |
-| `cadence-beat`        | Saved drum pattern                                                                                                       |
-| `cadence-soundscape`  | Saved mood, tempo, layer levels, and layer mutes                                                                         |
-| `cadence-experience`  | Display, motion, touch, character voices, voice volume/pace, and dialogue progression preferences                        |
+| Key                    | Contents                                                                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `cadence-story-v1`     | Started campaign, contiguous cleared chapters, discovered field notes, optional curiosities, prologue choice, and ending |
+| `cadence-progress-v1`  | XP, practice history, streaks, and saved-idea count                                                                      |
+| `cadence-ideas`        | The latest 12 recorded note-event ideas                                                                                  |
+| `cadence-beat`         | Saved drum pattern                                                                                                       |
+| `cadence-soundscape`   | Saved mood, tempo, layer levels, and layer mutes                                                                         |
+| `cadence-experience`   | Display, motion, touch, character voices, voice volume/pace, and dialogue progression preferences                        |
+| `cadence-listening-v1` | Act II introduction, selected record, contiguous mission completions, personal feeling words, and saved mixes            |
 
 Story saves are validated on load. Completing a chapter saves the recovered Echo before its reward scene, so reloading never loses an earned Echo. Clearing browser site data removes these local saves. Recordings store note events rather than microphone audio and are limited to 64 notes or 30 seconds.
 
 ## Install and play offline
 
-The production build includes a manifest, icons, and a Workbox service worker generated with `vite-plugin-pwa`. The world illustration, all story text, all 46 character voice tracks, fonts, code, and UI assets are precached (about 3.8 MiB total). Instruments and musical performances are synthesized locally using Web Audio.
+The production build includes a manifest, icons, and a Workbox service worker generated with `vite-plugin-pwa`. The world illustration, all story text, all 75 character and guide voice tracks, fonts, code, and UI assets are precached (about 5.6 MiB total). Instruments and complete song performances are synthesized locally using Web Audio.
 
 1. Visit once online over HTTPS or localhost and let the game finish loading.
 2. Open the journey menu → **Take the journey offline**, use the browser’s Install command, or use Safari → Share → Add to Home Screen.
-3. Reload or reopen offline. Chapters, spoken dialogue, journal entries, the finale, art, and sound camp remain playable, including chapters you have not visited before.
+3. Reload or reopen offline. Chapters, spoken dialogue, journal entries, the finale, art, sound camp, and every Act II record and mission remain playable, including material you have not visited before.
 
 Historical source links lead to external websites and require a connection; the full in-game field notes remain offline. Updates prompt before activation and wait until you are out of a scene, challenge, or menu. The development server does not register a service worker; verify offline behavior with a production build and `npm run preview`.
 
@@ -131,6 +159,6 @@ npm run build
 npm test
 ```
 
-Browser coverage includes an actual complete six-chapter campaign and finale; character choice and save persistence; chapter gating and failed-attempt recovery; historical journal links; optional rewards; mobile layout and nested focus controls; and offline world art, story, and instruments. Voice tests measure the actual decoded speech signal, exercise pause/resume/replay and cancellation, let the conversation advance into a player choice, check saved voice preferences and mute, retry blocked autoplay, and play unheard chapters with the network offline. The standalone practice suite also checks every musical activity, recorded ideas, beat editing, theme preferences, and synthesized audio output. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium installation.
+Browser coverage includes an actual complete six-chapter campaign and finale; character choice and save persistence; chapter gating and failed-attempt recovery; historical journal links; optional rewards; mobile layout and nested focus controls; and offline world art, story, and instruments. Act II tests listen through a full record and complete all eight missions, including incorrect answers, the entire section map, all three performance repairs, a before/after mix, saved progress, and one-time rewards. They measure the synthesized song signal, mute individual layers, pause/resume, check three-beat meter and mobile views, and play unheard records and spoken guides offline. Score checks verify complete forms and that each altered performance changes exactly the advertised musical property. Voice tests measure actual decoded speech, exercise playback controls, verify automatic conversations and saved preferences, and recover from blocked playback and failed downloads. The standalone practice suite also checks every musical activity, recorded ideas, beat editing, theme preferences, and synthesized audio output. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium installation.
 
 Built with React, TypeScript, Vite, Lucide, locally bundled DM Sans and Fraunces, original SVG character/glyph art, and a custom generated environment illustration optimized to WebP. No game engine or remote rendering dependency is required. The audio architecture follows [MDN Web Audio best practices](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices).

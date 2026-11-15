@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
+import voiceManifest from '../src/game/voice-manifest.json' with { type: 'json' }
 
 const voiceSelector = 'audio[data-story-voice]'
 const voice = (page: Page) => page.locator(voiceSelector)
@@ -243,7 +244,7 @@ test('every voice is cached and an unheard chapter speaks after an offline reloa
       all.flat().filter((url) => url.includes('/game/voices/') && url.includes('.mp3')),
     ).size
   })
-  expect(cachedVoices).toBe(46)
+  expect(cachedVoices).toBe(Object.keys(voiceManifest.lines).length)
   await context.setOffline(true)
   await page.reload()
   await page.getByRole('button', { name: 'Enter chapter', exact: true }).click()

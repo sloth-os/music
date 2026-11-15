@@ -1,5 +1,6 @@
 import { chapters, prologue, ending, curiousReply } from '../src/game/story.ts'
 import { narrationId } from '../src/game/narration-id.ts'
+import { labNarration } from '../src/game/listening/songs.ts'
 
 export function narrationLines() {
   const lines = [
@@ -7,6 +8,7 @@ export function narrationLines() {
     ...chapters.flatMap((chapter) => [...chapter.before, ...chapter.after]),
     ...ending,
     curiousReply,
+    ...labNarration,
   ]
   const unique = new Map()
   for (const line of lines) {
