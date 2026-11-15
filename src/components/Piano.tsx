@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { audio, NOTES } from '../lib/audio'
+import { useExperience } from '../experience/Experience'
 
 const blacks = [
   { midi: 61, key: 'w', after: 0, name: 'C♯' },
@@ -21,18 +22,20 @@ export function Piano({
   instrument?: 'piano' | 'soft'
   disabled?: boolean
 }) {
+  const { touch } = useExperience()
   const [pressed, setPressed] = useState<number | null>(null)
   const release = useRef<ReturnType<typeof setTimeout> | null>(null)
   const play = useCallback(
     (midi: number) => {
       if (disabled) return
+      touch()
       void audio.note(midi, 0.55, 0, instrument)
       setPressed(midi)
       onNote?.(midi)
       if (release.current) clearTimeout(release.current)
       release.current = setTimeout(() => setPressed(null), 200)
     },
-    [onNote, instrument, disabled],
+    [onNote, instrument, disabled, touch],
   )
   useEffect(() => {
     if (!keyboard) return

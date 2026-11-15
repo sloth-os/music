@@ -251,3 +251,144 @@ test('melody memory, minor chord listening, and tempo comparison complete their 
   await dialog.getByRole('button', { name: 'Keep exploring' }).click()
   await expect(page.locator('.journey-count')).toContainText('3 of 6 explored')
 })
+
+test('theme and motion preferences persist, and the adventure map opens focused quests', async ({
+  page,
+}) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Switch to after hours' }).click()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  await page.getByRole('button', { name: 'Experience settings' }).click()
+  const preferences = page.getByRole('dialog', { name: 'Your experience' })
+  await expect(preferences.getByRole('button', { name: 'After hours' })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  )
+  const motion = preferences.getByRole('switch', { name: 'Gentle motion', exact: true })
+  await expect(motion).toHaveAttribute('aria-checked', 'false')
+  await motion.click()
+  await expect(page.locator('html')).toHaveAttribute('data-motion', 'full')
+  await motion.click()
+  await page.keyboard.press('Escape')
+  await page.getByRole('button', { name: 'Adventure map', exact: true }).click()
+  await expect(page.locator('.map-stops > li')).toHaveCount(6)
+  await page.getByRole('button', { name: 'Start Highs & lows', exact: true }).click()
+  const quest = page.getByRole('dialog')
+  await expect(quest).toHaveClass(/quest-focus/)
+  await quest.getByRole('button', { name: 'Exit quest focus' }).click()
+  await expect(quest).not.toHaveClass(/quest-focus/)
+  await quest.getByRole('button', { name: 'Focus on this quest' }).click()
+  await expect(quest).toHaveClass(/quest-focus/)
+  await page.keyboard.press('Escape')
+  await page.reload()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced')
+  await expect(page.getByRole('button', { name: 'Adventure map', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  )
+  for (const width of [1024, 820, 390, 360]) {
+    await page.setViewportSize({ width, height: 844 })
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+    await expect(
+      page.getByRole('button', { name: 'Start Change the pace', exact: true }),
+    ).toBeVisible()
+  }
+})
+
+test('soundscape produces audio, mixes layers, and restores a saved mood', async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = AudioContext.prototype.createAnalyser
+    AudioContext.prototype.createAnalyser = function () {
+      const analyser = original.call(this)
+      Object.assign(window, { cadenceTestAnalyser: analyser })
+      return analyser
+    }
+  })
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Enter the flow' }).click()
+  await expect(page.locator('.soundscape-title')).toContainText('Golden hour')
+  await page.getByRole('button', { name: 'Start the room', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Pause the room', exact: true })).toBeVisible()
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const analyser = (window as unknown as { cadenceTestAnalyser?: AnalyserNode })
+          .cadenceTestAnalyser
+        if (!analyser) return false
+        const signal = new Uint8Array(analyser.fftSize)
+        analyser.getByteTimeDomainData(signal)
+        return signal.some((value) => Math.abs(value - 128) > 3)
+      }),
+    )
+    .toBe(true)
+  await page.getByRole('button', { name: /Moon garden/ }).click()
+  await expect(page.locator('.universe-center')).toContainText('A minor')
+  await page.getByRole('slider', { name: 'Soundscape tempo' }).fill('93')
+  await page.getByRole('slider', { name: 'The atmosphere level' }).fill('45')
+  await page.getByRole('button', { name: 'Mute the heartbeat', exact: true }).click()
+  await expect(
+    page.getByRole('button', { name: 'Enable the heartbeat', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'false')
+  await page.getByRole('button', { name: 'Save this feeling', exact: true }).click()
+  await expect(
+    page.getByRole('button', { name: 'Your feeling is saved', exact: true }),
+  ).toBeVisible()
+  await page.getByRole('button', { name: 'Pause the room', exact: true }).click()
+  await page.getByRole('button', { name: 'Piano room', exact: true }).click()
+  await page.getByRole('button', { name: 'Enter the flow' }).click()
+  await expect(page.locator('.soundscape-title')).toContainText('Moon garden')
+  await page.reload()
+  await page.getByRole('button', { name: 'Enter the flow' }).click()
+  await expect(page.locator('.soundscape-title')).toContainText('Moon garden')
+  await expect(page.getByRole('slider', { name: 'Soundscape tempo' })).toHaveValue('93')
+  await expect(page.getByRole('slider', { name: 'The atmosphere level' })).toHaveValue('45')
+  await expect(
+    page.getByRole('button', { name: 'Enable the heartbeat', exact: true }),
+  ).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Start the room', exact: true })).toBeVisible()
+})
+
+test('the soundscape focus room works on mobile, traps focus, and exits with Escape', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Or, get lost in the sound' }).click()
+  await page.getByRole('button', { name: 'Focus on the soundscape' }).click()
+  const room = page.getByRole('dialog', { name: 'Soundscape focus room' })
+  await expect(room).toBeVisible()
+  await page.keyboard.press('Tab')
+  await expect(room.getByRole('button', { name: 'Soundscape guide' })).toBeFocused()
+  await page.keyboard.press('Shift+Tab')
+  await expect(room.getByRole('button', { name: 'Save this feeling', exact: true })).toBeFocused()
+  await page.keyboard.press('a')
+  await expect(page.locator('.melody-pad.active')).toHaveCount(1)
+  for (const width of [390, 360, 820]) {
+    await page.setViewportSize({ width, height: 844 })
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  }
+  await page.keyboard.press('Escape')
+  await expect(room).not.toBeVisible()
+  await expect(page.getByRole('button', { name: 'Focus on the soundscape' })).toBeVisible()
+})
+
+test('the new soundscape remains an instrument after an offline reload', async ({
+  page,
+  context,
+}) => {
+  await page.goto('/')
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready
+  })
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true)
+  await context.setOffline(true)
+  await page.reload()
+  await page.getByRole('button', { name: 'Enter the flow' }).click()
+  await page.getByRole('button', { name: /Wildflower/ }).click()
+  await page.getByRole('button', { name: 'Start the room', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Pause the room', exact: true })).toBeVisible()
+  await expect(page.locator('.soundscape-title')).toContainText('Wildflower')
+  await page.getByRole('button', { name: 'Play soundscape F4', exact: true }).click()
+  await expect(page.locator('.melody-pad.active')).toHaveCount(1)
+})

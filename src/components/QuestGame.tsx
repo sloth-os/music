@@ -13,12 +13,16 @@ import {
   Trophy,
   Volume2,
   VolumeX,
+  Maximize2,
+  Minimize2,
 } from 'lucide-react'
 import type { Quest } from '../lib/data'
 import { audio, NOTES } from '../lib/audio'
 import { Dialog } from './Dialog'
 import { QuestArt } from './Art'
 import { Piano } from './Piano'
+import { Resonance } from './Resonance'
+import { useExperience } from '../experience/Experience'
 
 interface Round {
   a: number
@@ -71,6 +75,8 @@ export function QuestGame({
         ? 4
         : 5
   const rounds = useMemo(() => makeRounds(quest.id, count), [quest.id, count])
+  const [focus, setFocus] = useState(true)
+  const { touch } = useExperience()
   const [phase, setPhase] = useState<'intro' | 'play' | 'result'>('intro')
   const [round, setRound] = useState(0)
   const [score, setScore] = useState(0)
@@ -207,6 +213,7 @@ export function QuestGame({
     if (nearest < 0) return
     taps.current[nearest] = difference
     setTapCount(taps.current.filter((value) => value !== null).length)
+    touch()
     void audio.note(60, 0.09)
   }, [round, rhythmStage])
   useEffect(() => {
@@ -269,8 +276,13 @@ export function QuestGame({
     <Dialog
       title={`${daily ? 'Daily challenge: ' : ''}${quest.title}`}
       onClose={onClose}
-      className={`quest-dialog theme-${quest.color}`}
+      className={`quest-dialog theme-${quest.color} ${focus ? 'quest-focus' : ''} quest-phase-${phase} ${feedback !== null ? (feedback ? 'answer-correct' : 'answer-learning') : ''}`}
     >
+      <div className="quest-atmosphere" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
       <div className="quest-modal-top">
         <span className="eyebrow">
           {daily
@@ -281,6 +293,14 @@ export function QuestGame({
           {quest.minutes} min · +{daily ? '80' : '50'} XP
         </span>
       </div>
+      <button
+        className="quest-focus-toggle"
+        aria-label={focus ? 'Exit quest focus' : 'Focus on this quest'}
+        onClick={() => setFocus((value) => !value)}
+      >
+        {focus ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+        <span>{focus ? 'Back to cozy view' : 'Just me and the music'}</span>
+      </button>
       {phase === 'intro' ? (
         <div className="quest-intro">
           <div className={`quest-intro-art ${quest.color}`}>
@@ -294,10 +314,22 @@ export function QuestGame({
           </div>
           {quest.id === 'chords' && (
             <div className="chord-examples">
-              <button className="button secondary small" onClick={() => void audio.chord(60)}>
+              <button
+                className="button secondary small"
+                onClick={() => {
+                  audio.stop()
+                  void audio.chord(60)
+                }}
+              >
                 <Volume2 size={16} /> Major example
               </button>
-              <button className="button secondary small" onClick={() => void audio.chord(60, true)}>
+              <button
+                className="button secondary small"
+                onClick={() => {
+                  audio.stop()
+                  void audio.chord(60, true)
+                }}
+              >
                 <Volume2 size={16} /> Minor example
               </button>
             </div>
@@ -363,6 +395,16 @@ export function QuestGame({
         </div>
       ) : (
         <div className="quest-play">
+          <div className="quest-round-waypoints" aria-label={`Round ${round + 1} of ${count}`}>
+            {rounds.map((_, i) => (
+              <span
+                key={i}
+                className={`${i < round ? 'passed' : ''} ${i === round ? 'current' : ''}`}
+              >
+                {i < round ? <Check size={10} /> : i + 1}
+              </span>
+            ))}
+          </div>
           <div className="game-progress">
             <div>
               <span>
@@ -404,6 +446,11 @@ export function QuestGame({
                       ? 'Listen to both patterns. Is the second faster or slower?'
                       : `Listen for four beats, then tap the next four. ${[80, 96, 108][round]} BPM.`}
           </p>
+          {quest.id !== 'rhythm' && quest.id !== 'notes' && (
+            <div className={`listening-resonance ${playing ? 'is-listening' : ''}`}>
+              <Resonance active={playing} />
+            </div>
+          )}
           {quest.id === 'rhythm' ? (
             <div className="rhythm-game">
               <div className="beat-dots">

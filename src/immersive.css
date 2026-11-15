@@ -1,0 +1,4309 @@
+/* Cadence fuses an analog studio with a quietly responsive digital instrument. */
+:root {
+  --surface: #fffdf8;
+  --surface-soft: #f1f2e9;
+  --glass: #fffdf4b8;
+  --copy: #6c745e;
+  --accent: #b35940;
+  --focus: #8ba66c;
+  --shadow: 0 18px 50px #3b453308;
+  --radius: 15px;
+  color-scheme: light;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 25px;
+}
+body {
+  transition:
+    background 0.35s,
+    color 0.35s;
+}
+.app-shell {
+  isolation: isolate;
+}
+.main-content:focus {
+  outline: none;
+}
+.skip-link {
+  position: fixed;
+  top: -60px;
+  left: 50%;
+  z-index: 300;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--bg);
+  padding: 12px 20px;
+  border-radius: 0 0 8px 8px;
+  font-size: 13px;
+}
+.skip-link:focus {
+  top: 0;
+}
+.workspace {
+  background: radial-gradient(ellipse at 95% 2%, #efe5d42b, transparent 45%);
+}
+.topbar {
+  background: #fbfaf6df;
+  backdrop-filter: blur(20px);
+}
+.topbar-actions {
+  gap: 11px;
+}
+.topbar-actions > .icon-button {
+  width: 30px;
+  height: 30px;
+}
+.flow-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dce4cf;
+  background: #edf1e5;
+  color: #63774f;
+  padding: 8px 11px;
+  border-radius: 30px;
+  font-size: 10px;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+.flow-entry:hover {
+  background: #e4ecd8;
+  box-shadow: 0 0 0 4px #e4ecd850;
+}
+.flow-live-dot {
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  background: #9cac7e;
+  margin-left: 3px;
+}
+.theme-toggle:hover {
+  transform: rotate(-12deg);
+}
+.experience-toggle:hover {
+  background: var(--surface-soft);
+}
+.hero-card {
+  background:
+    radial-gradient(ellipse at 80% 45%, #ece4ce 0, transparent 60%),
+    linear-gradient(115deg, #f1e9db, #f2eddf 70%);
+  box-shadow: var(--shadow);
+  min-height: 331px;
+  border-radius: var(--radius);
+}
+.hero-card:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.12' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+}
+.hero-copy {
+  padding-top: 32px;
+  padding-bottom: 29px;
+  width: 58%;
+}
+.hero-card h2 {
+  font-size: 43px;
+  letter-spacing: -1.3px;
+}
+.hero-card p {
+  font-size: 12px;
+  line-height: 1.9;
+}
+.hero-card .hero-art {
+  top: 8px;
+  right: -5px;
+  width: 50%;
+  height: 91%;
+  transform: perspective(900px) rotateY(var(--pointer-x, 0deg)) rotateX(var(--pointer-y, 0deg));
+  transition: transform 0.6s cubic-bezier(0.2, 0.65, 0.3, 1);
+  filter: drop-shadow(0 18px 16px #43503b16);
+}
+.hero-flow-button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  font-size: 9px;
+  color: #7b785d;
+  padding: 0;
+  margin-top: 16px;
+  position: relative;
+  z-index: 3;
+}
+.hero-flow-button:hover {
+  color: var(--coral);
+}
+.hero-card .button {
+  min-height: 43px;
+  margin-top: 22px;
+}
+.hero-footnote {
+  margin-top: 16px;
+  font-size: 8px;
+}
+.hero-orbit-lines {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-orbit-lines > span {
+  position: absolute;
+  right: 2%;
+  top: 7%;
+  width: 330px;
+  height: 330px;
+  border: 1px solid #b4b89928;
+  border-radius: 50%;
+  transform: rotate(-20deg) scaleX(1.2);
+}
+.hero-orbit-lines > span:nth-child(2) {
+  right: 1%;
+  top: -2%;
+  width: 380px;
+  height: 380px;
+  border-style: dashed;
+  opacity: 0.6;
+}
+.hero-orbit-lines > span:nth-child(3) {
+  width: 8px;
+  height: 8px;
+  right: 43%;
+  top: 27%;
+  border: 0;
+  background: #c49b6b60;
+  animation: float-note 6s ease-in-out infinite;
+}
+.hero-sound-label {
+  position: absolute;
+  bottom: 20px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #fffdf2c2;
+  backdrop-filter: blur(12px);
+  border: 1px solid #fffdf3c4;
+  box-shadow: 0 5px 20px #716b4320;
+  padding: 10px 12px;
+  border-radius: 9px;
+  z-index: 2;
+  transform: rotate(-4deg);
+  animation: float-note 7s ease-in-out infinite;
+}
+.hero-sound-label > span:first-child {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #8e9e75;
+  box-shadow: 0 0 0 3px #aab79522;
+}
+.hero-sound-label > span:nth-child(2) {
+  font-size: 5px;
+  letter-spacing: 1.3px;
+  line-height: 1.7;
+  color: #9b9f81;
+}
+.hero-sound-label strong {
+  font-family: 'Fraunces', serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.15px;
+  color: #73815d;
+}
+.hero-sound-label > svg {
+  color: #a4af88;
+  margin-left: 3px;
+}
+.little-promises {
+  min-height: 51px;
+}
+.quest-card {
+  border-radius: 11px;
+  box-shadow: 0 3px 0 #e7e8dc25;
+  position: relative;
+}
+.quest-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 13px 30px #38422a11;
+}
+.quest-card-art .quest-art {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.quest-card:hover .quest-art {
+  transform: rotate(-5deg) scale(1.07);
+}
+.quest-arrow {
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.quest-card:hover .quest-arrow {
+  background: #e5ebd8;
+  transform: translateX(2px);
+}
+.quest-card-footer {
+  padding-top: 6px;
+}
+.streak-card,
+.daily-card,
+.mini-playground {
+  box-shadow: 0 5px 25px #4b593206;
+  border-radius: 12px;
+}
+.daily-illustration > svg {
+  animation: float-note 8s ease-in-out infinite;
+}
+.day-circle.today {
+  box-shadow: 0 0 0 4px #d2aa8310;
+}
+.button {
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+.button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px #9f4d3525;
+}
+.main-nav > button {
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+.main-nav > button:hover {
+  transform: translateX(2px);
+}
+.journey-view-controls {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 18px;
+  padding: 4px;
+  background: #eeefe6;
+  border: 1px solid #e7e9db;
+  border-radius: 7px;
+  width: fit-content;
+}
+.journey-view-controls > button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background: transparent;
+  color: #8d967c;
+  font-size: 9px;
+}
+.journey-view-controls > button[aria-pressed='true'] {
+  background: #fffdf7;
+  box-shadow: 0 1px 4px #3745260b;
+  color: #667750;
+}
+.quest-filters {
+  margin-top: 13px;
+}
+.journey-map {
+  background: radial-gradient(ellipse at 90% 20%, #6d866220, transparent 60%), #26332b;
+  color: #cbd7bf;
+  border: 1px solid #46533c;
+  border-radius: 13px;
+  padding: 22px 21px 17px;
+  margin-top: 18px;
+  overflow: hidden;
+  isolation: isolate;
+  position: relative;
+}
+.map-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.map-heading > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 7px;
+  letter-spacing: 1.25px;
+  color: #a8b698;
+}
+.map-heading > span:last-child {
+  font-size: 9px;
+  color: #829777;
+}
+.map-world {
+  position: relative;
+  min-height: 350px;
+}
+.map-trail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.map-stops {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 168px);
+  padding: 17px 0 0;
+  margin: 0;
+  position: relative;
+  gap: 13px;
+}
+.map-stops > li:nth-child(4) {
+  grid-column: 3;
+  grid-row: 2;
+}
+.map-stops > li:nth-child(5) {
+  grid-column: 2;
+  grid-row: 2;
+}
+.map-stops > li:nth-child(6) {
+  grid-column: 1;
+  grid-row: 2;
+}
+.map-stops button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border-radius: 9px;
+}
+.map-stops button:hover .map-island {
+  transform: translateY(-4px) scale(1.06);
+  box-shadow:
+    0 0 0 7px #9daf7710,
+    0 0 32px #b2be8522;
+}
+.map-island {
+  position: relative;
+  background: #465344;
+  width: 75px;
+  height: 66px;
+  border-radius: 46% 54% 52% 48%/55% 44% 56% 45%;
+  box-shadow: 0 0 0 5px #b2bd8c09;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+.map-island .quest-art {
+  width: 64px;
+  height: 48px;
+}
+.island-peach {
+  color: #e2b58c;
+  background: #705647;
+}
+.island-lavender {
+  color: #cebadb;
+  background: #555065;
+}
+.island-sage {
+  color: #b6cda0;
+  background: #455b46;
+}
+.island-butter {
+  color: #d6cb8d;
+  background: #5e6040;
+}
+.island-pink {
+  color: #d7a4b8;
+  background: #664954;
+}
+.island-blue {
+  color: #a8c5cf;
+  background: #40575b;
+}
+.map-stop-number,
+.map-check {
+  position: absolute;
+  right: -4px;
+  bottom: -2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7px;
+  color: #c1cbb0;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #2b382e;
+  border: 1px solid #647658;
+}
+.map-check {
+  background: #a5b77e;
+  color: #304223;
+  border-color: #b7c895;
+}
+.map-stops strong {
+  font-family: 'Fraunces', serif;
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 12px;
+  color: #d2dac5;
+}
+.map-stops small {
+  font-size: 7px;
+  color: #8f9e82;
+  margin-top: 5px;
+}
+.map-stops small > span {
+  margin: 0 5px;
+}
+.map-stops em {
+  font-size: 4.5px;
+  letter-spacing: 0.9px;
+  color: #c6d29e;
+  font-style: normal;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 7px;
+}
+.next-stop .map-island {
+  outline: 1px dashed #b7c091;
+  outline-offset: 7px;
+}
+.map-caption {
+  font-size: 8px;
+  color: #b6c1a5;
+  text-align: center;
+  margin-top: 13px;
+  line-height: 1.9;
+}
+.map-caption > span {
+  display: block;
+  color: #829577;
+  font-size: 7px;
+}
+/* A musical room with a real, live signal. */
+.new-pill {
+  border: 1px solid #bac5a2;
+  color: #82966a;
+  background: #edf1e3;
+  padding: 2px 4px;
+  font-size: 6px;
+  border-radius: 3px;
+  letter-spacing: 0.7px;
+}
+.playground-tabs button.soundscape-tab {
+  color: #8e7e58;
+}
+.piano-resonance {
+  height: 45px;
+  margin: 10px 0 -15px;
+  position: relative;
+}
+.resonance {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+.note-readout {
+  position: relative;
+  margin-top: 24px;
+}
+.instrument-card {
+  position: relative;
+  overflow: hidden;
+}
+.white-key.pressed {
+  box-shadow:
+    inset 0 -5px 0 #9db97b,
+    inset 0 0 30px #adc7813b;
+}
+.black-key.pressed {
+  box-shadow:
+    0 1px 0 #465437,
+    0 0 15px #b1cc7b66;
+}
+.soundscape-room {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 288px;
+  background: #18241f;
+  border: 1px solid #354638;
+  border-radius: 19px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px #1d30271c;
+  position: relative;
+  color: #d8e0cb;
+  min-height: 685px;
+  isolation: isolate;
+}
+.soundscape-room:focus {
+  outline: none;
+}
+.soundscape-main {
+  padding: 22px 26px 25px;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 45% 48%, hsla(var(--scene-hue), 32%, 32%, 0.15), transparent 60%),
+    linear-gradient(130deg, #23352b33, #131d1733);
+  overflow: hidden;
+}
+.soundscape-main:before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(#c2d4a42b 0.6px, transparent 0.6px);
+  background-size: 34px 34px;
+  opacity: 0.26;
+  mask-image: radial-gradient(ellipse at center, #000, transparent 75%);
+}
+.soundscape-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+.room-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 6px;
+  letter-spacing: 1.3px;
+  color: #9ba98b;
+}
+.live-dot {
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  background: #6c7d60;
+  box-shadow: 0 0 0 3px #8ca46a0c;
+}
+.live-dot.live {
+  background: #c6d599;
+  box-shadow: 0 0 9px #b5cc8288;
+  animation: breathe 3s ease-in-out infinite;
+}
+.soundscape-top > div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.room-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 29px;
+  width: 29px;
+  border: 1px solid #8f9c7730;
+  border-radius: 50%;
+  background: #202e25b3;
+  color: #91a180;
+}
+.room-icon:hover {
+  background: #344232;
+  color: #d5dfbc;
+}
+.soundscape-title {
+  text-align: center;
+  position: relative;
+  margin-top: 19px;
+}
+.soundscape-title .eyebrow {
+  justify-content: center;
+  color: #7e9677;
+  font-size: 6px;
+  letter-spacing: 1.6px;
+}
+.soundscape-title h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: -1.4px;
+  line-height: 1.3;
+  color: #e2e6d1;
+  margin-top: 9px;
+}
+.soundscape-title h2 > span {
+  color: #c3b77c;
+}
+.soundscape-title p {
+  font-size: 10px;
+  color: #93a48a;
+  line-height: 1.7;
+  margin-top: 7px;
+}
+.soundscape-universe {
+  height: 300px;
+  position: relative;
+  margin-top: 2px;
+  isolation: isolate;
+}
+.universe-center {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+.universe-center > span {
+  font-size: 7px;
+  color: #a2b398;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.universe-center strong {
+  font-family: 'Fraunces', serif;
+  font-size: 56px;
+  color: #d5dec0;
+  font-weight: 400;
+  line-height: 1;
+}
+.universe-center > small {
+  font-size: 4px;
+  letter-spacing: 1.7px;
+  color: #7e9771;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+.orbit-label {
+  position: absolute;
+  top: 45%;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #667d61;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.orbit-label > span {
+  font-size: 6px;
+  font-style: normal;
+}
+.orbit-label.left {
+  left: 7px;
+}
+.orbit-label.right {
+  right: 7px;
+}
+.soundscape-transport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 17px;
+  position: relative;
+  z-index: 2;
+  margin-top: -4px;
+}
+.bar-indicator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.bar-indicator > i {
+  width: 3px;
+  height: 12px;
+  background: #4b5b40;
+  border-radius: 2px;
+  transition:
+    background 0.1s,
+    height 0.1s;
+}
+.bar-indicator > i:nth-child(2n) {
+  height: 7px;
+}
+.bar-indicator > i.current {
+  background: #c7d297;
+  height: 18px;
+  box-shadow: 0 0 7px #b4c78466;
+}
+.start-room {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 12px;
+  padding: 12px 19px;
+  color: #283b27;
+  border: 1px solid #d0dab3;
+  border-radius: 30px;
+  background: #c4d19e;
+  box-shadow: 0 0 25px #b5c68813;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+.start-room:hover {
+  background: #d3deb7;
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px #b5c68833;
+}
+.start-room svg {
+  width: 15px;
+  height: 15px;
+}
+.room-key {
+  font-size: 7px;
+  color: #73886a;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 76px;
+}
+.soundscape-pads {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 7px;
+  margin: 28px 0 0;
+  position: relative;
+  z-index: 2;
+}
+.melody-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #4a5f423f;
+  border-bottom: 3px solid #465b3b6b;
+  background: linear-gradient(160deg, #33472f77, #25352a99);
+  border-radius: 7px;
+  height: 65px;
+  color: #b4c49f;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background 0.15s,
+    transform 0.15s,
+    box-shadow 0.15s;
+  touch-action: none;
+}
+.melody-pad:before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, #a8bd7e44, transparent 80%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.melody-pad:hover:before,
+.melody-pad.active:before {
+  opacity: 1;
+}
+.melody-pad:hover {
+  border-color: #8da66e66;
+}
+.melody-pad.active {
+  transform: translateY(2px);
+  background: #52663e88;
+  color: #e1ebca;
+  border-bottom-width: 1px;
+  box-shadow: 0 0 20px #a2bc6930;
+}
+.melody-pad > span {
+  font-family: 'Fraunces', serif;
+  font-size: 19px;
+  font-weight: 400;
+  position: relative;
+}
+.melody-pad small {
+  font-size: 8px;
+  margin-left: 1px;
+  opacity: 0.4;
+}
+.melody-pad kbd {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 7px;
+  margin-top: 7px;
+  opacity: 0.45;
+}
+.pad-caption {
+  font-size: 7px;
+  color: #829975;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  line-height: 1.8;
+  margin-top: 12px;
+  position: relative;
+}
+.room-unmute {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #5e563b44;
+  border: 1px solid #bca46d44;
+  color: #d3bf8a;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 9px;
+  margin: 18px auto -6px;
+  position: relative;
+}
+.soundscape-mixer {
+  padding: 30px 23px 24px;
+  background: #202d25;
+  border-left: 1px solid #65795025;
+  position: relative;
+  z-index: 2;
+}
+.mixer-heading .eyebrow {
+  font-size: 5.5px;
+  letter-spacing: 1.5px;
+  color: #7f9474;
+}
+.mixer-heading h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+  margin-top: 7px;
+  color: #cbd7bc;
+}
+.mood-options {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 18px;
+}
+.mood-options > button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 49px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 7px;
+  color: #9fae92;
+  text-align: left;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+.mood-options > button.selected {
+  border-color: #91a07144;
+  background: #b5c4860c;
+  color: #d2ddbd;
+}
+.mood-options > button:hover {
+  background: #97ac7012;
+}
+.mood-symbol {
+  height: 32px;
+  width: 32px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #434532;
+  color: #c8b986;
+}
+.mood-moon {
+  color: #b7a8ca;
+  background: #393447;
+}
+.mood-drift {
+  color: #a1bca5;
+  background: #2d4439;
+}
+.mood-bloom {
+  color: #c6a0b5;
+  background: #49343d;
+}
+.mood-options > button > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  gap: 4px;
+  flex: 1;
+}
+.mood-options small {
+  font-size: 6px;
+  color: #788e6d;
+  letter-spacing: 0.1px;
+}
+.mood-options > button > svg {
+  color: #adb980;
+  width: 12px;
+  height: 12px;
+}
+.mixer-divider {
+  height: 1px;
+  background: #90a77722;
+  margin: 21px 0;
+}
+.mixer-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 22px;
+}
+.mixer-layer > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mixer-layer > div > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #8b9f6e33;
+  border-radius: 6px;
+  background: #29392b;
+  color: #a3b486;
+  transition: color 0.2s;
+}
+.mixer-layer > div > button:hover {
+  background: #3c4b32;
+}
+.mixer-layer > div > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+}
+.mixer-layer strong {
+  font-size: 9px;
+  font-weight: 400;
+  color: #b6c1a5;
+}
+.mixer-layer small {
+  font-size: 6px;
+  color: #768c6c;
+}
+.layer-level {
+  font-size: 7px;
+  color: #90a379;
+  min-width: 28px;
+  text-align: right;
+}
+.mixer-layer > input {
+  width: calc(100% - 37px);
+  margin: 11px 0 0 37px;
+  display: block;
+  height: 3px;
+  accent-color: #adb87e;
+  cursor: pointer;
+}
+.mixer-layer.is-muted > div {
+  opacity: 0.4;
+}
+.room-tempo {
+  display: block;
+  margin-top: 27px;
+}
+.room-tempo > span:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  color: #a6b894;
+}
+.room-tempo strong {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #d5ddbc;
+}
+.room-tempo strong > small {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 6px;
+  color: #8c9f75;
+  letter-spacing: 0.7px;
+}
+.room-tempo > input {
+  display: block;
+  accent-color: #b9c78b;
+  width: 100%;
+  height: 4px;
+  margin: 14px 0 10px;
+  cursor: pointer;
+}
+.room-tempo > span:last-child {
+  display: flex;
+  justify-content: space-between;
+  color: #6d8462;
+}
+.room-tempo > span:last-child > small {
+  font-size: 6px;
+}
+.save-room {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #8b9f6944;
+  background: #2c3b2b;
+  border-radius: 7px;
+  color: #b6c49c;
+  width: 100%;
+  padding: 12px 9px;
+  font-size: 10px;
+  margin-top: 23px;
+}
+.save-room:hover {
+  background: #3b4b32;
+}
+.mixer-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 6px;
+  color: #78906a;
+  margin-top: 15px;
+}
+.room-guide {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  border: 1px solid #87a06944;
+  border-radius: 9px;
+  padding: 17px;
+  margin-top: 20px;
+  background: #263727;
+  color: #a2b38c;
+  position: relative;
+}
+.room-guide > svg {
+  margin-top: 3px;
+}
+.room-guide strong {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  color: #c7d7b3;
+  font-weight: 400;
+}
+.room-guide p {
+  font-size: 10px;
+  color: #99ac84;
+  line-height: 1.9;
+  margin-top: 7px;
+}
+.soundscape-room.is-focused {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  border: 0;
+  border-radius: 0;
+  overflow-y: auto;
+  min-height: 100dvh;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  align-content: start;
+}
+.is-focused .soundscape-main {
+  min-height: 100dvh;
+  padding: 28px max(30px, calc((100vw - 1250px) / 2)) 35px;
+}
+.is-focused .soundscape-mixer {
+  min-height: 100dvh;
+  padding: 35px 28px;
+}
+.is-focused .soundscape-title {
+  margin-top: 14px;
+}
+.is-focused .soundscape-title h2 {
+  font-size: 54px;
+}
+.is-focused .soundscape-universe {
+  height: clamp(290px, 42vh, 520px);
+}
+.is-focused .soundscape-pads {
+  max-width: 720px;
+  margin: 30px auto 0;
+  gap: 12px;
+}
+.is-focused .melody-pad {
+  height: 83px;
+}
+.is-focused .melody-pad > span {
+  font-size: 23px;
+}
+.is-focused .melody-pad kbd {
+  font-size: 9px;
+}
+.is-focused .pad-caption {
+  font-size: 9px;
+}
+.is-focused .soundscape-title p {
+  font-size: 12px;
+}
+.is-focused .universe-center strong {
+  font-size: 68px;
+}
+.is-focused .universe-center > span {
+  font-size: 10px;
+}
+.is-focused .universe-center > small {
+  font-size: 5px;
+}
+.is-focused .room-badge {
+  font-size: 8px;
+}
+.is-focused .orbit-label.left {
+  left: 7%;
+}
+.is-focused .orbit-label.right {
+  right: 7%;
+}
+/* A quest becomes a single, calm stage. */
+.quest-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+  border-radius: inherit;
+}
+.quest-atmosphere > span {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(65px);
+  opacity: 0.3;
+  background: #e0dfbd;
+  top: -120px;
+  left: -170px;
+}
+.quest-atmosphere > span:nth-child(2) {
+  background: #e2cec0;
+  left: auto;
+  top: auto;
+  right: -150px;
+  bottom: -150px;
+}
+.quest-atmosphere > span:nth-child(3) {
+  filter: none;
+  border: 1px solid #bdc8a51c;
+  width: 650px;
+  height: 650px;
+  background: transparent;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+.quest-dialog {
+  isolation: isolate;
+}
+.quest-focus-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 8px;
+  background: none;
+  color: #8c9878;
+  margin: 17px 0 0 auto;
+  padding: 0;
+}
+.quest-focus-toggle:hover {
+  color: #64744b;
+}
+.quest-dialog.quest-focus {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  max-width: none;
+  max-height: 100dvh;
+  width: 100%;
+  height: 100dvh;
+  padding: 28px max(24px, calc((100vw - 880px) / 2)) 35px;
+  background: var(--bg);
+  overflow-y: auto;
+  animation: focus-in 0.4s ease-out;
+}
+.quest-focus > .dialog-close {
+  right: 32px;
+  top: 29px;
+  height: 34px;
+  width: 34px;
+}
+.quest-focus > .quest-modal-top {
+  padding-right: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.quest-focus .quest-modal-top .eyebrow {
+  font-size: 10px;
+}
+.quest-focus .quest-duration {
+  font-size: 10px;
+}
+.quest-focus-toggle > span {
+  white-space: nowrap;
+}
+.quest-focus .quest-focus-toggle {
+  font-size: 9px;
+}
+.quest-focus .quest-intro {
+  max-width: 630px;
+  padding-top: clamp(22px, 5vh, 65px);
+  margin: 0 auto;
+}
+.quest-focus .quest-intro-art {
+  width: 105px;
+  height: 90px;
+  border-radius: 24px;
+  box-shadow: 0 10px 35px #374a2310;
+  transform: rotate(-6deg);
+  margin-bottom: 25px;
+}
+.quest-focus .quest-intro-art .quest-art {
+  width: 94px;
+  height: 71px;
+}
+.quest-focus .quest-intro h2 {
+  font-size: 45px;
+  letter-spacing: -1.5px;
+}
+.quest-focus .intro-copy {
+  font-size: 15px;
+  max-width: 585px;
+  line-height: 1.9;
+}
+.quest-focus .lesson-tip {
+  max-width: 570px;
+  margin-top: 24px;
+  padding: 20px 23px;
+  border-radius: 12px;
+}
+.quest-focus .lesson-tip p {
+  font-size: 12px;
+}
+.quest-focus .headphone-tip {
+  font-size: 10px;
+  margin-top: 24px;
+}
+.quest-focus .quest-intro > .button {
+  min-height: 47px;
+  font-size: 13px;
+  min-width: 200px;
+  border-radius: 8px;
+}
+.quest-round-waypoints {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 20px 0 24px;
+}
+.quest-round-waypoints > span {
+  position: relative;
+  height: 24px;
+  width: 24px;
+  border: 1px solid #dce3ce;
+  background: #f3f5e9;
+  border-radius: 50%;
+  font-size: 8px;
+  color: #b1bba0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.quest-round-waypoints > span:not(:last-child):after {
+  content: '';
+  height: 1px;
+  width: 13px;
+  background: #dce3ce;
+  position: absolute;
+  left: 24px;
+  top: 11px;
+}
+.quest-round-waypoints > span.current {
+  background: #dce8c9;
+  border-color: #a5b88a;
+  color: #7f9563;
+  box-shadow: 0 0 0 4px #e4ecd875;
+}
+.quest-round-waypoints > span.passed {
+  background: #9fb481;
+  border-color: #9fb481;
+  color: #fffdf3;
+}
+.quest-play {
+  max-width: 650px;
+  margin: 0 auto;
+}
+.quest-focus .quest-play {
+  padding-top: 3px;
+}
+.quest-focus .game-progress {
+  margin-top: 0;
+}
+.quest-focus .quest-play h2 {
+  font-size: 36px;
+  margin-top: 29px;
+  letter-spacing: -0.9px;
+}
+.quest-focus .game-instruction {
+  font-size: 13px;
+  margin-top: 12px;
+}
+.quest-focus .quest-play .listen-button {
+  min-height: 67px;
+  font-size: 13px;
+  min-width: 224px;
+  margin-top: 12px;
+}
+.listening-resonance {
+  height: 40px;
+  margin: 16px auto 0;
+  max-width: 300px;
+  opacity: 0.35;
+  transition: opacity 0.3s;
+}
+.listening-resonance.is-listening {
+  opacity: 1;
+}
+.quest-focus .answer-options {
+  max-width: 490px;
+  gap: 20px;
+}
+.quest-focus .answer-button {
+  min-height: 97px;
+  border-radius: 11px;
+  font-size: 17px;
+  gap: 17px;
+  box-shadow: 0 3px 0 #dbe0cc25;
+}
+.quest-focus .answer-button small {
+  font-size: 10px;
+}
+.quest-focus .answer-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px #7f976313;
+}
+.quest-focus .game-piano {
+  max-width: 570px;
+}
+.quest-focus .game-piano .piano {
+  height: 168px;
+  border-radius: 10px;
+  box-shadow:
+    0 5px 0 #d9e0cd,
+    0 12px 35px #5362360d;
+}
+.quest-focus .game-feedback {
+  padding: 21px;
+  border-radius: 12px;
+  margin: 28px auto 0;
+  box-shadow: 0 8px 30px #64794609;
+}
+.quest-focus .game-feedback strong {
+  font-size: 13px;
+}
+.quest-focus .game-feedback p {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.quest-focus .game-feedback .button {
+  min-height: 39px;
+  font-size: 11px;
+}
+.quest-focus .game-reassurance {
+  font-size: 10px;
+  margin-top: 26px;
+}
+.quest-focus .rhythm-game {
+  margin-top: 29px;
+}
+.quest-focus .beat-dots {
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.quest-focus .beat-dots > span {
+  width: 39px;
+  height: 39px;
+  font-size: 12px;
+}
+.quest-focus .tap-button {
+  height: 149px;
+  width: 149px;
+  font-size: 32px;
+  box-shadow:
+    0 0 0 1px #e5d9bf,
+    0 10px 40px #7f996322;
+}
+.quest-focus .tap-button small {
+  font-size: 10px;
+}
+.quest-focus .tap-button.your-turn {
+  box-shadow:
+    0 0 0 1px #a7b88d,
+    0 0 0 15px #9fb68b0c;
+  animation: tap-pulse 0.625s infinite;
+}
+.quest-focus .rhythm-message {
+  font-size: 12px;
+  margin-top: 25px;
+}
+.quest-focus .rhythm-game > .muted {
+  font-size: 10px;
+}
+.quest-focus .quest-result {
+  max-width: 650px;
+  margin: 0 auto;
+  padding-top: clamp(40px, 7vh, 90px);
+}
+.quest-focus .result-trophy {
+  height: 115px;
+  width: 115px;
+  background: #f0e5bc;
+  border: 1px solid #dcc784;
+  box-shadow:
+    0 0 0 12px #f4edd5,
+    0 0 0 35px #e8dfbd15;
+  margin-bottom: 39px;
+}
+.quest-focus .quest-result h2 {
+  font-size: 43px;
+  letter-spacing: -1.2px;
+}
+.quest-focus .quest-result > p {
+  font-size: 14px;
+}
+.quest-focus .result-stats {
+  margin-top: 30px;
+  max-width: 390px;
+  padding: 24px 0;
+  border-radius: 12px;
+}
+.quest-focus .result-stats strong {
+  font-size: 38px;
+}
+.quest-focus .result-stats span {
+  font-size: 11px;
+}
+.quest-focus .quest-result > p.result-note {
+  font-size: 12px;
+  margin-top: 27px;
+  margin-bottom: 27px;
+}
+.quest-focus .quest-result > .button {
+  min-height: 44px;
+  font-size: 12px;
+}
+.answer-correct .quest-atmosphere > span:first-child {
+  background: #d1dfb7;
+}
+.answer-learning .quest-atmosphere > span:first-child {
+  background: #ebd7a9;
+}
+/* Preferences are part of the room, not a separate technical setup. */
+.theme-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 26px 0;
+}
+.theme-choice {
+  padding: 10px 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  text-align: left;
+  color: var(--copy);
+}
+.theme-choice.selected {
+  border-color: #8da370;
+  box-shadow: 0 0 0 2px #91a77422;
+}
+.theme-preview {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 78px;
+  background: #f3eee1;
+  border-radius: 5px;
+  padding: 12px;
+  overflow: hidden;
+}
+.theme-preview > i {
+  display: block;
+  height: 47px;
+  background: #e5ddca;
+  border-radius: 4px;
+  flex: 1;
+}
+.theme-preview > i:nth-child(2) {
+  height: 33px;
+  background: #93a486;
+}
+.theme-preview > i:nth-child(3) {
+  height: 43px;
+  background: #e1be91;
+}
+.theme-choice.dark .theme-preview {
+  background: #19251d;
+}
+.theme-choice.dark .theme-preview > i {
+  background: #304234;
+}
+.theme-choice.dark .theme-preview > i:nth-child(2) {
+  background: #8da971;
+}
+.theme-choice.dark .theme-preview > i:nth-child(3) {
+  background: #806849;
+}
+.theme-choice > span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  padding: 13px 3px 0;
+}
+.theme-choice > span:last-child > svg:last-child:not(:first-child) {
+  margin-left: auto;
+}
+.preference-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 19px 0;
+  border-top: 1px solid var(--line);
+}
+.preference-row > div {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #8da575;
+}
+.preference-row > div > span {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.preference-row strong {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.preference-row small {
+  font-size: 10px;
+  color: var(--copy);
+  line-height: 1.7;
+}
+.switch {
+  display: flex;
+  align-items: center;
+  width: 36px;
+  height: 21px;
+  border-radius: 15px;
+  padding: 3px;
+  border: 1px solid #d3dac7;
+  background: #e7ebdf;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.switch > span {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background: #b3bea0;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+.switch[aria-checked='true'] {
+  background: #9fb683;
+  border-color: #91aa75;
+}
+.switch[aria-checked='true'] > span {
+  transform: translateX(14px);
+  background: #f5faec;
+}
+.switch:disabled {
+  opacity: 0.35;
+}
+/* Daylight and After hours share the same tactile language. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #141c19;
+  --paper: #1d2821;
+  --surface: #1d2821;
+  --surface-soft: #273329;
+  --glass: #1b2821da;
+  --ink: #e0e5d2;
+  --muted: #a0b291;
+  --line: #334432;
+  --copy: #a9b79b;
+  --coral: #d39775;
+  --coral-dark: #c18562;
+  --accent: #d39775;
+  --peach: #463b2e;
+  --lavender: #35313f;
+  --sage: #2c3d2d;
+  --butter: #3c3d29;
+  --pink: #412f36;
+  --blue: #293b3d;
+  background: var(--bg);
+  color: var(--ink);
+}
+[data-theme='dark'] body {
+  background: var(--bg);
+  color: var(--ink);
+}
+[data-theme='dark'] .sidebar,
+[data-theme='dark'] .topbar {
+  background: #18221bcf;
+  border-color: var(--line);
+}
+[data-theme='dark'] .brand > span {
+  color: #d6dfc8;
+}
+[data-theme='dark'] .brand {
+  color: #d39775;
+}
+[data-theme='dark'] .brand-caption,
+[data-theme='dark'] .nav-heading {
+  color: #85967b;
+}
+[data-theme='dark'] .main-nav > button {
+  color: #a0b190;
+}
+[data-theme='dark'] .main-nav > button.active {
+  background: #2b3c29;
+  color: #cad9b8;
+}
+[data-theme='dark'] .main-nav > button:hover {
+  background: #28372a;
+}
+[data-theme='dark'] .nav-new {
+  background: #3d3e29;
+  border-color: #555637;
+  color: #b3b48d;
+}
+[data-theme='dark'] .workspace {
+  background: radial-gradient(ellipse at 75% 2%, #58764a13, transparent 50%);
+}
+[data-theme='dark'] .topbar-left > span,
+[data-theme='dark'] .topbar-music {
+  color: #8ea381;
+}
+[data-theme='dark'] .topbar-divider {
+  background: var(--line);
+}
+[data-theme='dark'] .sound-toggle {
+  color: #a1b78c;
+}
+[data-theme='dark'] .flow-entry {
+  background: #2d3d29;
+  border-color: #455a38;
+  color: #bfd39f;
+}
+[data-theme='dark'] .avatar {
+  background: #34452e;
+  border-color: #536448;
+  outline-color: #41533a;
+  color: #c8d8b5;
+}
+[data-theme='dark'] .icon-button {
+  color: #9aaf88;
+}
+[data-theme='dark'] .icon-button:hover {
+  background: #33442e;
+  color: #d5e2c1;
+}
+[data-theme='dark'] .grow-card {
+  background: #253021;
+  border-color: #3b4932;
+}
+[data-theme='dark'] .grow-card h3 {
+  color: #bdccac;
+}
+[data-theme='dark'] .grow-card p,
+[data-theme='dark'] .install-button,
+[data-theme='dark'] .sidebar-footer {
+  color: #8ea27c;
+}
+[data-theme='dark'] .hero-card {
+  background:
+    radial-gradient(ellipse at 85% 60%, #71895122, transparent 65%),
+    linear-gradient(110deg, #29392a, #243329);
+  border-color: #47543a;
+}
+[data-theme='dark'] .hero-card h2 {
+  color: #e3e7cf;
+}
+[data-theme='dark'] .hero-tag {
+  color: #b4bc8e;
+}
+[data-theme='dark'] .hero-card p,
+[data-theme='dark'] .hero-footnote {
+  color: #afbb95;
+}
+[data-theme='dark'] .hero-flow-button {
+  color: #aabb8d;
+}
+[data-theme='dark'] .hero-sound-label {
+  background: #253426dc;
+  border-color: #667c4c44;
+}
+[data-theme='dark'] .hero-sound-label strong {
+  color: #b9cca1;
+}
+[data-theme='dark'] .button.primary {
+  background: #c18b66;
+  color: #172118;
+}
+[data-theme='dark'] .button.primary:hover {
+  background: #d0a27e;
+}
+[data-theme='dark'] .button.secondary {
+  background: #263627;
+  border-color: #415438;
+  color: #b8caa3;
+}
+[data-theme='dark'] .button.secondary:hover {
+  background: #35472e;
+}
+[data-theme='dark'] .button.dark {
+  background: #a9bd8d;
+  color: #23321e;
+}
+[data-theme='dark'] .button.dark:hover {
+  background: #c0d1a7;
+}
+[data-theme='dark'] .level-pill {
+  background: #283824;
+  border-color: #405535;
+  color: #a3bf87;
+}
+[data-theme='dark'] .level-pill strong {
+  color: #b8cda0;
+}
+[data-theme='dark'] .level-pill span {
+  color: #8fa77b;
+}
+[data-theme='dark'] .greeting,
+[data-theme='dark'] .eyebrow {
+  color: #9cae86;
+}
+[data-theme='dark'] .page-heading p,
+[data-theme='dark'] .quest-card p,
+[data-theme='dark'] .mini-piano-copy p,
+[data-theme='dark'] .streak-card > p,
+[data-theme='dark'] .streak-footer,
+[data-theme='dark'] .intro-copy,
+[data-theme='dark'] .dialog-lead,
+[data-theme='dark'] .basics-content p,
+[data-theme='dark'] .how-steps p,
+[data-theme='dark'] .install-instructions p,
+[data-theme='dark'] .game-instruction,
+[data-theme='dark'] .quest-result > p,
+[data-theme='dark'] .result-stats span,
+[data-theme='dark'] .note-readout,
+[data-theme='dark'] .privacy-note,
+[data-theme='dark'] .try-card > p,
+[data-theme='dark'] .empty-ideas p,
+[data-theme='dark'] .badge-card p,
+[data-theme='dark'] .progress-summary > div > span:last-child {
+  color: var(--copy);
+}
+[data-theme='dark'] .little-promises {
+  color: #91a47d;
+}
+[data-theme='dark'] .quest-card,
+[data-theme='dark'] .streak-card,
+[data-theme='dark'] .mini-playground,
+[data-theme='dark'] .instrument-card,
+[data-theme='dark'] .ideas-card,
+[data-theme='dark'] .progress-summary > div,
+[data-theme='dark'] .sessions-list {
+  background: #1e2b21;
+  border-color: #34472f;
+}
+[data-theme='dark'] .peach {
+  color: #cda275;
+}
+[data-theme='dark'] .lavender {
+  color: #b7a1c8;
+}
+[data-theme='dark'] .sage {
+  color: #a5bf92;
+}
+[data-theme='dark'] .butter {
+  color: #c9bf84;
+}
+[data-theme='dark'] .pink {
+  color: #c99aad;
+}
+[data-theme='dark'] .blue {
+  color: #97b8c0;
+}
+[data-theme='dark'] .quest-badge {
+  background: #d2b2871c;
+  border-color: #b0926630;
+  color: #ceb38c;
+}
+[data-theme='dark'] .quest-badge.completed {
+  background: #526a3544;
+  border-color: #647c4133;
+  color: #bed496;
+}
+[data-theme='dark'] .quest-arrow {
+  background: #30422b;
+}
+[data-theme='dark'] .quest-card-footer > span:first-child,
+[data-theme='dark'] .journey-count,
+[data-theme='dark'] .view-all-button {
+  color: #94aa7c;
+}
+[data-theme='dark'] .journey-view-controls {
+  background: #243224;
+  border-color: #36472f;
+}
+[data-theme='dark'] .journey-view-controls > button {
+  color: #96a584;
+}
+[data-theme='dark'] .journey-view-controls > button[aria-pressed='true'] {
+  background: #3b4d31;
+  color: #d1dfbb;
+}
+[data-theme='dark'] .quest-filters > button {
+  color: #93a680;
+}
+[data-theme='dark'] .quest-filters > button.active {
+  background: #30432a;
+  color: #c0d4a6;
+}
+[data-theme='dark'] .quest-filters > button:hover {
+  background: #293a26;
+}
+[data-theme='dark'] .mini-playground .tiny-note {
+  background: #304229;
+  color: #b1c494;
+}
+[data-theme='dark'] .text-button {
+  color: #a6bb8c;
+}
+[data-theme='dark'] .streak-number {
+  color: #c7d8ae;
+}
+[data-theme='dark'] .day-circle {
+  background: #2b3a26;
+  border-color: #3c4d32;
+}
+[data-theme='dark'] .day-circle.today {
+  background: #534b2f;
+  border-color: #9d8960;
+  outline-color: #24301e;
+}
+[data-theme='dark'] .day-circle.played {
+  background: #627845;
+  border-color: #7c9857;
+  color: #d9e7c5;
+}
+[data-theme='dark'] .daily-card {
+  background: #302b3b;
+  border-color: #494057;
+}
+[data-theme='dark'] .daily-card h2 {
+  color: #d4c6e0;
+}
+[data-theme='dark'] .daily-card > p,
+[data-theme='dark'] .daily-meta,
+[data-theme='dark'] .daily-button {
+  color: #b9a5cc;
+}
+[data-theme='dark'] .daily-button {
+  background: #3b324a;
+  border-color: #514160;
+}
+[data-theme='dark'] .daily-illustration > svg {
+  background: #42374f;
+  border-color: #514460;
+  color: #b9a0d0;
+}
+[data-theme='dark'] .daily-top .tag {
+  border-color: #5d4d6b;
+  color: #b9a2cb;
+}
+[data-theme='dark'] .quote-card {
+  color: #9bac87;
+}
+[data-theme='dark'] .quote-decoration > span {
+  background: #455a37;
+}
+[data-theme='dark'] .piano {
+  border-color: #4b5a3e;
+  box-shadow: 0 4px 0 #172213;
+}
+[data-theme='dark'] .white-key {
+  background: linear-gradient(90deg, #d9dfc9, #cfd8ba 85%, #bdc9a4);
+  border-color: #a9b693;
+}
+[data-theme='dark'] .white-key > span {
+  color: #536b3a;
+}
+[data-theme='dark'] .white-key small {
+  color: #768a5e;
+}
+[data-theme='dark'] .white-key:hover,
+[data-theme='dark'] .white-key.pressed {
+  background: #afc78a;
+}
+[data-theme='dark'] .playground-tabs {
+  border-color: var(--line);
+}
+[data-theme='dark'] .playground-tabs button {
+  color: #9db188;
+}
+[data-theme='dark'] .playground-tabs button.active {
+  background: #31442a;
+  color: #c4d5ac;
+}
+[data-theme='dark'] .new-pill {
+  background: #3d492b;
+  border-color: #697846;
+  color: #b9cb93;
+}
+[data-theme='dark'] .sound-select,
+[data-theme='dark'] .note-readout {
+  background: #273526;
+  border-color: #3a4c30;
+  color: #b8c99f;
+}
+[data-theme='dark'] .sound-select select {
+  color: #b7c99e;
+}
+[data-theme='dark'] .try-card,
+[data-theme='dark'] .level-panel,
+[data-theme='dark'] .progress-empty {
+  background: #283622;
+  border-color: #435334;
+}
+[data-theme='dark'] .try-card h3,
+[data-theme='dark'] .level-panel h3,
+[data-theme='dark'] .progress-empty h3 {
+  color: #b8c99d;
+}
+[data-theme='dark'] .beat-step {
+  background: #2c3d26;
+  border-color: #405833;
+}
+[data-theme='dark'] .beat-step.on {
+  background: #b78d64;
+  border-color: #b78d64;
+}
+[data-theme='dark'] .track-1 .beat-step.on {
+  background: #8a9e6a;
+}
+[data-theme='dark'] .track-2 .beat-step.on {
+  background: #a18cb4;
+}
+[data-theme='dark'] .badge-card {
+  background: #202d20;
+  border-color: #3c4e30;
+}
+[data-theme='dark'] .badge-symbol {
+  background: #2d3b25;
+  border-color: #4b5c39;
+  color: #7e9761;
+}
+[data-theme='dark'] .badge-card h3 {
+  color: #a6bb8c;
+}
+[data-theme='dark'] .badge-card.unlocked {
+  background: #353723;
+  border-color: #5e5b32;
+}
+[data-theme='dark'] .badge-card.unlocked .badge-symbol {
+  background: #595732;
+  border-color: #7e7445;
+  color: #d0bf80;
+}
+[data-theme='dark'] .badge-card.unlocked h3 {
+  color: #d1c28a;
+}
+[data-theme='dark'] .progress-track {
+  background: #36482c;
+}
+[data-theme='dark'] .dialog {
+  background: #1b281e;
+  border-color: #3a4e2e;
+  color: var(--ink);
+}
+[data-theme='dark'] .dialog-close {
+  background: #31432a;
+  color: #b4ca98;
+}
+[data-theme='dark'] .quest-dialog.quest-focus {
+  background: #17221a;
+}
+[data-theme='dark'] .quest-atmosphere > span:first-child {
+  background: #6c8b4333;
+  opacity: 1;
+}
+[data-theme='dark'] .quest-atmosphere > span:nth-child(2) {
+  background: #94734d22;
+  opacity: 1;
+}
+[data-theme='dark'] .quest-atmosphere > span:nth-child(3) {
+  border-color: #6f8b4922;
+}
+[data-theme='dark'] .lesson-tip,
+[data-theme='dark'] .help-storage {
+  background: #2a3a24;
+  border-color: #435a33;
+  color: #b7cb9b;
+}
+[data-theme='dark'] .lesson-tip p,
+[data-theme='dark'] .help-storage p {
+  color: #afc195;
+}
+[data-theme='dark'] .answer-button {
+  background: #23331f;
+  border-color: #445a32;
+  color: #c2d7aa;
+}
+[data-theme='dark'] .answer-button:hover:not(:disabled) {
+  background: #334929;
+  border-color: #88a45f;
+}
+[data-theme='dark'] .listen-button {
+  background: #304328;
+  border-color: #4b6437;
+  color: #c0d5a3;
+}
+[data-theme='dark'] .quest-round-waypoints > span {
+  background: #263720;
+  border-color: #455c33;
+  color: #829c65;
+}
+[data-theme='dark'] .quest-round-waypoints > span.current {
+  background: #526c36;
+  color: #d9e8c6;
+  box-shadow: 0 0 0 4px #789b4322;
+}
+[data-theme='dark'] .quest-round-waypoints > span:after {
+  background: #455c33;
+}
+[data-theme='dark'] .game-feedback {
+  background: #304425;
+  border-color: #516e38;
+}
+[data-theme='dark'] .game-feedback p,
+[data-theme='dark'] .game-feedback strong {
+  color: #c2d6aa;
+}
+[data-theme='dark'] .feedback-icon {
+  background: #4d6831;
+  border-color: #749049;
+  color: #cfdfb6;
+}
+[data-theme='dark'] .game-feedback.learning {
+  background: #483e23;
+  border-color: #756035;
+}
+[data-theme='dark'] .game-feedback.learning p,
+[data-theme='dark'] .game-feedback.learning strong {
+  color: #d7c58d;
+}
+[data-theme='dark'] .game-feedback.learning .feedback-icon {
+  background: #65562f;
+  border-color: #93804b;
+  color: #e3d298;
+}
+[data-theme='dark'] .result-stats {
+  background: #293a21;
+  border-color: #4b5c32;
+}
+[data-theme='dark'] .result-stats strong {
+  color: #bbd291;
+}
+[data-theme='dark'] .quest-focus .result-trophy {
+  background: #59502a;
+  border-color: #8a7743;
+  box-shadow:
+    0 0 0 12px #393c23,
+    0 0 0 35px #4b522515;
+  color: #dbc783;
+}
+[data-theme='dark'] .beat-dots > span {
+  background: #313b26;
+  border-color: #475233;
+  color: #839461;
+}
+[data-theme='dark'] .beat-dots > span.active {
+  background: #8c8150;
+  border-color: #a69a60;
+  color: #f8f0d4;
+}
+[data-theme='dark'] .beat-dots > span.active.your-turn {
+  background: #8ca95f;
+  color: #f5f9e8;
+}
+[data-theme='dark'] .tap-button {
+  background: #454326;
+  border-color: #5a5731;
+  color: #c1b782;
+  box-shadow: 0 0 0 1px #7f7941;
+}
+[data-theme='dark'] .tap-button.your-turn {
+  background: #809b54;
+  border-color: #526d33;
+  color: #ecf7dc;
+}
+[data-theme='dark'] .theme-choice {
+  background: #23311f;
+}
+[data-theme='dark'] .switch {
+  background: #35472c;
+  border-color: #526742;
+}
+[data-theme='dark'] .source-note,
+[data-theme='dark'] .page-footer {
+  color: #859a72;
+}
+[data-theme='dark'] .source-note a {
+  color: #b1c891;
+}
+[data-theme='dark'] .tag {
+  border-color: #667b4d;
+  color: #adbf95;
+}
+@keyframes float-note {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -6px;
+  }
+}
+@keyframes breathe {
+  50% {
+    box-shadow:
+      0 0 0 5px #b5cc8210,
+      0 0 16px #b5cc8255;
+  }
+}
+@keyframes focus-in {
+  from {
+    opacity: 0;
+    transform: scale(1.012);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media (min-width: 1650px) {
+  .hero-card {
+    min-height: 374px;
+  }
+  .hero-card h2 {
+    font-size: 48px;
+  }
+  .hero-card p {
+    font-size: 13px;
+  }
+  .hero-flow-button {
+    font-size: 11px;
+  }
+  .hero-tag {
+    font-size: 9px;
+  }
+  .hero-footnote {
+    font-size: 10px;
+  }
+  .soundscape-room {
+    grid-template-columns: minmax(0, 1fr) 315px;
+  }
+  .soundscape-universe {
+    height: 350px;
+  }
+  .soundscape-title h2 {
+    font-size: 49px;
+  }
+  .soundscape-title p {
+    font-size: 12px;
+  }
+  .soundscape-main {
+    padding: 27px 35px 30px;
+  }
+  .mixer-heading .eyebrow {
+    font-size: 7px;
+  }
+  .mixer-heading h3 {
+    font-size: 25px;
+  }
+  .mood-options > button > span:nth-child(2) {
+    font-size: 12px;
+  }
+  .mood-options small {
+    font-size: 8px;
+  }
+  .mixer-layer strong {
+    font-size: 11px;
+  }
+  .mixer-layer small {
+    font-size: 8px;
+  }
+  .layer-level {
+    font-size: 9px;
+  }
+  .mixer-layer > div > button {
+    height: 33px;
+    width: 33px;
+  }
+  .mixer-layer > input {
+    margin-left: 41px;
+    width: calc(100% - 41px);
+  }
+  .mixer-note {
+    font-size: 8px;
+  }
+  .mixer-layers {
+    gap: 21px;
+  }
+  .room-tempo > span:first-child {
+    font-size: 11px;
+  }
+  .room-tempo > span:last-child > small {
+    font-size: 8px;
+  }
+  .save-room {
+    font-size: 12px;
+    min-height: 43px;
+  }
+  .pad-caption {
+    font-size: 9px;
+  }
+  .melody-pad {
+    height: 75px;
+  }
+  .room-badge {
+    font-size: 8px;
+  }
+  .map-stops strong {
+    font-size: 17px;
+  }
+  .map-stops small {
+    font-size: 9px;
+  }
+  .map-stops em {
+    font-size: 6px;
+  }
+  .map-island {
+    width: 91px;
+    height: 77px;
+  }
+  .map-island .quest-art {
+    width: 77px;
+    height: 59px;
+  }
+  .map-caption {
+    font-size: 10px;
+  }
+  .map-caption > span {
+    font-size: 9px;
+  }
+  .map-heading > span:first-child {
+    font-size: 9px;
+  }
+  .map-stops {
+    grid-template-rows: repeat(2, 187px);
+  }
+}
+@media (max-width: 1250px) {
+  .topbar-actions {
+    gap: 8px;
+  }
+  .topbar-left > span {
+    font-size: 8px;
+  }
+  .flow-entry {
+    font-size: 8px;
+    padding: 7px 9px;
+    gap: 6px;
+  }
+  .flow-entry > svg {
+    width: 14px;
+  }
+  .topbar-actions > .icon-button {
+    width: 27px;
+    height: 27px;
+  }
+  .sound-toggle {
+    font-size: 10px;
+  }
+  .hero-card h2 {
+    font-size: 35px;
+  }
+  .hero-copy {
+    width: 65%;
+    padding-left: 25px;
+  }
+  .hero-card p {
+    font-size: 11px;
+  }
+  .hero-card .hero-art {
+    width: 48%;
+    right: -18px;
+    height: 88%;
+    top: 15px;
+  }
+  .hero-sound-label {
+    right: 15px;
+    bottom: 19px;
+    padding: 8px 10px;
+    gap: 7px;
+  }
+  .hero-sound-label strong {
+    font-size: 10px;
+  }
+  .hero-sound-label > span:nth-child(2) {
+    font-size: 4px;
+  }
+  .hero-flow-button {
+    font-size: 8px;
+  }
+  .hero-tag {
+    font-size: 6px;
+  }
+  .hero-footnote {
+    font-size: 7px;
+  }
+  .soundscape-room {
+    grid-template-columns: minmax(0, 1fr) 252px;
+    min-height: 670px;
+  }
+  .soundscape-mixer {
+    padding: 26px 18px;
+  }
+  .soundscape-main {
+    padding: 19px 20px 25px;
+  }
+  .soundscape-title h2 {
+    font-size: 35px;
+  }
+  .soundscape-title p {
+    font-size: 8px;
+  }
+  .soundscape-universe {
+    height: 280px;
+  }
+  .mixer-heading h3 {
+    font-size: 20px;
+  }
+  .room-key {
+    display: none;
+  }
+  .soundscape-transport {
+    gap: 18px;
+  }
+  .bar-indicator {
+    gap: 3px;
+  }
+  .soundscape-pads {
+    gap: 5px;
+  }
+  .melody-pad {
+    height: 58px;
+  }
+  .melody-pad > span {
+    font-size: 17px;
+  }
+  .melody-pad kbd {
+    font-size: 6px;
+  }
+  .pad-caption {
+    font-size: 6px;
+  }
+  .soundscape-title .eyebrow {
+    font-size: 5px;
+    letter-spacing: 1.25px;
+  }
+  .room-badge {
+    font-size: 5px;
+    letter-spacing: 1px;
+  }
+  .orbit-label {
+    font-size: 11px;
+    gap: 6px;
+  }
+  .orbit-label.left {
+    left: 0;
+  }
+  .orbit-label.right {
+    right: 0;
+  }
+  .soundscape-mixer .mixer-note {
+    font-size: 5px;
+  }
+  .is-focused .soundscape-main {
+    padding: 25px 32px 35px;
+  }
+  .is-focused .soundscape-title h2 {
+    font-size: 46px;
+  }
+  .is-focused .soundscape-universe {
+    height: 43vh;
+  }
+  .is-focused .soundscape-pads {
+    gap: 9px;
+  }
+  .is-focused .melody-pad {
+    height: 75px;
+  }
+}
+@media (max-width: 1050px) {
+  .flow-entry > span:first-of-type {
+    display: none;
+  }
+  .flow-entry {
+    padding: 7px;
+    border-radius: 50%;
+    width: 29px;
+    height: 29px;
+    justify-content: center;
+  }
+  .flow-live-dot {
+    display: none;
+  }
+  .hero-copy {
+    width: 68%;
+    padding-left: 23px;
+  }
+  .hero-card h2 {
+    font-size: 32px;
+  }
+  .hero-card p {
+    font-size: 10px;
+  }
+  .hero-flow-button {
+    font-size: 7px;
+  }
+  .hero-card .hero-art {
+    width: 45%;
+    right: -18px;
+    top: 19px;
+  }
+  .hero-sound-label {
+    bottom: 18px;
+    right: 12px;
+    padding: 8px;
+  }
+  .hero-sound-label strong {
+    font-size: 9px;
+  }
+  .hero-sound-label > svg {
+    width: 15px;
+  }
+  .journey-view-controls > button {
+    font-size: 8px;
+    padding: 6px 8px;
+  }
+  .soundscape-room {
+    grid-template-columns: minmax(0, 1fr) 229px;
+    min-height: 670px;
+  }
+  .soundscape-main {
+    padding: 18px 16px 24px;
+  }
+  .soundscape-mixer {
+    padding: 25px 16px;
+  }
+  .soundscape-top .room-badge {
+    font-size: 4.5px;
+    letter-spacing: 0.7px;
+  }
+  .soundscape-title h2 {
+    font-size: 32px;
+  }
+  .soundscape-title p {
+    font-size: 7px;
+    max-width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .soundscape-universe {
+    height: 270px;
+  }
+  .orbit-label {
+    display: none;
+  }
+  .room-icon {
+    height: 25px;
+    width: 25px;
+  }
+  .room-icon > svg {
+    width: 15px;
+  }
+  .melody-pad {
+    height: 52px;
+    border-radius: 5px;
+  }
+  .melody-pad > span {
+    font-size: 15px;
+  }
+  .melody-pad kbd {
+    font-size: 5px;
+  }
+  .soundscape-pads {
+    gap: 4px;
+  }
+  .pad-caption {
+    font-size: 5px;
+    gap: 4px;
+  }
+  .mood-options > button > span:nth-child(2) {
+    font-size: 9px;
+  }
+  .mood-options small {
+    font-size: 5.5px;
+  }
+  .mood-symbol {
+    width: 29px;
+    height: 29px;
+  }
+  .mood-options > button {
+    gap: 8px;
+  }
+  .soundscape-room.is-focused {
+    grid-template-columns: minmax(0, 1fr) 270px;
+  }
+  .is-focused .soundscape-mixer {
+    padding: 30px 23px;
+  }
+  .is-focused .soundscape-main {
+    padding: 24px;
+  }
+  .is-focused .room-badge {
+    font-size: 7px;
+  }
+  .is-focused .soundscape-title h2 {
+    font-size: 46px;
+  }
+  .is-focused .soundscape-title p {
+    font-size: 10px;
+    max-width: 340px;
+  }
+  .is-focused .pad-caption {
+    font-size: 7px;
+  }
+  .is-focused .melody-pad {
+    height: 68px;
+  }
+  .is-focused .melody-pad > span {
+    font-size: 20px;
+  }
+  .is-focused .melody-pad kbd {
+    font-size: 7px;
+  }
+  .map-stops strong {
+    font-size: 12px;
+  }
+  .map-island {
+    width: 62px;
+    height: 58px;
+  }
+  .map-island .quest-art {
+    width: 54px;
+    height: 43px;
+  }
+  .map-stops em {
+    font-size: 3.5px;
+    letter-spacing: 0.6px;
+  }
+  .map-stops small {
+    font-size: 6px;
+  }
+  .map-heading > span:first-child {
+    font-size: 5px;
+    letter-spacing: 1px;
+  }
+  .map-stops {
+    grid-template-rows: repeat(2, 155px);
+  }
+  .map-world {
+    min-height: 325px;
+  }
+  .map-caption {
+    font-size: 7px;
+  }
+  .map-caption > span {
+    font-size: 6px;
+  }
+  .quest-focus > .dialog-close {
+    right: 22px;
+    top: 23px;
+  }
+  .quest-focus .quest-modal-top {
+    padding-right: 38px;
+  }
+}
+@media (max-width: 850px) {
+  .topbar-actions {
+    gap: 6px;
+  }
+  .topbar-actions .experience-toggle {
+    display: none;
+  }
+  .topbar-left > span {
+    font-size: 7px;
+  }
+  .hero-card h2 {
+    font-size: 34px;
+  }
+  .hero-card .hero-art {
+    width: 49%;
+    top: 6px;
+    right: -13px;
+  }
+  .hero-copy {
+    width: 68%;
+  }
+  .hero-card {
+    min-height: 325px;
+  }
+  .hero-flow-button {
+    font-size: 8px;
+  }
+  .hero-sound-label {
+    right: 18px;
+    bottom: 17px;
+  }
+  .soundscape-room {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .soundscape-main {
+    padding: 23px 25px 25px;
+  }
+  .soundscape-title h2 {
+    font-size: 39px;
+  }
+  .soundscape-title p {
+    font-size: 10px;
+    max-width: none;
+  }
+  .soundscape-title .eyebrow {
+    font-size: 6px;
+  }
+  .soundscape-top .room-badge {
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+  .room-icon {
+    width: 28px;
+    height: 28px;
+  }
+  .soundscape-universe {
+    height: 310px;
+  }
+  .soundscape-pads {
+    gap: 7px;
+    margin-top: 26px;
+  }
+  .melody-pad {
+    height: 67px;
+  }
+  .melody-pad > span {
+    font-size: 20px;
+  }
+  .melody-pad kbd {
+    font-size: 8px;
+  }
+  .pad-caption {
+    font-size: 7px;
+  }
+  .soundscape-mixer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+    padding: 26px 23px;
+    border-left: 0;
+    border-top: 1px solid #8b9c6c33;
+  }
+  .soundscape-mixer > .mixer-heading:first-child {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .mood-options {
+    grid-column: 1;
+    grid-row: 2/5;
+    margin-top: 17px;
+    gap: 9px;
+  }
+  .soundscape-mixer > .mixer-heading:nth-of-type(3) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .mixer-divider {
+    display: none;
+  }
+  .mixer-layers {
+    grid-column: 2;
+    grid-row: 2/5;
+    margin-top: 21px;
+    gap: 17px;
+  }
+  .mixer-heading h3 {
+    font-size: 21px;
+  }
+  .mixer-heading .eyebrow {
+    font-size: 6px;
+  }
+  .mood-options > button > span:nth-child(2) {
+    font-size: 10px;
+  }
+  .mood-options small {
+    font-size: 6px;
+  }
+  .mixer-layer strong {
+    font-size: 10px;
+  }
+  .mixer-layer small {
+    font-size: 6px;
+  }
+  .room-tempo {
+    grid-column: 1;
+    grid-row: 5;
+    margin-top: 23px;
+  }
+  .save-room {
+    grid-column: 2;
+    grid-row: 5;
+    align-self: center;
+    margin-top: 28px;
+  }
+  .mixer-note {
+    grid-column: 1/-1;
+    grid-row: 6;
+    margin-top: 23px;
+    font-size: 7px !important;
+  }
+  .soundscape-room.is-focused {
+    grid-template-columns: 1fr;
+    align-content: start;
+  }
+  .is-focused .soundscape-main {
+    min-height: auto;
+    padding: 26px 32px 28px;
+  }
+  .is-focused .soundscape-mixer {
+    min-height: 0;
+    padding: 28px 32px;
+  }
+  .is-focused .soundscape-universe {
+    height: 42vh;
+  }
+  .is-focused .soundscape-title h2 {
+    font-size: 47px;
+  }
+  .is-focused .room-badge {
+    font-size: 7px;
+  }
+  .is-focused .soundscape-title p {
+    font-size: 11px;
+    max-width: none;
+  }
+  .is-focused .soundscape-pads {
+    gap: 10px;
+  }
+  .is-focused .melody-pad {
+    height: 75px;
+  }
+  .is-focused .pad-caption {
+    font-size: 8px;
+  }
+  .quest-focus .quest-play h2 {
+    font-size: 33px;
+  }
+  .quest-focus .quest-intro h2 {
+    font-size: 40px;
+  }
+  .map-stops strong {
+    font-size: 13px;
+  }
+  .map-island {
+    width: 73px;
+    height: 65px;
+  }
+  .map-island .quest-art {
+    width: 63px;
+    height: 48px;
+  }
+  .map-heading > span:first-child {
+    font-size: 6px;
+  }
+  .map-stops small {
+    font-size: 7px;
+  }
+  .map-stops em {
+    font-size: 4px;
+  }
+  .map-caption {
+    font-size: 8px;
+  }
+  .map-caption > span {
+    font-size: 7px;
+  }
+}
+@media (max-width: 650px) {
+  .topbar {
+    padding-left: 17px;
+    padding-right: 17px;
+    height: 65px;
+  }
+  .topbar-left > span {
+    font-size: 0;
+    gap: 0;
+  }
+  .topbar-music {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    letter-spacing: -0.5px;
+    font-style: normal;
+    margin-left: 2px;
+  }
+  .topbar-left > span > svg {
+    display: none;
+  }
+  .topbar-actions {
+    gap: 9px;
+  }
+  .topbar-actions .experience-toggle {
+    display: inline-flex;
+    width: 27px;
+    height: 27px;
+  }
+  .topbar-actions .flow-entry {
+    display: none;
+  }
+  .topbar-actions > .icon-button {
+    width: 26px;
+    height: 26px;
+  }
+  .topbar-actions .avatar {
+    display: none;
+  }
+  .sound-toggle > span {
+    display: none;
+  }
+  .sound-toggle > svg {
+    width: 18px;
+    height: 18px;
+  }
+  .topbar-actions .theme-toggle > svg {
+    width: 18px;
+    height: 18px;
+  }
+  .mobile-menu {
+    margin-right: 9px;
+  }
+  .main-content {
+    padding-top: 28px;
+  }
+  .hero-card {
+    min-height: 334px;
+    background:
+      radial-gradient(ellipse at 80% 60%, #e7dfc4 0, transparent 60%),
+      linear-gradient(120deg, #f1e9dc, #f1eddf);
+    border-radius: 15px;
+  }
+  .hero-copy {
+    width: 77%;
+    padding: 29px 0 27px 23px;
+  }
+  .hero-card h2 {
+    font-size: 33px;
+    line-height: 1.17;
+    letter-spacing: -0.95px;
+    margin-top: 17px;
+  }
+  .hero-tag {
+    font-size: 5.7px;
+    letter-spacing: 0.7px;
+  }
+  .hero-card p {
+    font-size: 11px;
+    line-height: 1.9;
+    margin-top: 15px;
+  }
+  .hero-card .button {
+    margin-top: 21px;
+    min-height: 41px;
+    font-size: 11px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .hero-card .hero-art {
+    top: 68px;
+    right: -51px;
+    width: 55%;
+    height: 73%;
+    filter: drop-shadow(0 12px 10px #43503b18);
+  }
+  .hero-flow-button {
+    font-size: 8px;
+    margin-top: 17px;
+    gap: 5px;
+  }
+  .hero-flow-button > svg:first-child {
+    width: 13px;
+  }
+  .hero-flow-button > svg:last-child {
+    width: 11px;
+  }
+  .hero-footnote {
+    font-size: 6px;
+    margin-top: 15px;
+    gap: 4px;
+  }
+  .hero-sound-label {
+    display: none;
+  }
+  .hero-orbit-lines > span {
+    width: 250px;
+    height: 250px;
+    right: -90px;
+    top: 70px;
+  }
+  .hero-orbit-lines > span:nth-child(2) {
+    width: 285px;
+    height: 285px;
+    right: -95px;
+    top: 53px;
+  }
+  .little-promises {
+    font-size: 8px;
+    gap: 13px;
+    min-height: 51px;
+  }
+  .journey-view-controls {
+    margin-top: 20px;
+  }
+  .journey-view-controls > button {
+    font-size: 10px;
+    padding: 7px 11px;
+    gap: 6px;
+  }
+  .quest-filters {
+    margin-top: 17px;
+    margin-bottom: 17px;
+  }
+  .quest-card {
+    border-radius: 11px;
+  }
+  .quest-card h3 {
+    font-size: 17px;
+  }
+  .quest-card p {
+    font-size: 11px;
+  }
+  .quest-card-art {
+    min-height: 132px;
+  }
+  .quest-card-copy {
+    padding-top: 20px;
+  }
+  .quest-card-footer > span:first-child {
+    font-size: 10px;
+  }
+  .quest-card .quest-art {
+    width: 90px;
+    height: 72px;
+  }
+  .quest-card .quest-badge {
+    font-size: 4.5px;
+  }
+  .mini-playground {
+    padding-bottom: 23px;
+  }
+  .daily-illustration > svg {
+    animation-duration: 9s;
+  }
+  .journey-map {
+    padding: 19px 16px 18px;
+    margin-top: 21px;
+  }
+  .map-heading > span:first-child {
+    font-size: 6px;
+    letter-spacing: 0.75px;
+    gap: 5px;
+  }
+  .map-heading > span:first-child > svg {
+    width: 13px;
+  }
+  .map-heading > span:last-child {
+    font-size: 9px;
+  }
+  .map-world {
+    min-height: 585px;
+  }
+  .map-trail {
+    display: none;
+  }
+  .map-stops {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, 173px);
+    padding-top: 22px;
+    gap: 17px 11px;
+  }
+  .map-stops > li:nth-child(n) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .map-stops > li {
+    position: relative;
+  }
+  .map-stops > li:after {
+    content: '';
+    position: absolute;
+    top: 41px;
+    right: -26px;
+    width: 38px;
+    border-top: 1px dashed #7a986144;
+    pointer-events: none;
+  }
+  .map-stops > li:nth-child(2n):after {
+    display: none;
+  }
+  .map-island {
+    height: 78px;
+    width: 86px;
+  }
+  .map-island .quest-art {
+    height: 57px;
+    width: 76px;
+  }
+  .map-stops strong {
+    font-size: 17px;
+    margin-top: 15px;
+  }
+  .map-stops small {
+    font-size: 9px;
+    margin-top: 7px;
+  }
+  .map-stop-number {
+    height: 23px;
+    width: 23px;
+    font-size: 8px;
+  }
+  .map-stops em {
+    font-size: 5px;
+    letter-spacing: 0.75px;
+    gap: 4px;
+    margin-top: 9px;
+  }
+  .map-caption {
+    font-size: 10px;
+    line-height: 1.9;
+    margin-top: 15px;
+  }
+  .map-caption > span {
+    font-size: 9px;
+    margin-top: 3px;
+  }
+  .playground-tabs {
+    gap: 0;
+    justify-content: space-between;
+    margin-top: 4px;
+    align-items: center;
+  }
+  .playground-tabs button {
+    font-size: 10px;
+    padding: 9px 8px;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .playground-tabs button > svg {
+    width: 16px;
+    height: 16px;
+  }
+  .playground-tabs .new-pill {
+    font-size: 5px;
+    padding: 2px 3px;
+    margin-left: 1px;
+  }
+  .piano-resonance {
+    height: 39px;
+    margin: 10px 0 -14px;
+  }
+  .note-readout {
+    margin-top: 21px;
+  }
+  .soundscape-room {
+    border-radius: 14px;
+  }
+  .soundscape-main {
+    padding: 20px 17px 24px;
+  }
+  .soundscape-top .room-badge {
+    font-size: 5.5px;
+    letter-spacing: 0.8px;
+  }
+  .room-icon {
+    width: 28px;
+    height: 28px;
+  }
+  .room-icon > svg {
+    width: 16px;
+  }
+  .soundscape-title {
+    margin-top: 25px;
+  }
+  .soundscape-title .eyebrow {
+    font-size: 5px;
+    letter-spacing: 1.3px;
+  }
+  .soundscape-title h2 {
+    font-size: 36px;
+    letter-spacing: -1.1px;
+    margin-top: 12px;
+  }
+  .soundscape-title p {
+    font-size: 10px;
+    max-width: 245px;
+    line-height: 1.9;
+    margin: 9px auto 0;
+  }
+  .soundscape-universe {
+    height: 280px;
+    margin-top: 1px;
+  }
+  .universe-center > span {
+    font-size: 7px;
+    letter-spacing: 1.5px;
+  }
+  .universe-center strong {
+    font-size: 51px;
+  }
+  .universe-center > small {
+    font-size: 3.5px;
+    letter-spacing: 1.3px;
+  }
+  .soundscape-transport {
+    margin-top: 0;
+    gap: 16px;
+  }
+  .start-room {
+    min-height: 44px;
+    padding: 11px 17px;
+    font-size: 12px;
+    gap: 9px;
+  }
+  .start-room > svg {
+    width: 15px;
+  }
+  .bar-indicator {
+    gap: 4px;
+  }
+  .bar-indicator > i {
+    width: 3px;
+    height: 11px;
+  }
+  .soundscape-pads {
+    gap: 5px;
+    margin-top: 27px;
+  }
+  .melody-pad {
+    height: 61px;
+    border-radius: 6px;
+  }
+  .melody-pad > span {
+    font-size: 18px;
+  }
+  .melody-pad small {
+    font-size: 7px;
+  }
+  .melody-pad kbd {
+    font-size: 7px;
+    margin-top: 7px;
+  }
+  .pad-caption {
+    font-size: 7px;
+    gap: 5px;
+    margin-top: 13px;
+    text-align: center;
+  }
+  .pad-caption > svg {
+    width: 10px;
+  }
+  .soundscape-mixer {
+    padding: 24px 20px;
+    gap: 0 20px;
+  }
+  .mixer-heading .eyebrow {
+    font-size: 5px;
+    letter-spacing: 1.1px;
+  }
+  .mixer-heading h3 {
+    font-size: 19px;
+    letter-spacing: -0.5px;
+    margin-top: 8px;
+  }
+  .mood-options {
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .mood-options > button {
+    min-height: 50px;
+    gap: 6px;
+    padding: 6px;
+  }
+  .mood-symbol {
+    width: 25px;
+    height: 28px;
+    border-radius: 5px;
+  }
+  .mood-symbol > svg {
+    width: 15px;
+    height: 15px;
+  }
+  .mood-options > button > span:nth-child(2) {
+    font-size: 8px;
+    gap: 5px;
+  }
+  .mood-options small {
+    font-size: 5px;
+    letter-spacing: -0.1px;
+  }
+  .mood-options > button > svg {
+    width: 10px;
+    height: 10px;
+  }
+  .mixer-layers {
+    gap: 17px;
+    margin-top: 23px;
+  }
+  .mixer-layer > div {
+    gap: 6px;
+  }
+  .mixer-layer > div > button {
+    width: 24px;
+    height: 26px;
+    border-radius: 5px;
+  }
+  .mixer-layer > div > button > svg {
+    width: 14px;
+    height: 14px;
+  }
+  .mixer-layer strong {
+    font-size: 8px;
+    line-height: 1.4;
+  }
+  .mixer-layer small {
+    font-size: 4.8px;
+    line-height: 1.4;
+  }
+  .layer-level {
+    font-size: 6px;
+    min-width: 21px;
+  }
+  .mixer-layer > input {
+    width: calc(100% - 30px);
+    margin-left: 30px;
+    margin-top: 10px;
+    height: 3px;
+  }
+  .room-tempo {
+    margin-top: 25px;
+  }
+  .room-tempo > span:first-child {
+    font-size: 8px;
+    align-items: center;
+  }
+  .room-tempo strong {
+    font-size: 19px;
+  }
+  .room-tempo strong > small {
+    font-size: 5px;
+  }
+  .room-tempo > span:last-child > small {
+    font-size: 5px;
+  }
+  .room-tempo > input {
+    height: 4px;
+  }
+  .save-room {
+    font-size: 9px;
+    gap: 6px;
+    padding: 11px 8px;
+    margin-top: 27px;
+  }
+  .save-room > svg {
+    width: 14px;
+  }
+  .soundscape-mixer .mixer-note {
+    font-size: 6px !important;
+    gap: 5px;
+    margin-top: 25px;
+  }
+  .soundscape-room.is-focused {
+    grid-template-columns: 1fr;
+  }
+  .is-focused .soundscape-main {
+    padding: 22px 20px 26px;
+    min-height: auto;
+  }
+  .is-focused .soundscape-mixer {
+    padding: 26px 22px;
+    min-height: 0;
+  }
+  .is-focused .room-badge {
+    font-size: 6px;
+  }
+  .is-focused .soundscape-title {
+    margin-top: 25px;
+  }
+  .is-focused .soundscape-title h2 {
+    font-size: 43px;
+  }
+  .is-focused .soundscape-title p {
+    font-size: 11px;
+    max-width: 285px;
+  }
+  .is-focused .soundscape-universe {
+    height: 38vh;
+    min-height: 255px;
+    max-height: 380px;
+  }
+  .is-focused .universe-center strong {
+    font-size: 56px;
+  }
+  .is-focused .universe-center > span {
+    font-size: 8px;
+  }
+  .is-focused .universe-center > small {
+    font-size: 4px;
+  }
+  .is-focused .soundscape-pads {
+    gap: 6px;
+    margin-top: 28px;
+  }
+  .is-focused .melody-pad {
+    height: 67px;
+  }
+  .is-focused .melody-pad > span {
+    font-size: 20px;
+  }
+  .is-focused .melody-pad kbd {
+    font-size: 8px;
+  }
+  .is-focused .pad-caption {
+    font-size: 7px;
+  }
+  .room-guide {
+    padding: 14px 12px;
+    gap: 9px;
+  }
+  .room-guide > svg {
+    width: 19px;
+  }
+  .room-guide strong {
+    font-size: 19px;
+  }
+  .room-guide p {
+    font-size: 11px;
+    line-height: 1.9;
+  }
+  .room-unmute {
+    font-size: 8px;
+    gap: 5px;
+    line-height: 1.7;
+  }
+  .quest-dialog.quest-focus {
+    padding: 23px 22px 29px;
+    animation: fade-in 0.25s;
+  }
+  .quest-focus > .dialog-close {
+    right: 18px;
+    top: 18px;
+    height: 30px;
+    width: 30px;
+  }
+  .quest-focus .quest-modal-top {
+    padding-right: 31px;
+    padding-bottom: 17px;
+  }
+  .quest-focus .quest-modal-top .eyebrow {
+    font-size: 7px;
+    letter-spacing: 0.85px;
+    line-height: 1.7;
+  }
+  .quest-focus .quest-duration {
+    font-size: 8px;
+  }
+  .quest-focus .quest-focus-toggle {
+    font-size: 8px;
+    margin-top: 17px;
+    gap: 5px;
+  }
+  .quest-focus-toggle > svg {
+    height: 13px;
+    width: 13px;
+  }
+  .quest-focus .quest-intro {
+    padding-top: 34px;
+    max-width: 400px;
+  }
+  .quest-focus .quest-intro-art {
+    width: 86px;
+    height: 78px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+  }
+  .quest-focus .quest-intro-art .quest-art {
+    width: 76px;
+    height: 61px;
+  }
+  .quest-focus .quest-intro h2 {
+    font-size: 37px;
+    letter-spacing: -1.2px;
+  }
+  .quest-focus .intro-copy {
+    font-size: 14px;
+    line-height: 1.95;
+    max-width: 340px;
+    margin-top: 18px;
+  }
+  .quest-focus .lesson-tip {
+    padding: 18px 16px;
+    margin-top: 25px;
+    gap: 10px;
+  }
+  .quest-focus .lesson-tip p {
+    font-size: 12px;
+    line-height: 1.9;
+  }
+  .quest-focus .headphone-tip {
+    font-size: 9px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+  }
+  .quest-focus .quest-intro > .button {
+    min-height: 46px;
+    font-size: 13px;
+    min-width: 190px;
+  }
+  .quest-round-waypoints {
+    margin-top: 27px;
+    margin-bottom: 27px;
+    gap: 13px;
+  }
+  .quest-round-waypoints > span {
+    height: 23px;
+    width: 23px;
+    font-size: 8px;
+  }
+  .quest-round-waypoints > span:not(:last-child):after {
+    left: 23px;
+    top: 10px;
+    width: 12px;
+  }
+  .quest-focus .game-progress {
+    margin-top: 0;
+  }
+  .quest-focus .game-progress > div:first-child {
+    font-size: 9px;
+  }
+  .quest-focus .quest-play h2 {
+    font-size: 30px;
+    letter-spacing: -0.8px;
+    margin-top: 30px;
+    line-height: 1.4;
+  }
+  .quest-focus .game-instruction {
+    font-size: 12px;
+    line-height: 1.9;
+    margin-top: 12px;
+  }
+  .listening-resonance {
+    height: 40px;
+    margin-top: 18px;
+    max-width: 260px;
+  }
+  .quest-focus .quest-play .listen-button {
+    min-height: 61px;
+    min-width: 204px;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 26px;
+  }
+  .quest-focus .answer-options {
+    gap: 13px;
+    max-width: 350px;
+  }
+  .quest-focus .answer-button {
+    font-size: 15px;
+    min-height: 88px;
+    gap: 13px;
+    padding: 19px 13px;
+  }
+  .quest-focus .answer-button small {
+    font-size: 8px;
+    line-height: 1.7;
+  }
+  .quest-focus .game-piano {
+    max-width: 365px;
+    margin-top: 26px;
+  }
+  .quest-focus .game-piano .piano {
+    height: 155px;
+    border-top-width: 10px;
+    border-radius: 7px;
+  }
+  .quest-focus .game-feedback {
+    padding: 17px 14px;
+    margin-top: 27px;
+    gap: 10px;
+  }
+  .quest-focus .game-feedback strong {
+    font-size: 12px;
+  }
+  .quest-focus .game-feedback p {
+    font-size: 11px;
+    line-height: 1.9;
+  }
+  .quest-focus .game-feedback > div:nth-child(2) {
+    width: calc(100% - 40px);
+  }
+  .quest-focus .game-feedback .button {
+    font-size: 11px;
+    min-height: 36px;
+    margin-top: 3px;
+  }
+  .quest-focus .game-reassurance {
+    font-size: 9px;
+    line-height: 1.8;
+    margin-top: 27px;
+  }
+  .quest-focus .beat-dots {
+    gap: 15px;
+  }
+  .quest-focus .beat-dots > span {
+    height: 34px;
+    width: 34px;
+    font-size: 11px;
+  }
+  .quest-focus .rhythm-game {
+    margin-top: 28px;
+  }
+  .quest-focus .tap-button {
+    height: 141px;
+    width: 141px;
+    margin-top: 19px;
+    font-size: 30px;
+  }
+  .quest-focus .tap-button small {
+    font-size: 9px;
+  }
+  .quest-focus .rhythm-message {
+    font-size: 11px;
+    line-height: 1.8;
+    margin-top: 26px;
+    min-height: 20px;
+  }
+  .quest-focus .rhythm-game > .muted {
+    font-size: 9px;
+  }
+  .quest-focus .quest-result {
+    padding-top: clamp(40px, 9vh, 85px);
+    padding-bottom: 20px;
+  }
+  .quest-focus .result-trophy {
+    height: 104px;
+    width: 104px;
+    margin-bottom: 38px;
+  }
+  .quest-focus .result-trophy > svg {
+    width: 45px;
+    height: 45px;
+  }
+  .quest-focus .quest-result h2 {
+    font-size: 36px;
+    line-height: 1.35;
+  }
+  .quest-focus .quest-result > .eyebrow {
+    font-size: 6px;
+    letter-spacing: 1.2px;
+    margin-bottom: 16px;
+  }
+  .quest-focus .quest-result > p {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-top: 20px;
+  }
+  .quest-focus .result-stats {
+    max-width: 310px;
+    margin-top: 29px;
+    padding: 23px 0;
+  }
+  .quest-focus .result-stats strong {
+    font-size: 33px;
+  }
+  .quest-focus .result-stats span {
+    font-size: 10px;
+  }
+  .quest-focus .quest-result > p.result-note {
+    font-size: 12px;
+    margin-top: 29px;
+    margin-bottom: 29px;
+  }
+  .quest-focus .quest-result > .button {
+    font-size: 12px;
+    min-height: 44px;
+  }
+  .theme-choices {
+    gap: 11px;
+  }
+  .theme-choice {
+    padding: 8px 8px 12px;
+  }
+  .theme-preview {
+    height: 71px;
+    padding: 11px;
+    gap: 6px;
+  }
+  .theme-choice > span:last-child {
+    font-size: 11px;
+    gap: 6px;
+    padding: 12px 2px 0;
+  }
+  .theme-choice > span:last-child > svg {
+    width: 15px;
+  }
+  .preference-row {
+    gap: 13px;
+  }
+  .preference-row > div {
+    gap: 10px;
+  }
+  .preference-row > div > svg {
+    width: 20px;
+  }
+  .preference-row strong {
+    font-size: 12px;
+  }
+  .preference-row small {
+    font-size: 10px;
+    line-height: 1.8;
+  }
+  .experience-dialog > .dialog-lead {
+    font-size: 12px;
+  }
+}
+@media (max-width: 390px) {
+  .topbar {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .topbar-actions {
+    gap: 8px;
+  }
+  .topbar-music {
+    font-size: 16px;
+  }
+  .hero-copy {
+    width: 80%;
+    padding-left: 21px;
+  }
+  .hero-card h2 {
+    font-size: 30px;
+  }
+  .hero-card p {
+    font-size: 10px;
+  }
+  .hero-tag {
+    font-size: 5.2px;
+  }
+  .hero-card .hero-art {
+    right: -53px;
+    width: 55%;
+    top: 80px;
+    height: 70%;
+  }
+  .hero-flow-button {
+    font-size: 7px;
+  }
+  .hero-footnote {
+    font-size: 5.7px;
+  }
+  .hero-card {
+    min-height: 327px;
+  }
+  .quest-card h3 {
+    font-size: 16px;
+  }
+  .quest-card p {
+    font-size: 10px;
+  }
+  .soundscape-main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .soundscape-title h2 {
+    font-size: 33px;
+  }
+  .soundscape-title p {
+    font-size: 9px;
+    max-width: 235px;
+  }
+  .soundscape-top .room-badge {
+    font-size: 5px;
+  }
+  .soundscape-universe {
+    height: 264px;
+  }
+  .soundscape-pads {
+    gap: 4px;
+  }
+  .melody-pad {
+    height: 56px;
+  }
+  .melody-pad > span {
+    font-size: 16px;
+  }
+  .melody-pad kbd {
+    font-size: 6px;
+  }
+  .pad-caption {
+    font-size: 6px;
+  }
+  .soundscape-mixer {
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 0 15px;
+  }
+  .mixer-heading h3 {
+    font-size: 17px;
+  }
+  .mixer-heading .eyebrow {
+    font-size: 4.5px;
+    letter-spacing: 1px;
+  }
+  .mood-options > button {
+    padding: 5px;
+    gap: 5px;
+  }
+  .mood-options > button > span:nth-child(2) {
+    font-size: 7px;
+  }
+  .mood-options small {
+    font-size: 4.6px;
+  }
+  .mood-symbol {
+    width: 22px;
+    height: 25px;
+  }
+  .mood-symbol > svg {
+    width: 14px;
+  }
+  .mixer-layer strong {
+    font-size: 7.5px;
+  }
+  .mixer-layer small {
+    font-size: 4.4px;
+  }
+  .mixer-layer > div {
+    gap: 4px;
+  }
+  .layer-level {
+    font-size: 5.5px;
+    min-width: 19px;
+  }
+  .save-room {
+    font-size: 8px;
+    gap: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .save-room > svg {
+    width: 12px;
+  }
+  .room-tempo > span:first-child {
+    font-size: 7px;
+  }
+  .room-tempo strong {
+    font-size: 17px;
+  }
+  .quest-dialog.quest-focus {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .quest-focus .quest-modal-top .eyebrow {
+    font-size: 6.2px;
+  }
+  .quest-focus .quest-duration {
+    font-size: 7px;
+  }
+  .quest-focus .quest-intro h2 {
+    font-size: 35px;
+  }
+  .quest-focus .intro-copy {
+    font-size: 13px;
+  }
+  .quest-focus .lesson-tip p {
+    font-size: 11px;
+  }
+  .map-stops strong {
+    font-size: 16px;
+  }
+  .map-island {
+    width: 80px;
+    height: 73px;
+  }
+  .map-stops em {
+    font-size: 4.5px;
+  }
+  .map-caption {
+    font-size: 9px;
+  }
+  .map-caption > span {
+    font-size: 8px;
+  }
+}
+[data-motion='reduced'] *,
+[data-motion='reduced'] *:before,
+[data-motion='reduced'] *:after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+[data-motion='reduced'] .hero-card .hero-art {
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-card .hero-art {
+    transform: none !important;
+  }
+  .hero-sound-label,
+  .hero-orbit-lines > span,
+  .daily-illustration > svg {
+    animation: none !important;
+  }
+}
+/* Give musical controls the same readability as the lessons. */
+@media (min-width: 851px) {
+  .soundscape-room:not(.is-focused) {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+  .soundscape-room:not(.is-focused) .soundscape-universe {
+    height: clamp(300px, 27vw, 440px);
+  }
+}
+.soundscape-top .room-badge {
+  font-size: 8px;
+  letter-spacing: 1.1px;
+}
+.soundscape-title .eyebrow {
+  font-size: 7px;
+  letter-spacing: 1.6px;
+}
+.soundscape-title p {
+  font-size: 12px;
+  color: #a6b79a;
+}
+.mixer-heading .eyebrow {
+  font-size: 7px;
+  letter-spacing: 1.4px;
+}
+.mixer-heading h3 {
+  font-size: 23px;
+}
+.mood-options > button > span:nth-child(2) {
+  font-size: 12px;
+  color: #c0ceb0;
+}
+.mood-options small {
+  font-size: 9px;
+  color: #95ab86;
+}
+.mood-options > button {
+  min-height: 56px;
+}
+.mood-symbol {
+  width: 35px;
+  height: 35px;
+}
+.mixer-layer strong {
+  font-size: 11px;
+  color: #c0d0ac;
+}
+.mixer-layer small {
+  font-size: 9px;
+  color: #92a77f;
+  line-height: 1.6;
+}
+.mixer-layer > div > span:nth-child(2) {
+  gap: 3px;
+}
+.layer-level {
+  font-size: 9px;
+  color: #a3b88a;
+}
+.mixer-layer > div > button {
+  width: 31px;
+  height: 32px;
+}
+.mixer-layer > input {
+  margin-left: 39px;
+  width: calc(100% - 39px);
+  margin-top: 10px;
+}
+.room-tempo > span:first-child {
+  font-size: 11px;
+  color: #b4c79f;
+}
+.room-tempo strong {
+  font-size: 23px;
+}
+.room-tempo strong > small {
+  font-size: 8px;
+}
+.room-tempo > span:last-child > small {
+  font-size: 8px;
+  color: #8fa67e;
+}
+.save-room {
+  font-size: 12px;
+  min-height: 43px;
+}
+.soundscape-mixer .mixer-note {
+  font-size: 9px !important;
+  color: #8ea67b;
+}
+.pad-caption {
+  font-size: 10px;
+  color: #9eb18e;
+  line-height: 1.9;
+}
+.room-key {
+  font-size: 9px;
+  color: #91a97d;
+}
+.map-stops strong {
+  font-size: 16px;
+}
+.map-stops small {
+  font-size: 9px;
+  color: #a6b595;
+}
+.map-stops em {
+  font-size: 6px;
+}
+.map-heading > span:first-child {
+  font-size: 8px;
+}
+.map-caption {
+  font-size: 10px;
+}
+.map-caption > span {
+  font-size: 9px;
+}
+.is-focused .soundscape-mixer {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.soundscape-mixer > .mixer-heading:nth-of-type(4) {
+  grid-column: 2;
+  grid-row: 1;
+}
+@media (min-width: 851px) and (max-width: 1250px) {
+  .soundscape-room:not(.is-focused) {
+    grid-template-columns: minmax(0, 1fr) 265px;
+  }
+  .mood-options > button > span:nth-child(2) {
+    font-size: 11px;
+  }
+  .mood-options small {
+    font-size: 8px;
+  }
+  .mixer-layer strong {
+    font-size: 10px;
+  }
+  .mixer-layer small {
+    font-size: 8px;
+  }
+  .soundscape-title p {
+    font-size: 10px;
+    max-width: 260px;
+  }
+  .soundscape-title .eyebrow {
+    font-size: 6px;
+  }
+  .soundscape-top .room-badge {
+    font-size: 6px;
+  }
+  .pad-caption {
+    font-size: 8px;
+  }
+  .soundscape-main {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+  .map-stops strong {
+    font-size: 13px;
+  }
+  .map-stops small {
+    font-size: 8px;
+  }
+  .map-stops em {
+    font-size: 4px;
+  }
+  .map-heading > span:first-child {
+    font-size: 6px;
+  }
+}
+@media (max-width: 650px) {
+  .soundscape-mixer {
+    display: flex;
+    flex-direction: column;
+    padding: 27px 23px;
+    gap: 0;
+  }
+  .soundscape-mixer .mixer-heading .eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.4px;
+  }
+  .soundscape-mixer .mixer-heading h3 {
+    font-size: 26px;
+    margin-top: 9px;
+  }
+  .mood-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 20px;
+  }
+  .mood-options > button {
+    min-height: 66px;
+    padding: 9px 7px;
+    gap: 7px;
+    border: 1px solid #7c90632b;
+    border-radius: 8px;
+  }
+  .mood-options > button > span:nth-child(2) {
+    font-size: 10px;
+    color: #c3d4b1;
+    gap: 5px;
+  }
+  .mood-options small {
+    font-size: 7px;
+    line-height: 1.6;
+    color: #a0b68d;
+  }
+  .mood-symbol {
+    height: 31px;
+    width: 28px;
+    border-radius: 6px;
+  }
+  .mood-symbol > svg {
+    width: 17px;
+    height: 17px;
+  }
+  .mood-options > button > svg {
+    width: 10px;
+    height: 10px;
+  }
+  .mixer-divider {
+    display: block;
+    margin: 25px 0;
+  }
+  .mixer-layers {
+    margin-top: 24px;
+    gap: 22px;
+  }
+  .mixer-layer > div {
+    gap: 10px;
+  }
+  .mixer-layer > div > button {
+    width: 38px;
+    height: 38px;
+    border-radius: 7px;
+  }
+  .mixer-layer > div > button > svg {
+    width: 19px;
+    height: 19px;
+  }
+  .mixer-layer strong {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .mixer-layer small {
+    font-size: 10px;
+    line-height: 1.7;
+    color: #99b085;
+  }
+  .layer-level {
+    font-size: 11px;
+    min-width: 29px;
+    color: #acc495;
+  }
+  .mixer-layer > input {
+    width: calc(100% - 48px);
+    margin-left: 48px;
+    margin-top: 13px;
+    height: 5px;
+  }
+  .room-tempo {
+    margin-top: 34px;
+  }
+  .room-tempo > span:first-child {
+    font-size: 12px;
+  }
+  .room-tempo strong {
+    font-size: 27px;
+  }
+  .room-tempo strong > small {
+    font-size: 8px;
+  }
+  .room-tempo > input {
+    height: 5px;
+    margin-top: 16px;
+    margin-bottom: 13px;
+  }
+  .room-tempo > span:last-child > small {
+    font-size: 9px;
+  }
+  .save-room {
+    font-size: 13px;
+    width: 100%;
+    min-height: 45px;
+    align-self: stretch;
+    margin-top: 27px;
+    gap: 9px;
+  }
+  .save-room > svg {
+    width: 17px;
+    height: 17px;
+  }
+  .soundscape-mixer .mixer-note {
+    font-size: 9px !important;
+    margin-top: 20px;
+    gap: 7px;
+  }
+  .soundscape-mixer .mixer-note > svg {
+    width: 14px;
+    height: 14px;
+  }
+  .soundscape-top .room-badge {
+    font-size: 6px;
+    letter-spacing: 0.85px;
+  }
+  .soundscape-title .eyebrow {
+    font-size: 6px;
+    letter-spacing: 1.3px;
+  }
+  .soundscape-title p {
+    font-size: 11px;
+    line-height: 1.9;
+    max-width: 250px;
+    color: #acbf9d;
+  }
+  .soundscape-universe {
+    height: 294px;
+  }
+  .pad-caption,
+  .is-focused .pad-caption {
+    font-size: 9px;
+    max-width: 275px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    line-height: 1.9;
+    align-items: flex-start;
+    margin-top: 15px;
+  }
+  .pad-caption > svg {
+    margin-top: 4px;
+    width: 12px;
+    height: 12px;
+  }
+  .is-focused .soundscape-mixer {
+    padding: 29px 25px;
+  }
+  .map-stops strong {
+    font-size: 17px;
+  }
+  .map-stops small {
+    font-size: 10px;
+  }
+  .map-stops em {
+    font-size: 5px;
+  }
+  .map-heading > span:first-child {
+    font-size: 6px;
+  }
+  .mood-options {
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 390px) {
+  .soundscape-mixer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .mood-options > button {
+    padding-left: 6px;
+    padding-right: 6px;
+    gap: 6px;
+  }
+  .mood-options > button > span:nth-child(2) {
+    font-size: 9px;
+  }
+  .mood-options small {
+    font-size: 6.5px;
+  }
+  .mood-symbol {
+    width: 26px;
+    height: 29px;
+  }
+  .mood-options > button > svg {
+    display: none;
+  }
+  .soundscape-title p {
+    font-size: 10px;
+  }
+  .soundscape-top .room-badge {
+    font-size: 5.5px;
+  }
+  .pad-caption {
+    font-size: 8px;
+  }
+  .mixer-layer strong {
+    font-size: 12px;
+  }
+  .mixer-layer small {
+    font-size: 9px;
+  }
+  .map-stops em {
+    font-size: 4.5px;
+  }
+}

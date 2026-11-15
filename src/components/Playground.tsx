@@ -13,9 +13,12 @@ import {
   Square,
   Trash2,
   Volume2,
+  Orbit,
 } from 'lucide-react'
 import { Piano } from './Piano'
 import { audio } from '../lib/audio'
+import { Soundscape } from './Soundscape'
+import { Resonance } from './Resonance'
 
 interface RecordedNote {
   midi: number
@@ -29,12 +32,19 @@ export function Playground({
   onSave,
   notify,
   keyboardEnabled = true,
+  tab,
+  onTabChange: setTab,
+  muted,
+  onUnmute,
 }: {
   onSave: () => void
   notify: (text: string) => void
   keyboardEnabled?: boolean
+  tab: 'piano' | 'beats' | 'soundscape'
+  onTabChange: (tab: 'piano' | 'beats' | 'soundscape') => void
+  muted: boolean
+  onUnmute: () => void
 }) {
-  const [tab, setTab] = useState<'piano' | 'beats'>('piano')
   const [instrument, setInstrument] = useState<'piano' | 'soft'>('piano')
   const [recording, setRecording] = useState(false)
   const [replaying, setReplaying] = useState(false)
@@ -108,6 +118,16 @@ export function Playground({
       </div>
       <div className="playground-tabs">
         <button
+          className={tab === 'soundscape' ? 'active soundscape-tab' : 'soundscape-tab'}
+          onClick={() => {
+            setTab('soundscape')
+            setRecording(false)
+            audio.stop()
+          }}
+        >
+          <Orbit size={18} /> Soundscape <span className="new-pill">NEW</span>
+        </button>
+        <button
           onClick={() => {
             setTab('piano')
             audio.stop()
@@ -127,7 +147,15 @@ export function Playground({
           <Drum size={18} /> Beat maker
         </button>
       </div>
-      {tab === 'piano' ? (
+      {tab === 'soundscape' ? (
+        <Soundscape
+          onSave={onSave}
+          notify={notify}
+          keyboardEnabled={keyboardEnabled}
+          muted={muted}
+          onUnmute={onUnmute}
+        />
+      ) : tab === 'piano' ? (
         <>
           <div className="instrument-card">
             <div className="instrument-top">
@@ -151,6 +179,9 @@ export function Playground({
                   <option value="soft">Soft sine</option>
                 </select>
               </label>
+            </div>
+            <div className="piano-resonance">
+              <Resonance />
             </div>
             <div className="note-readout">
               <span className={recording ? 'record-dot active' : 'record-dot'} />

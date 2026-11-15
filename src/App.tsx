@@ -26,6 +26,11 @@ import {
   WifiOff,
   X,
   Zap,
+  Moon,
+  Orbit,
+  SlidersHorizontal,
+  Map,
+  LayoutGrid,
 } from 'lucide-react'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 import type { Category, Page, Quest } from './lib/data'
@@ -37,6 +42,9 @@ import { Piano } from './components/Piano'
 import { Playground } from './components/Playground'
 import { ProgressPage } from './components/Progress'
 import { QuestGame } from './components/QuestGame'
+import { ExperienceSettings } from './components/ExperienceSettings'
+import { useExperience } from './experience/Experience'
+import { JourneyMap } from './components/JourneyMap'
 
 interface InstallPrompt extends Event {
   prompt: () => Promise<void>
@@ -46,6 +54,16 @@ type InfoDialog = 'basics' | 'help' | 'install' | 'reset' | null
 
 export default function App() {
   const [page, setPage] = useState<Page>('learn')
+  const { theme, setTheme } = useExperience()
+  const [experienceOpen, setExperienceOpen] = useState(false)
+  const [playgroundTab, setPlaygroundTab] = useState<'piano' | 'beats' | 'soundscape'>('piano')
+  const [journeyView, setJourneyView] = useState<'cards' | 'map'>(() => {
+    try {
+      return localStorage.getItem('cadence-journey-view') === 'map' ? 'map' : 'cards'
+    } catch {
+      return 'cards'
+    }
+  })
   const [progress, setProgress] = useState(readProgress)
   const [category, setCategory] = useState<Category>('All quests')
   const [allQuests, setAllQuests] = useState(false)
@@ -132,6 +150,19 @@ export default function App() {
     setMobileMenu(false)
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
+  const enterSoundscape = () => {
+    if (page === 'playground' && playgroundTab === 'soundscape') return
+    setPlaygroundTab('soundscape')
+    navigate('playground')
+  }
+  const changeJourneyView = (view: 'cards' | 'map') => {
+    setJourneyView(view)
+    try {
+      localStorage.setItem('cadence-journey-view', view)
+    } catch {
+      /* View still changes for this visit. */
+    }
+  }
   const startQuest = (selected: Quest, isDaily = false) => {
     audio.stop()
     setQuest(selected)
@@ -181,6 +212,9 @@ export default function App() {
     setProgress((current) => ({ ...current, compositions: current.compositions + 1 }))
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">
+        Skip to music
+      </a>
       {mobileMenu && (
         <button
           className="sidebar-scrim"
@@ -286,6 +320,25 @@ export default function App() {
             </span>
           </div>
           <div className="topbar-actions">
+            <button className="flow-entry" onClick={enterSoundscape}>
+              <Orbit size={16} />
+              <span>Enter the flow</span>
+              <span className="flow-live-dot" />
+            </button>
+            <button
+              className="icon-button theme-toggle"
+              aria-label={theme === 'light' ? 'Switch to after hours' : 'Switch to daylight'}
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            >
+              {theme === 'light' ? <Moon size={17} /> : <Sun size={17} />}
+            </button>
+            <button
+              className="icon-button experience-toggle"
+              aria-label="Experience settings"
+              onClick={() => setExperienceOpen(true)}
+            >
+              <SlidersHorizontal size={17} />
+            </button>
             {!online && (
               <span className="offline-pill">
                 <WifiOff size={14} /> Offline
@@ -310,7 +363,7 @@ export default function App() {
             </button>
           </div>
         </header>
-        <main className="main-content" id="main-content">
+        <main className="main-content" id="main-content" tabIndex={-1}>
           {page === 'learn' ? (
             <div className="page-enter">
               <div className="page-heading">
@@ -335,7 +388,24 @@ export default function App() {
               </div>
               <div className="dashboard-grid">
                 <div className="learning-column">
-                  <section className="hero-card">
+                  <section
+                    className="hero-card"
+                    onPointerMove={(event) => {
+                      const bounds = event.currentTarget.getBoundingClientRect()
+                      event.currentTarget.style.setProperty(
+                        '--pointer-x',
+                        `${((event.clientX - bounds.left) / bounds.width - 0.5) * 8}deg`,
+                      )
+                      event.currentTarget.style.setProperty(
+                        '--pointer-y',
+                        `${((event.clientY - bounds.top) / bounds.height - 0.5) * -8}deg`,
+                      )
+                    }}
+                    onPointerLeave={(event) => {
+                      event.currentTarget.style.setProperty('--pointer-x', '0deg')
+                      event.currentTarget.style.setProperty('--pointer-y', '0deg')
+                    }}
+                  >
                     <div className="hero-copy">
                       <div className="hero-tag">
                         <span />
@@ -376,12 +446,29 @@ export default function App() {
                         {progress.completed.length ? 'Continue my journey' : 'Start my journey'}
                         <ArrowRight size={17} />
                       </button>
+                      <button className="hero-flow-button" onClick={enterSoundscape}>
+                        <Orbit size={16} /> Or, get lost in the sound <ArrowRight size={14} />
+                      </button>
                       <span className="hero-footnote">
                         <Headphones size={12} /> {progress.completed.length ? nextQuest.minutes : 3}{' '}
                         minutes · zero experience needed
                       </span>
                     </div>
+                    <div className="hero-orbit-lines" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
                     <HeroArt />
+                    <div className="hero-sound-label">
+                      <span />
+                      <span>
+                        YOUR KIND OF MUSIC
+                        <br />
+                        <strong>is waiting to happen.</strong>
+                      </span>
+                      <Music2 size={19} />
+                    </div>
                   </section>
                   <div className="little-promises">
                     <span>
@@ -404,67 +491,97 @@ export default function App() {
                         {progress.completed.length} of {quests.length} explored
                       </span>
                     </div>
-                    <div className="quest-filters" role="group" aria-label="Filter quests">
-                      {(['All quests', 'Rhythm', 'Melody', 'Harmony'] as Category[]).map((c) => (
-                        <button
-                          className={category === c ? 'active' : ''}
-                          aria-pressed={category === c}
-                          key={c}
-                          onClick={() => setCategory(c)}
-                        >
-                          {c}
-                        </button>
-                      ))}
-                    </div>
-                    <div className="quest-grid">
-                      {visibleQuests.map((q) => {
-                        const completed = progress.completed.includes(q.id)
-                        return (
-                          <button
-                            className={`quest-card theme-${q.color}`}
-                            key={q.id}
-                            onClick={() => startQuest(q)}
-                          >
-                            <div className={`quest-card-art ${q.color}`}>
-                              <span className="quest-number">{q.number}</span>
-                              <QuestArt kind={q.id} />
-                              {completed ? (
-                                <span className="quest-badge completed">
-                                  <Check size={11} /> EXPLORED
-                                </span>
-                              ) : q.id === nextQuest.id ? (
-                                <span className="quest-badge">
-                                  {q.id === 'rhythm' ? 'START HERE' : 'UP NEXT'}
-                                </span>
-                              ) : (
-                                <span className="quest-category">{q.category}</span>
-                              )}
-                            </div>
-                            <div className="quest-card-copy">
-                              <h3>{q.title}</h3>
-                              <p>{q.description}</p>
-                              <div className="quest-card-footer">
-                                <span>
-                                  {q.minutes} min<span className="dot-separator">·</span>
-                                  <Zap size={11} /> 50 XP
-                                </span>
-                                <span className="quest-arrow">
-                                  <ArrowRight size={15} />
-                                </span>
-                              </div>
-                            </div>
-                          </button>
-                        )
-                      })}
-                    </div>
-                    {category === 'All quests' && (
+                    <div
+                      className="journey-view-controls"
+                      role="group"
+                      aria-label="Learning journey view"
+                    >
                       <button
-                        className="view-all-button"
-                        onClick={() => setAllQuests((value) => !value)}
+                        aria-pressed={journeyView === 'cards'}
+                        onClick={() => changeJourneyView('cards')}
                       >
-                        {allQuests ? 'A little less for now' : 'Explore all 6 quests'}
-                        <ChevronDown size={15} className={allQuests ? 'rotated' : ''} />
+                        <LayoutGrid size={13} /> Quests
                       </button>
+                      <button
+                        aria-pressed={journeyView === 'map'}
+                        onClick={() => changeJourneyView('map')}
+                      >
+                        <Map size={13} /> Adventure map
+                      </button>
+                    </div>
+                    {journeyView === 'map' ? (
+                      <JourneyMap
+                        completed={progress.completed}
+                        next={nextQuest.id}
+                        onQuest={startQuest}
+                      />
+                    ) : (
+                      <>
+                        <div className="quest-filters" role="group" aria-label="Filter quests">
+                          {(['All quests', 'Rhythm', 'Melody', 'Harmony'] as Category[]).map(
+                            (c) => (
+                              <button
+                                className={category === c ? 'active' : ''}
+                                aria-pressed={category === c}
+                                key={c}
+                                onClick={() => setCategory(c)}
+                              >
+                                {c}
+                              </button>
+                            ),
+                          )}
+                        </div>
+                        <div className="quest-grid">
+                          {visibleQuests.map((q) => {
+                            const completed = progress.completed.includes(q.id)
+                            return (
+                              <button
+                                className={`quest-card theme-${q.color}`}
+                                key={q.id}
+                                onClick={() => startQuest(q)}
+                              >
+                                <div className={`quest-card-art ${q.color}`}>
+                                  <span className="quest-number">{q.number}</span>
+                                  <QuestArt kind={q.id} />
+                                  {completed ? (
+                                    <span className="quest-badge completed">
+                                      <Check size={11} /> EXPLORED
+                                    </span>
+                                  ) : q.id === nextQuest.id ? (
+                                    <span className="quest-badge">
+                                      {q.id === 'rhythm' ? 'START HERE' : 'UP NEXT'}
+                                    </span>
+                                  ) : (
+                                    <span className="quest-category">{q.category}</span>
+                                  )}
+                                </div>
+                                <div className="quest-card-copy">
+                                  <h3>{q.title}</h3>
+                                  <p>{q.description}</p>
+                                  <div className="quest-card-footer">
+                                    <span>
+                                      {q.minutes} min<span className="dot-separator">·</span>
+                                      <Zap size={11} /> 50 XP
+                                    </span>
+                                    <span className="quest-arrow">
+                                      <ArrowRight size={15} />
+                                    </span>
+                                  </div>
+                                </div>
+                              </button>
+                            )
+                          })}
+                        </div>
+                        {category === 'All quests' && (
+                          <button
+                            className="view-all-button"
+                            onClick={() => setAllQuests((value) => !value)}
+                          >
+                            {allQuests ? 'A little less for now' : 'Explore all 6 quests'}
+                            <ChevronDown size={15} className={allQuests ? 'rotated' : ''} />
+                          </button>
+                        )}
+                      </>
                     )}
                   </section>
                   <section className="mini-playground">
@@ -491,7 +608,7 @@ export default function App() {
                           <KeyboardMusic size={12} /> Tap or use A–K
                         </span>
                       </div>
-                      <Piano keyboard={!quest && !info && !mobileMenu} />
+                      <Piano keyboard={!quest && !info && !mobileMenu && !experienceOpen} />
                     </div>
                   </section>
                 </div>
@@ -585,13 +702,18 @@ export default function App() {
             <Playground
               onSave={addComposition}
               notify={notify}
-              keyboardEnabled={!info && !mobileMenu}
+              keyboardEnabled={!info && !mobileMenu && !experienceOpen}
+              tab={playgroundTab}
+              onTabChange={setPlaygroundTab}
+              muted={muted}
+              onUnmute={() => setMuted(false)}
             />
           ) : (
             <ProgressPage progress={progress} startQuest={startQuest} />
           )}
         </main>
       </div>
+      {experienceOpen && <ExperienceSettings onClose={() => setExperienceOpen(false)} />}
       {quest && (
         <QuestGame
           key={`${quest.id}-${daily}`}
