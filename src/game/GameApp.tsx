@@ -35,6 +35,7 @@ import { BrandMark } from '../components/Art'
 import { chapters, curiosities, ending, prologue, readStory } from './story'
 import { WorldMap, worldArt } from './WorldMap'
 import { Dialogue } from './Dialogue'
+import { narrator } from './narration'
 import { EchoGlyph, Portrait, Resonator } from './GameArt'
 import { Journal } from './Journal'
 import { Finale } from './Finale'
@@ -79,7 +80,7 @@ export default function GameApp() {
   const [campTab, setCampTab] = useState<'piano' | 'beats' | 'soundscape'>('soundscape')
   const [offlineAvailable, setOfflineAvailable] = useState(false)
   const root = useRef<HTMLDivElement>(null)
-  const { theme, setTheme } = useExperience()
+  const { theme, setTheme, narration } = useExperience()
   const {
     needRefresh: [needRefresh],
     updateServiceWorker,
@@ -97,6 +98,7 @@ export default function GameApp() {
       document.body.classList.remove('game-mode')
       if (toastTimer.current) clearTimeout(toastTimer.current)
       audio.stop()
+      narrator.stop()
     }
   }, [])
   useEffect(() => {
@@ -144,6 +146,16 @@ export default function GameApp() {
       window.removeEventListener('beforeinstallprompt', install)
     }
   }, [])
+  useEffect(() => {
+    if (muted || !narration) return
+    const prime = () => narrator.prime()
+    document.addEventListener('pointerdown', prime, { once: true })
+    document.addEventListener('keydown', prime, { once: true })
+    return () => {
+      document.removeEventListener('pointerdown', prime)
+      document.removeEventListener('keydown', prime)
+    }
+  }, [muted, narration])
   const openOverlay = (next: Overlay) => {
     audio.stop()
     setOverlay(next)
@@ -575,6 +587,8 @@ export default function GameApp() {
         <Dialogue
           key={`${dialogue.kind}-${dialogue.chapter}-${dialogue.replay}`}
           lines={currentDialogueLines}
+          muted={muted}
+          onUnmute={() => setMuted(false)}
           title={
             dialogue.kind === 'prologue'
               ? 'The night the music vanished'

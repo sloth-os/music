@@ -1,0 +1,308 @@
+{
+  "version": 1,
+  "engine": "Kokoro-82M v1.0, INT8",
+  "cast": {
+    "iona": {
+      "voice": "bf_emma",
+      "speed": 0.98,
+      "lang": "en-gb",
+      "description": "Calm, warm British archivist"
+    },
+    "pip": {
+      "voice": "am_puck",
+      "speed": 1.08,
+      "lang": "en-us",
+      "description": "Bright, lively American companion"
+    },
+    "keeper": {
+      "voice": "am_michael",
+      "speed": 1.02,
+      "lang": "en-us",
+      "description": "Curious, grounded American listener"
+    },
+    "memory": {
+      "voice": "af_heart",
+      "speed": 0.97,
+      "lang": "en-us",
+      "description": "Warm, measured storyteller"
+    }
+  },
+  "lines": {
+    "iona-98598aea": {
+      "file": "game/voices/iona-98598aea.mp3",
+      "speaker": "iona",
+      "duration": 7.512,
+      "bytes": 60332
+    },
+    "iona-5e6600c4": {
+      "file": "game/voices/iona-5e6600c4.mp3",
+      "speaker": "iona",
+      "duration": 6.288,
+      "bytes": 50540
+    },
+    "keeper-1283e5f8": {
+      "file": "game/voices/keeper-1283e5f8.mp3",
+      "speaker": "keeper",
+      "duration": 3.552,
+      "bytes": 28652
+    },
+    "pip-a9e0fab0": {
+      "file": "game/voices/pip-a9e0fab0.mp3",
+      "speaker": "pip",
+      "duration": 7.152,
+      "bytes": 57452
+    },
+    "pip-4c160f13": {
+      "file": "game/voices/pip-4c160f13.mp3",
+      "speaker": "pip",
+      "duration": 3.624,
+      "bytes": 29228
+    },
+    "memory-e0457269": {
+      "file": "game/voices/memory-e0457269.mp3",
+      "speaker": "memory",
+      "duration": 9.912,
+      "bytes": 79532
+    },
+    "keeper-ce9da0f6": {
+      "file": "game/voices/keeper-ce9da0f6.mp3",
+      "speaker": "keeper",
+      "duration": 2.472,
+      "bytes": 20012
+    },
+    "pip-fb409af2": {
+      "file": "game/voices/pip-fb409af2.mp3",
+      "speaker": "pip",
+      "duration": 6.36,
+      "bytes": 51116
+    },
+    "pip-5d75b470": {
+      "file": "game/voices/pip-5d75b470.mp3",
+      "speaker": "pip",
+      "duration": 4.848,
+      "bytes": 39020
+    },
+    "iona-438c1aa9": {
+      "file": "game/voices/iona-438c1aa9.mp3",
+      "speaker": "iona",
+      "duration": 7.632,
+      "bytes": 61292
+    },
+    "pip-3faed0f7": {
+      "file": "game/voices/pip-3faed0f7.mp3",
+      "speaker": "pip",
+      "duration": 3.384,
+      "bytes": 27308
+    },
+    "memory-c9857f3b": {
+      "file": "game/voices/memory-c9857f3b.mp3",
+      "speaker": "memory",
+      "duration": 12.288,
+      "bytes": 98540
+    },
+    "keeper-2cd905b4": {
+      "file": "game/voices/keeper-2cd905b4.mp3",
+      "speaker": "keeper",
+      "duration": 3.048,
+      "bytes": 24620
+    },
+    "pip-60cacaa8": {
+      "file": "game/voices/pip-60cacaa8.mp3",
+      "speaker": "pip",
+      "duration": 7.44,
+      "bytes": 59756
+    },
+    "pip-5d77035f": {
+      "file": "game/voices/pip-5d77035f.mp3",
+      "speaker": "pip",
+      "duration": 4.488,
+      "bytes": 36140
+    },
+    "iona-cb225d6f": {
+      "file": "game/voices/iona-cb225d6f.mp3",
+      "speaker": "iona",
+      "duration": 7.944,
+      "bytes": 63788
+    },
+    "memory-1c1fea7d": {
+      "file": "game/voices/memory-1c1fea7d.mp3",
+      "speaker": "memory",
+      "duration": 10.584,
+      "bytes": 84908
+    },
+    "keeper-ed940230": {
+      "file": "game/voices/keeper-ed940230.mp3",
+      "speaker": "keeper",
+      "duration": 4.368,
+      "bytes": 35180
+    },
+    "pip-5e464037": {
+      "file": "game/voices/pip-5e464037.mp3",
+      "speaker": "pip",
+      "duration": 7.344,
+      "bytes": 58988
+    },
+    "iona-90d63c57": {
+      "file": "game/voices/iona-90d63c57.mp3",
+      "speaker": "iona",
+      "duration": 9.408,
+      "bytes": 75500
+    },
+    "pip-6ec3957d": {
+      "file": "game/voices/pip-6ec3957d.mp3",
+      "speaker": "pip",
+      "duration": 4.704,
+      "bytes": 37868
+    },
+    "iona-27f27cfb": {
+      "file": "game/voices/iona-27f27cfb.mp3",
+      "speaker": "iona",
+      "duration": 7.488,
+      "bytes": 60140
+    },
+    "pip-a5ea2f9b": {
+      "file": "game/voices/pip-a5ea2f9b.mp3",
+      "speaker": "pip",
+      "duration": 4.632,
+      "bytes": 37292
+    },
+    "memory-8162ff2e": {
+      "file": "game/voices/memory-8162ff2e.mp3",
+      "speaker": "memory",
+      "duration": 12.6,
+      "bytes": 101036
+    },
+    "keeper-c29d0067": {
+      "file": "game/voices/keeper-c29d0067.mp3",
+      "speaker": "keeper",
+      "duration": 3.096,
+      "bytes": 25004
+    },
+    "pip-7f62e2a8": {
+      "file": "game/voices/pip-7f62e2a8.mp3",
+      "speaker": "pip",
+      "duration": 8.304,
+      "bytes": 66668
+    },
+    "pip-1999d754": {
+      "file": "game/voices/pip-1999d754.mp3",
+      "speaker": "pip",
+      "duration": 5.76,
+      "bytes": 46316
+    },
+    "iona-80796700": {
+      "file": "game/voices/iona-80796700.mp3",
+      "speaker": "iona",
+      "duration": 7.752,
+      "bytes": 62252
+    },
+    "memory-ef2848bb": {
+      "file": "game/voices/memory-ef2848bb.mp3",
+      "speaker": "memory",
+      "duration": 13.608,
+      "bytes": 109100
+    },
+    "keeper-7cde47ab": {
+      "file": "game/voices/keeper-7cde47ab.mp3",
+      "speaker": "keeper",
+      "duration": 3.336,
+      "bytes": 26924
+    },
+    "pip-5439f15a": {
+      "file": "game/voices/pip-5439f15a.mp3",
+      "speaker": "pip",
+      "duration": 8.184,
+      "bytes": 65708
+    },
+    "iona-4dd35b41": {
+      "file": "game/voices/iona-4dd35b41.mp3",
+      "speaker": "iona",
+      "duration": 6.816,
+      "bytes": 54764
+    },
+    "pip-b5512b0e": {
+      "file": "game/voices/pip-b5512b0e.mp3",
+      "speaker": "pip",
+      "duration": 6.192,
+      "bytes": 49772
+    },
+    "iona-1a10bc80": {
+      "file": "game/voices/iona-1a10bc80.mp3",
+      "speaker": "iona",
+      "duration": 7.776,
+      "bytes": 62444
+    },
+    "pip-c3fc0be7": {
+      "file": "game/voices/pip-c3fc0be7.mp3",
+      "speaker": "pip",
+      "duration": 4.464,
+      "bytes": 35948
+    },
+    "memory-451eebec": {
+      "file": "game/voices/memory-451eebec.mp3",
+      "speaker": "memory",
+      "duration": 14.136,
+      "bytes": 113324
+    },
+    "keeper-cee165a6": {
+      "file": "game/voices/keeper-cee165a6.mp3",
+      "speaker": "keeper",
+      "duration": 4.272,
+      "bytes": 34412
+    },
+    "pip-62dbfdb1": {
+      "file": "game/voices/pip-62dbfdb1.mp3",
+      "speaker": "pip",
+      "duration": 8.352,
+      "bytes": 67052
+    },
+    "iona-9cc974b5": {
+      "file": "game/voices/iona-9cc974b5.mp3",
+      "speaker": "iona",
+      "duration": 6.096,
+      "bytes": 49004
+    },
+    "keeper-fcde074c": {
+      "file": "game/voices/keeper-fcde074c.mp3",
+      "speaker": "keeper",
+      "duration": 7.056,
+      "bytes": 56684
+    },
+    "pip-1d7ed76f": {
+      "file": "game/voices/pip-1d7ed76f.mp3",
+      "speaker": "pip",
+      "duration": 4.344,
+      "bytes": 34988
+    },
+    "keeper-9059a65b": {
+      "file": "game/voices/keeper-9059a65b.mp3",
+      "speaker": "keeper",
+      "duration": 7.968,
+      "bytes": 63980
+    },
+    "iona-2ebb4e44": {
+      "file": "game/voices/iona-2ebb4e44.mp3",
+      "speaker": "iona",
+      "duration": 5.424,
+      "bytes": 43628
+    },
+    "pip-17cdf7e1": {
+      "file": "game/voices/pip-17cdf7e1.mp3",
+      "speaker": "pip",
+      "duration": 4.848,
+      "bytes": 39020
+    },
+    "iona-ef709bbb": {
+      "file": "game/voices/iona-ef709bbb.mp3",
+      "speaker": "iona",
+      "duration": 2.976,
+      "bytes": 24044
+    },
+    "pip-5dcc38cd": {
+      "file": "game/voices/pip-5dcc38cd.mp3",
+      "speaker": "pip",
+      "duration": 8.16,
+      "bytes": 65516
+    }
+  }
+}

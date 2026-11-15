@@ -24,13 +24,14 @@ class MusicAudio {
   private analyser: AnalyserNode | null = null
   private listeners = new Set<(event: SoundEvent) => void>()
   private volume = 1
+  private ducked = false
   muted = false
 
   async ready() {
     if (!this.context) {
       this.context = new AudioContext({ latencyHint: 'interactive' })
       this.master = this.context.createGain()
-      this.master.gain.value = this.muted ? 0 : this.volume * 0.65
+      this.master.gain.value = this.muted ? 0 : this.volume * 0.65 * (this.ducked ? 0.22 : 1)
       const compressor = this.context.createDynamicsCompressor()
       compressor.threshold.value = -14
       compressor.ratio.value = 4
@@ -49,10 +50,15 @@ class MusicAudio {
     this.muted = value
     if (this.master && this.context)
       this.master.gain.setTargetAtTime(
-        value ? 0 : this.volume * 0.65,
+        value ? 0 : this.volume * 0.65 * (this.ducked ? 0.22 : 1),
         this.context.currentTime,
         0.03,
       )
+  }
+
+  setDucked(value: boolean) {
+    this.ducked = value
+    this.setMuted(this.muted)
   }
 
   get currentTime() {

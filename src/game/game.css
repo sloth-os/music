@@ -6122,3 +6122,716 @@ body.game-mode {
     min-height: 34px;
   }
 }
+/* Spoken dialogue is the performance; captions remain available to every player. */
+.character-voice-aura {
+  position: absolute;
+  inset: 15% 3% 9%;
+  background: radial-gradient(ellipse, #e6d89825, transparent 67%);
+  filter: blur(14px);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+  z-index: 0;
+}
+.is-speaking .character-voice-aura {
+  opacity: 1;
+}
+.voiced-dialogue.is-speaking .dialogue-character .character-portrait {
+  filter: drop-shadow(0 10px 15px #09221780) drop-shadow(0 0 13px #dccb7b29);
+}
+.dialogue-voice-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 13px;
+  margin-top: 13px;
+  min-height: 30px;
+}
+.dialogue-playback {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex: 1;
+}
+.voice-play,
+.voice-replay,
+.voice-options-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 29px;
+  width: 29px;
+  border: 1px solid #adc18d5c;
+  background: #3d5b3255;
+  color: #d1daae;
+  border-radius: 4px;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.voice-play:hover,
+.voice-replay:hover:not(:disabled),
+.voice-options-button:hover {
+  background: #79945155;
+  border-color: #d8d194a1;
+}
+.voice-play {
+  background: #a4b66e44;
+  border-color: #bdc78588;
+}
+.voice-replay {
+  height: 26px;
+  width: 25px;
+  background: transparent;
+  border-color: #a5b98933;
+  color: #9fb88c;
+}
+.voice-replay:disabled {
+  opacity: 0.3;
+}
+.voice-equalizer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 17px;
+  width: 19px;
+  margin-left: 3px;
+  flex-shrink: 0;
+}
+.voice-equalizer > i {
+  display: block;
+  height: 4px;
+  width: 2px;
+  border-radius: 2px;
+  background: #88aa79;
+  transition: height 0.2s;
+}
+.voice-equalizer > i:nth-child(2n) {
+  height: 7px;
+}
+.is-speaking .voice-equalizer > i {
+  height: 13px;
+  animation: voice-wave 0.65s ease-in-out infinite alternate;
+  background: #d1d38d;
+}
+.is-speaking .voice-equalizer > i:nth-child(2) {
+  animation-delay: -0.2s;
+  height: 8px;
+}
+.is-speaking .voice-equalizer > i:nth-child(3) {
+  animation-delay: -0.45s;
+  height: 17px;
+}
+.is-speaking .voice-equalizer > i:nth-child(4) {
+  animation-delay: -0.3s;
+  height: 11px;
+}
+.voice-status {
+  font-size: 9px;
+  color: #a8c197;
+  line-height: 1.8;
+  min-width: 0;
+}
+.dialogue-voice-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+}
+.dialogue-auto {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #87a86d52;
+  border-radius: 4px;
+  background: #31502b44;
+  color: #94b482;
+  padding: 5px 8px;
+  min-height: 26px;
+  font-size: 8px;
+  white-space: nowrap;
+}
+.dialogue-auto > span {
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  background: #688e58;
+}
+.dialogue-auto.on {
+  color: #d3d39a;
+  border-color: #afba7166;
+  background: #7c904a26;
+}
+.dialogue-auto.on > span {
+  background: #d4d48f;
+  box-shadow: 0 0 7px #c5ce7b77;
+}
+.voice-options-button {
+  height: 26px;
+  width: 26px;
+  background: transparent;
+  border-color: #a3b48144;
+  color: #a5bc92;
+}
+.voice-options-button[aria-expanded='true'] {
+  color: #d9d29c;
+  border-color: #c2c68c88;
+  background: #6a804236;
+}
+.spoken-line-progress {
+  height: 2px;
+  width: 100%;
+  background: #819c6228;
+  border-radius: 2px;
+  margin-top: 9px;
+  overflow: hidden;
+}
+.spoken-line-progress > span {
+  display: block;
+  background: linear-gradient(90deg, #91b37c, #dfcd8b);
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.22s linear;
+}
+.voiced-dialogue .dialogue-text {
+  margin-top: 17px;
+  max-height: 30dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #8da76855 transparent;
+}
+.voiced-dialogue .dialogue-bottom {
+  margin-top: 16px;
+  padding-top: 15px;
+}
+.voiced-dialogue .dialogue-bottom > span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.voiced-dialogue .dialogue-bottom small {
+  font-size: 6px;
+  letter-spacing: 0.7px;
+  color: #7e9e80;
+  line-height: 1.7;
+}
+.voice-clock {
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.4px;
+  color: #a7be94;
+}
+.voice-clock > i {
+  font-style: normal;
+  margin: 0 4px;
+  color: #6c926f;
+}
+.dialogue-voice-options {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 17px 23px;
+  padding: 17px 16px 12px;
+  margin-top: 14px;
+  border: 1px solid #9bb36f44;
+  background: #213f2b99;
+  border-radius: 5px;
+}
+.dialogue-voice-options label {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  min-width: 0;
+}
+.dialogue-voice-options label > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  color: #b3c89d;
+}
+.dialogue-voice-options label strong {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 400;
+  color: #d4d5a1;
+}
+.voice-volume > input {
+  width: 100%;
+  height: 4px;
+  accent-color: #c5ca87;
+  margin: 0;
+  cursor: pointer;
+}
+.voice-rate > select {
+  font-size: 10px;
+  background: #2e4d31;
+  border: 1px solid #9eb3715e;
+  border-radius: 3px;
+  padding: 6px 8px;
+  color: #c5d1a7;
+  width: 100%;
+  cursor: pointer;
+}
+.voice-caption-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  background: none;
+  padding: 0;
+  color: #afc590;
+  text-align: left;
+  width: fit-content;
+}
+.voice-caption-toggle[aria-pressed='false'] {
+  color: #91af81;
+}
+.voice-settings-note {
+  font-size: 6px;
+  color: #86a779;
+  line-height: 1.9;
+  align-self: center;
+}
+.preference-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  margin: 19px 0 5px;
+  color: #8a9c74;
+}
+.narration-preferences {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 23px;
+  padding: 5px 0 21px;
+}
+.narration-preferences > label {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  font-size: 11px;
+  color: var(--copy);
+  min-width: 0;
+}
+.narration-preferences > label > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+}
+.narration-preferences strong {
+  font-size: 10px;
+  font-weight: 500;
+  color: #8b9e70;
+}
+.narration-preferences input {
+  width: 100%;
+  height: 4px;
+  margin: 6px 0;
+  accent-color: #9db47d;
+  cursor: pointer;
+}
+.narration-preferences select {
+  font-size: 11px;
+  padding: 7px 8px;
+  color: var(--copy);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface-soft);
+  width: 100%;
+  cursor: pointer;
+}
+.game-root .preference-section-heading {
+  color: #b9cb99;
+}
+.game-root .narration-preferences > label {
+  color: #afc698;
+}
+.game-root .narration-preferences strong {
+  color: #d1d5a0;
+}
+.game-root .narration-preferences select {
+  background: #304e2e;
+  border-color: #8ba75b55;
+  color: #cad5a7;
+}
+.voiced-dialogue .dialogue-box {
+  max-height: calc(100dvh - 215px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #8da76855 #163c2d;
+}
+@keyframes voice-wave {
+  to {
+    transform: scaleY(0.35);
+  }
+}
+@media (max-width: 750px) {
+  .dialogue-voice-controls {
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .dialogue-playback {
+    gap: 6px;
+  }
+  .voice-status {
+    font-size: 8px;
+    line-height: 1.9;
+  }
+  .voice-equalizer {
+    width: 16px;
+    gap: 2px;
+    margin-left: 1px;
+  }
+  .voice-equalizer > i {
+    width: 2px;
+  }
+  .dialogue-voice-actions {
+    gap: 7px;
+  }
+  .dialogue-auto {
+    font-size: 7px;
+    padding: 5px 6px;
+    gap: 4px;
+  }
+  .voice-play {
+    width: 28px;
+    height: 28px;
+  }
+  .voice-replay {
+    width: 24px;
+    height: 25px;
+  }
+  .voice-options-button {
+    width: 25px;
+    height: 25px;
+  }
+  .spoken-line-progress {
+    margin-top: 10px;
+  }
+  .voiced-dialogue .dialogue-box {
+    max-height: calc(100dvh - 225px);
+  }
+  .voiced-dialogue .dialogue-text {
+    font-size: 18px;
+    line-height: 1.85;
+    min-height: 100px;
+    max-height: 27dvh;
+    margin-top: 16px;
+  }
+  .voiced-dialogue .dialogue-bottom {
+    margin-top: 17px;
+    padding-top: 15px;
+  }
+  .dialogue-voice-options {
+    gap: 16px;
+    padding: 15px 13px 12px;
+  }
+  .dialogue-voice-options label > span {
+    font-size: 8px;
+  }
+  .voice-rate > select {
+    font-size: 9px;
+    padding: 6px;
+  }
+  .voice-caption-toggle {
+    font-size: 8px;
+    gap: 5px;
+  }
+  .voice-settings-note {
+    font-size: 5.5px;
+    line-height: 1.9;
+  }
+  .dialogue-voice-options label {
+    gap: 10px;
+  }
+  .narration-preferences {
+    gap: 18px;
+  }
+  .narration-preferences > label {
+    font-size: 10px;
+  }
+  .narration-preferences select {
+    font-size: 10px;
+    padding: 7px;
+  }
+  .preference-section-heading {
+    font-size: 7px;
+    letter-spacing: 1.5px;
+  }
+}
+@media (max-width: 500px) {
+  .dialogue-voice-controls {
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 13px;
+    flex-wrap: wrap;
+  }
+  .dialogue-playback {
+    gap: 6px;
+    flex: 1;
+    min-width: 180px;
+  }
+  .voice-status {
+    font-size: 8px;
+    line-height: 1.8;
+    max-width: 154px;
+  }
+  .voice-equalizer {
+    display: none;
+  }
+  .dialogue-voice-actions {
+    gap: 6px;
+    align-self: center;
+    margin-left: auto;
+  }
+  .voice-play {
+    height: 30px;
+    width: 30px;
+  }
+  .voice-play > svg {
+    width: 14px;
+    height: 14px;
+  }
+  .voice-replay {
+    height: 28px;
+    width: 25px;
+  }
+  .voice-replay > svg {
+    width: 13px;
+    height: 13px;
+  }
+  .voice-options-button {
+    height: 27px;
+    width: 25px;
+  }
+  .dialogue-auto {
+    min-height: 27px;
+    font-size: 7px;
+    padding: 5px 6px;
+  }
+  .spoken-line-progress {
+    margin-top: 9px;
+  }
+  .voiced-dialogue .dialogue-box {
+    padding-top: 19px;
+    max-height: calc(100dvh - 216px);
+  }
+  .voiced-dialogue .dialogue-text {
+    font-size: 17px;
+    line-height: 1.85;
+    min-height: 100px;
+    max-height: 25dvh;
+    margin-top: 16px;
+  }
+  .voiced-dialogue .dialogue-bottom {
+    margin-top: 16px;
+    padding-top: 14px;
+    gap: 11px;
+  }
+  .voiced-dialogue .dialogue-bottom small {
+    font-size: 5.5px;
+    letter-spacing: 0.5px;
+  }
+  .voice-clock {
+    font-size: 8px;
+    letter-spacing: 0.3px;
+  }
+  .voice-clock > i {
+    margin: 0 3px;
+  }
+  .dialogue-voice-options {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 13px;
+    padding: 15px 12px 12px;
+    margin-top: 13px;
+  }
+  .dialogue-voice-options label > span {
+    font-size: 8px;
+    line-height: 1.7;
+    gap: 4px;
+  }
+  .dialogue-voice-options label > span > svg {
+    width: 11px;
+    height: 11px;
+  }
+  .dialogue-voice-options label strong {
+    font-size: 8px;
+  }
+  .voice-rate > select {
+    font-size: 8px;
+    padding: 6px 5px;
+    line-height: 1.7;
+  }
+  .voice-volume > input {
+    margin-top: 7px;
+    height: 4px;
+  }
+  .voice-caption-toggle {
+    font-size: 7px;
+    gap: 5px;
+    line-height: 1.8;
+  }
+  .voice-caption-toggle > svg {
+    width: 12px;
+    height: 12px;
+  }
+  .voice-settings-note {
+    font-size: 5px;
+    line-height: 1.9;
+  }
+  .voice-options-open .dialogue-character {
+    height: 113px;
+    width: 84px;
+    margin-top: -86px;
+  }
+  .narration-preferences {
+    grid-template-columns: 1fr;
+    gap: 21px;
+    padding: 3px 0 23px;
+  }
+  .narration-preferences > label {
+    font-size: 11px;
+    gap: 12px;
+  }
+  .narration-preferences select {
+    font-size: 11px;
+    padding: 8px;
+  }
+  .narration-preferences input {
+    height: 4px;
+  }
+  .preference-section-heading {
+    font-size: 7px;
+    letter-spacing: 1.3px;
+  }
+}
+@media (max-width: 370px) {
+  .dialogue-playback {
+    min-width: 153px;
+    gap: 5px;
+  }
+  .voice-status {
+    font-size: 7px;
+    max-width: 128px;
+  }
+  .dialogue-voice-actions {
+    gap: 5px;
+  }
+  .dialogue-auto {
+    font-size: 6.5px;
+    padding: 4px 5px;
+  }
+  .voice-options-button {
+    height: 26px;
+    width: 24px;
+  }
+  .voice-play {
+    width: 28px;
+    height: 29px;
+  }
+  .voice-replay {
+    width: 23px;
+    height: 27px;
+  }
+  .voiced-dialogue .dialogue-text {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+  .voice-settings-note {
+    font-size: 4.7px;
+  }
+  .voice-caption-toggle {
+    font-size: 6.5px;
+  }
+  .voice-rate > select {
+    font-size: 7.5px;
+  }
+}
+@media (max-height: 500px) {
+  .voiced-dialogue .dialogue-box {
+    max-height: calc(100dvh - 134px);
+    padding-top: 14px;
+    padding-bottom: 13px;
+  }
+  .voiced-dialogue .dialogue-text {
+    font-size: 14px;
+    line-height: 1.8;
+    min-height: 55px;
+    max-height: 22dvh;
+    margin-top: 11px;
+  }
+  .dialogue-voice-controls {
+    margin-top: 9px;
+    min-height: 25px;
+    gap: 9px;
+  }
+  .voice-play {
+    height: 25px;
+    width: 26px;
+  }
+  .voice-replay {
+    height: 24px;
+    width: 24px;
+  }
+  .voice-status {
+    font-size: 7px;
+  }
+  .dialogue-auto {
+    font-size: 6px;
+    min-height: 23px;
+  }
+  .voice-options-button {
+    height: 24px;
+    width: 24px;
+  }
+  .spoken-line-progress {
+    margin-top: 7px;
+  }
+  .voiced-dialogue .dialogue-bottom {
+    margin-top: 11px;
+    padding-top: 11px;
+  }
+  .voiced-dialogue .dialogue-bottom small {
+    font-size: 5px;
+  }
+  .voiced-dialogue .voice-clock {
+    font-size: 7px;
+  }
+  .dialogue-voice-options {
+    padding: 12px;
+    gap: 12px 20px;
+    margin-top: 11px;
+  }
+  .dialogue-voice-options label > span {
+    font-size: 8px;
+  }
+  .voice-rate > select {
+    font-size: 9px;
+    padding: 5px;
+  }
+  .voice-caption-toggle {
+    font-size: 8px;
+  }
+  .voice-settings-note {
+    font-size: 6px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-speaking .voice-equalizer > i {
+    animation: none !important;
+  }
+  .spoken-line-progress > span {
+    transition: none;
+  }
+}
+[data-motion='reduced'] .is-speaking .voice-equalizer > i {
+  animation: none !important;
+}

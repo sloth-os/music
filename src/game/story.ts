@@ -433,3 +433,8 @@ export const speakerNames: Record<Speaker, { name: string; role: string }> = {
   keeper: { name: 'You', role: 'THE NEW LISTENER' },
   memory: { name: 'A living memory', role: 'ECHOES OF MUSIC HISTORY' },
 }
+
+export const curiousReply: StoryLine = {
+  speaker: 'pip',
+  text: 'Wrong notes are just places to listen again. We’re not collecting perfect performances. We’re waking up your curiosity. Ready, Keeper?',
+}

@@ -17,6 +17,10 @@ Open http://localhost:3000. Build with `npm run build`; serve the production bui
 
 The prologue introduces the Great Resonator, the Hush, the new Keeper, archivist Iona, and Pip. Each chapter has an arrival scene, a musical challenge, a story revelation, a recovered artifact, and a historical field note. Dialogue can be skipped or replayed from the journal. The prologue includes a small player choice that changes Pip’s response and is saved.
 
+All 46 dialogue lines are spoken by four distinct neural TTS voices: Iona, Pip, the Keeper, and the living memories. Voices begin when you enter a scene, with captions visible, and the conversation advances after each spoken line. Player choices always wait for input. Pause or replay a line, select **Wait for me** for manual progression, or open the dialogue’s voice options to change volume, speaking pace (0.75×–1.5×), or switch to captions. These preferences also appear in **Your experience** and persist on this device. Game mute controls dialogue too. Music softens while a character speaks, and skipping or leaving a scene stops the voice immediately. Switching away from the game pauses the scene.
+
+The voice tracks are generated ahead of time and bundled as MP3s (about 2.4 MiB for the complete cast). They work without installed browser voices, an API key, a speech service, or a model download at runtime. If a browser blocks playback, a visible play button retries it; captions and manual progression remain available.
+
 | Chapter                | Historical setting                    | Musical skill                        | Echo   |
 | ---------------------- | ------------------------------------- | ------------------------------------ | ------ |
 | I · Emberwood          | The Swabian Jura, deep prehistory     | Find and tap a steady pulse          | Pulse  |
@@ -76,19 +80,34 @@ Everything stays in the current browser on the current device; there is no cross
 | `cadence-ideas`       | The latest 12 recorded note-event ideas                                                                                  |
 | `cadence-beat`        | Saved drum pattern                                                                                                       |
 | `cadence-soundscape`  | Saved mood, tempo, layer levels, and layer mutes                                                                         |
-| `cadence-experience`  | Display, motion, and touch preferences                                                                                   |
+| `cadence-experience`  | Display, motion, touch, character voices, voice volume/pace, and dialogue progression preferences                        |
 
 Story saves are validated on load. Completing a chapter saves the recovered Echo before its reward scene, so reloading never loses an earned Echo. Clearing browser site data removes these local saves. Recordings store note events rather than microphone audio and are limited to 64 notes or 30 seconds.
 
 ## Install and play offline
 
-The production build includes a manifest, icons, and a Workbox service worker generated with `vite-plugin-pwa`. The world illustration, all story text, fonts, code, and UI assets are precached. Every sound is synthesized locally using Web Audio.
+The production build includes a manifest, icons, and a Workbox service worker generated with `vite-plugin-pwa`. The world illustration, all story text, all 46 character voice tracks, fonts, code, and UI assets are precached (about 3.8 MiB total). Instruments and musical performances are synthesized locally using Web Audio.
 
 1. Visit once online over HTTPS or localhost and let the game finish loading.
 2. Open the journey menu → **Take the journey offline**, use the browser’s Install command, or use Safari → Share → Add to Home Screen.
-3. Reload or reopen offline. Chapters, journal entries, the finale, art, and sound camp remain playable.
+3. Reload or reopen offline. Chapters, spoken dialogue, journal entries, the finale, art, and sound camp remain playable, including chapters you have not visited before.
 
 Historical source links lead to external websites and require a connection; the full in-game field notes remain offline. Updates prompt before activation and wait until you are out of a scene, challenge, or menu. The development server does not register a service worker; verify offline behavior with a production build and `npm run preview`.
+
+## Regenerate character voices
+
+The committed tracks use the stock voices in [Kokoro-82M v1.0](https://huggingface.co/hexgrad/Kokoro-82M) (Apache-2.0), generated locally with [kokoro-onnx](https://github.com/thewh1teagle/kokoro-onnx) (MIT). Cast and original generation speeds are recorded in `src/game/voice-manifest.json`. No model weights ship with the game. Normal development, CI, and publishing use the committed tracks and require only Node.js 22.6+ and npm.
+
+After changing story dialogue, regenerate its audio with Python 3.12, FFmpeg/ffprobe, and the ONNX models. Install the optional Python tools in a virtual environment and download `kokoro-v1.0.int8.onnx` and `voices-v1.0.bin` from the [v1.0 model release](https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0) into a directory outside the repository:
+
+```sh
+python3 -m venv /tmp/cadence-voices
+/tmp/cadence-voices/bin/pip install -r scripts/requirements-voices.txt
+/tmp/cadence-voices/bin/python scripts/generate-narration.py --models /path/to/models
+npm run voices:check
+```
+
+The generator resumes unchanged lines, normalizes speech loudness, writes compact MP3s and a manifest, and removes stale tracks after completing the full script. Use `--force` after changing the cast or generation settings. Commit the updated MP3s and manifest together with the dialogue. Every build verifies that all current story lines have complete matching voice tracks, so an edited line cannot silently lose its voice on publish.
 
 ## Automatic GitHub Pages publishing
 
@@ -112,6 +131,6 @@ npm run build
 npm test
 ```
 
-Browser coverage includes an actual complete six-chapter campaign and finale; character choice and save persistence; chapter gating and failed-attempt recovery; historical journal links; optional rewards; mobile layout and nested focus controls; and offline world art, story, and instruments. The standalone practice suite also checks every musical activity, recorded ideas, beat editing, theme preferences, and synthesized audio output. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium installation.
+Browser coverage includes an actual complete six-chapter campaign and finale; character choice and save persistence; chapter gating and failed-attempt recovery; historical journal links; optional rewards; mobile layout and nested focus controls; and offline world art, story, and instruments. Voice tests measure the actual decoded speech signal, exercise pause/resume/replay and cancellation, let the conversation advance into a player choice, check saved voice preferences and mute, retry blocked autoplay, and play unheard chapters with the network offline. The standalone practice suite also checks every musical activity, recorded ideas, beat editing, theme preferences, and synthesized audio output. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium installation.
 
 Built with React, TypeScript, Vite, Lucide, locally bundled DM Sans and Fraunces, original SVG character/glyph art, and a custom generated environment illustration optimized to WebP. No game engine or remote rendering dependency is required. The audio architecture follows [MDN Web Audio best practices](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices).
