@@ -11,7 +11,7 @@ test.afterEach(() => expect(errors).toEqual([]))
 test('the journey is responsive, all quests are reachable, and navigation works', async ({
   page,
 }) => {
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await expect(page.getByRole('heading', { name: 'Let’s find your rhythm.' })).toBeVisible()
   await expect(page.locator('.quest-card')).toHaveCount(3)
   await page.getByRole('button', { name: 'Harmony', exact: true }).click()
@@ -49,7 +49,7 @@ test('the journey is responsive, all quests are reachable, and navigation works'
 test('a complete notes quest grades answers, rewards XP, and keeps progress after reload', async ({
   page,
 }) => {
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await page.locator('.quest-card').filter({ hasText: 'Meet the notes' }).click()
   const dialog = page.getByRole('dialog')
   await dialog.getByRole('button', { name: 'Let’s play' }).click()
@@ -77,7 +77,7 @@ test('ear training explains an incorrect answer and only gives the daily bonus o
   await page.addInitScript(() => {
     Math.random = () => 0.9
   })
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   for (let attempt = 0; attempt < 2; attempt++) {
     await page
       .getByRole('button', { name: attempt === 0 ? 'Give it a go' : 'Play it again', exact: true })
@@ -113,7 +113,7 @@ test('ear training explains an incorrect answer and only gives the daily bonus o
 test('the piano records, replays, and saves ideas; beats are editable and persist', async ({
   page,
 }) => {
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await page.getByRole('button', { name: /Playground/ }).click()
   await page.getByRole('button', { name: 'Record', exact: true }).click()
   await page.keyboard.press('a')
@@ -145,7 +145,7 @@ test('the piano records, replays, and saves ideas; beats are editable and persis
 })
 
 test('a rhythm quest accepts timed taps through all three rounds', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await page.getByRole('button', { name: 'Start my journey' }).click()
   const dialog = page.getByRole('dialog')
   await dialog.getByRole('button', { name: 'Let’s play' }).click()
@@ -169,7 +169,7 @@ test('a rhythm quest accepts timed taps through all three rounds', async ({ page
 })
 
 test('the production PWA reloads and remains playable fully offline', async ({ page, context }) => {
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready
   })
@@ -197,7 +197,7 @@ test('melody memory, minor chord listening, and tempo comparison complete their 
   await page.addInitScript(() => {
     Math.random = () => 0.1
   })
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await page.getByRole('button', { name: 'Explore all 6 quests' }).click()
   await page.locator('.quest-card').filter({ hasText: 'Melody maker' }).click()
   let dialog = page.getByRole('dialog')
@@ -255,7 +255,7 @@ test('melody memory, minor chord listening, and tempo comparison complete their 
 test('theme and motion preferences persist, and the adventure map opens focused quests', async ({
   page,
 }) => {
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await page.getByRole('button', { name: 'Switch to after hours' }).click()
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
   await page.getByRole('button', { name: 'Experience settings' }).click()
@@ -305,7 +305,7 @@ test('soundscape produces audio, mixes layers, and restores a saved mood', async
       return analyser
     }
   })
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await page.getByRole('button', { name: 'Enter the flow' }).click()
   await expect(page.locator('.soundscape-title')).toContainText('Golden hour')
   await page.getByRole('button', { name: 'Start the room', exact: true }).click()
@@ -353,7 +353,7 @@ test('the soundscape focus room works on mobile, traps focus, and exits with Esc
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await page.getByRole('button', { name: 'Or, get lost in the sound' }).click()
   await page.getByRole('button', { name: 'Focus on the soundscape' }).click()
   const room = page.getByRole('dialog', { name: 'Soundscape focus room' })
@@ -377,7 +377,7 @@ test('the new soundscape remains an instrument after an offline reload', async (
   page,
   context,
 }) => {
-  await page.goto('/')
+  await page.goto('/?mode=practice')
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready
   })

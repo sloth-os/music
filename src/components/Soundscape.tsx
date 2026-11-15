@@ -159,10 +159,10 @@ export function Soundscape({
         }
       }
     }
-    document.addEventListener('keydown', handler)
+    document.addEventListener('keydown', handler, true)
     return () => {
       document.body.style.overflow = overflow
-      document.removeEventListener('keydown', handler)
+      document.removeEventListener('keydown', handler, true)
       previous?.focus()
     }
   }, [focus])

@@ -59,6 +59,7 @@ export function QuestGame({
   onUnmute,
   onClose,
   onComplete,
+  campaign,
 }: {
   quest: Quest
   daily?: boolean
@@ -66,6 +67,15 @@ export function QuestGame({
   onUnmute: () => void
   onClose: () => void
   onComplete: (score: number, rounds: number) => number
+  campaign?: {
+    title: string
+    era: string
+    echo: string
+    color: string
+    objective: string
+    onRetry: () => void
+    onToggleSound: () => void
+  }
 }) {
   const count = daily
     ? 3
@@ -276,7 +286,7 @@ export function QuestGame({
     <Dialog
       title={`${daily ? 'Daily challenge: ' : ''}${quest.title}`}
       onClose={onClose}
-      className={`quest-dialog theme-${quest.color} ${focus ? 'quest-focus' : ''} quest-phase-${phase} ${feedback !== null ? (feedback ? 'answer-correct' : 'answer-learning') : ''}`}
+      className={`quest-dialog theme-${quest.color} ${focus ? 'quest-focus' : ''} quest-phase-${phase} ${campaign ? 'campaign-quest' : ''} ${feedback !== null ? (feedback ? 'answer-correct' : 'answer-learning') : ''}`}
     >
       <div className="quest-atmosphere" aria-hidden="true">
         <span />
@@ -285,28 +295,44 @@ export function QuestGame({
       </div>
       <div className="quest-modal-top">
         <span className="eyebrow">
-          {daily
-            ? 'YOUR DAILY LITTLE CHALLENGE'
-            : `QUEST ${quest.number} · ${quest.category.toUpperCase()}`}
+          {campaign
+            ? `THE ECHO OF ${campaign.echo.toUpperCase()}`
+            : daily
+              ? 'YOUR DAILY LITTLE CHALLENGE'
+              : `QUEST ${quest.number} · ${quest.category.toUpperCase()}`}
         </span>
         <span className="quest-duration">
           {quest.minutes} min · +{daily ? '80' : '50'} XP
         </span>
       </div>
-      <button
-        className="quest-focus-toggle"
-        aria-label={focus ? 'Exit quest focus' : 'Focus on this quest'}
-        onClick={() => setFocus((value) => !value)}
-      >
-        {focus ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
-        <span>{focus ? 'Back to cozy view' : 'Just me and the music'}</span>
-      </button>
+      {campaign && (
+        <div className="campaign-challenge-context">
+          <span>{campaign.era}</span>
+          <button
+            aria-label={muted ? 'Turn challenge sound on' : 'Mute challenge sound'}
+            onClick={campaign.onToggleSound}
+          >
+            {muted ? <VolumeX size={17} /> : <Volume2 size={17} />}
+          </button>
+        </div>
+      )}
+      {!campaign && (
+        <button
+          className="quest-focus-toggle"
+          aria-label={focus ? 'Exit quest focus' : 'Focus on this quest'}
+          onClick={() => setFocus((value) => !value)}
+        >
+          {focus ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+          <span>{focus ? 'Back to cozy view' : 'Just me and the music'}</span>
+        </button>
+      )}
       {phase === 'intro' ? (
         <div className="quest-intro">
           <div className={`quest-intro-art ${quest.color}`}>
             <QuestArt kind={quest.id} />
           </div>
-          <h2>{quest.title}</h2>
+          <h2>{campaign?.title || quest.title}</h2>
+          {campaign && <p className="campaign-objective">{campaign.objective}</p>}
           <p className="intro-copy">{quest.intro}</p>
           <div className="lesson-tip">
             <Lightbulb size={21} />
@@ -371,7 +397,13 @@ export function QuestGame({
                 ? 'You’re finding your groove.'
                 : 'Every try is a step forward.'}
           </h2>
-          <p>{quest.title} complete. Your musical adventure just got a little bigger.</p>
+          <p>
+            {campaign
+              ? score >= Math.ceil(count * 0.6)
+                ? `The Echo of ${campaign.echo} has found its voice. A lost memory is coming home.`
+                : `The Echo is still flickering. Recover it by getting at least ${Math.ceil(count * 0.6)} of ${count} rounds right.`
+              : `${quest.title} complete. Your musical adventure just got a little bigger.`}
+          </p>
           <div className="result-stats">
             <div>
               <strong>
@@ -389,8 +421,18 @@ export function QuestGame({
               ? 'Beautiful listening. Keep that curiosity going.'
               : 'Music takes practice. You can replay any quest, any time.'}
           </p>
+          {campaign && score < Math.ceil(count * 0.6) && (
+            <button className="button primary campaign-retry" onClick={campaign.onRetry}>
+              <RotateCcw size={16} /> Try the memory again
+            </button>
+          )}
           <button className="button primary" onClick={onClose}>
-            Keep exploring <ArrowRight size={17} />
+            {campaign
+              ? score >= Math.ceil(count * 0.6)
+                ? 'Claim the Echo'
+                : 'Return to the island'
+              : 'Keep exploring'}{' '}
+            <ArrowRight size={17} />
           </button>
         </div>
       ) : (

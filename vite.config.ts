@@ -10,10 +10,10 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Cadence — Find your rhythm',
+        name: 'Cadence: The Lost Symphony',
         short_name: 'Cadence',
         description:
-          'A playful little adventure in music. Learn rhythm, melody, and harmony, one quest at a time.',
+          'A story-driven adventure through music history. Recover six Echoes, learn to listen, and restore the lost symphony.',
         theme_color: '#f9f8f4',
         background_color: '#f9f8f4',
         display: 'standalone',
@@ -25,7 +25,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff,woff2}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff,woff2}'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
         clientsClaim: true,

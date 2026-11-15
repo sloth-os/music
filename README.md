@@ -1,67 +1,108 @@
-# Cadence
+# Cadence: The Lost Symphony
 
-A small, playful introduction to music. No account, musical experience, microphone, or backend required.
+A story-driven music game for people who have never played an instrument. The Archive’s musical memories have fallen silent. As a new Keeper, travel with Pip, a clockwork bird, recover six Echoes from historical settings, and bring them together in a final concert.
 
-## Run locally
+The default experience is a full-screen illustrated game world: a title screen, a movable camera, chapter markers, a companion, a main-quest tracker, and an Echo inventory. There is no account, microphone, backend, or external audio service.
+
+## Run
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open http://localhost:3000. For a production build, run `npm run build` and `npm run preview` (port 4173).
+Open http://localhost:3000. Build with `npm run build`; serve the production build with `npm run preview` on port 4173.
 
-## Play
+## The main storyline
 
-- **Feel the beat:** listen to a four-beat count-in, then tap four steady beats. Timing uses the performance clock and a beginner-friendly 185 ms window, progressing from 80 to 108 BPM.
-- **Highs & lows:** compare two pitches by ear.
-- **Meet the notes:** find named white piano keys.
-- **Melody maker:** hear and watch a short melody, then reproduce its notes in order. Timing is deliberately not graded.
-- **Better together:** compare major and minor triads, with reference examples.
-- **Change the pace:** compare the tempo of two click patterns.
-- **Playground:** a chromatic one-octave piano (A–K; W, E, T, Y, U for black keys), warm and soft timbres, short melody recording/replay, and an eight-step kick/snare/hi-hat sequencer.
+The prologue introduces the Great Resonator, the Hush, the new Keeper, archivist Iona, and Pip. Each chapter has an arrival scene, a musical challenge, a story revelation, a recovered artifact, and a historical field note. Dialogue can be skipped or replayed from the journal. The prologue includes a small player choice that changes Pip’s response and is saved.
 
-Quests give 20–50 XP based on accuracy; the daily challenge gives a 30 XP bonus once per local calendar day. Practice on consecutive days builds a streak. Levels, six milestone badges, recent sessions, and saved ideas are tracked locally. All quests are open from the beginning, with a suggested sequence.
+| Chapter                | Historical setting                    | Musical skill                        | Echo   |
+| ---------------------- | ------------------------------------- | ------------------------------------ | ------ |
+| I · Emberwood          | The Swabian Jura, deep prehistory     | Find and tap a steady pulse          | Pulse  |
+| II · Marble Bay        | Tralles, Anatolia, 1st–2nd century CE | Distinguish higher and lower pitches | Voice  |
+| III · Lantern Abbey    | Arezzo, around 1025                   | Recognize white piano-key names      | Symbol |
+| IV · Clockwork Quarter | Bach’s Leipzig, 1723                  | Listen to and reproduce a melody     | Line   |
+| V · Brasswater Harbor  | Early New Orleans jazz, around 1910   | Hear major and minor triads          | Color  |
+| VI · Neon Heights      | Chicago house, early 1980s            | Compare tempos                       | Motion |
 
-Your browser saves progress in `cadence-progress-v1`, melodies in `cadence-ideas`, and the beat pattern in `cadence-beat`. There is no account or cross-device sync. Clearing site data clears local work. Recording stores note events, not microphone audio; each idea is limited to 64 notes or 30 seconds, and the latest 12 ideas are kept. The Help panel can reset learning progress while retaining saved ideas.
+Recover an Echo by getting at least 60% of a chapter’s rounds right. There are no lives to lose: an unsuccessful attempt provides feedback and an immediate retry. Later chapters stay locked until earlier Echoes are recovered. Replaying completed chapters remains available.
 
-## An immersive little studio
+The clues reveal that silence is part of music, rather than an enemy to erase. After recovering all six Echoes, enter the Great Resonator. The playable finale combines a four-note melody, four timed taps, and a choice between a major or minor ending. A short original synthesized concert and an epilogue complete the campaign. The restored world remains explorable.
 
-- **Daylight / After hours:** switch between a warm analog studio and a dark listening room from the top bar. Theme, motion, and optional touch feedback persist on the device.
-- **Adventure map:** an alternate view of the six quests, with connected islands and your completed discoveries. Switch back to quest cards whenever you like.
-- **Focused quests:** lessons open on a calm, full-screen stage with a clear round path, sound-responsive waves, a large rhythm target, and results. The cozy dialog view remains one click away.
-- **Soundscape:** enter the flow from the home screen or Playground. Four original moods combine rhythm, bass, harmony, and melody in a repeating four-bar progression. Start or pause the room, play the melodic pads with A–K, mute individual layers, adjust their levels, and find your own tempo. Save the room to return to the same settings offline.
-- **A live musical canvas:** the orbit and waveforms read the Web Audio analyser signal. Note events create light ripples; gentle pointer parallax and tactile key presses connect physical input to the visual scene. The room stops when the tab is hidden and cleans up audio and animation when you leave.
-- **A room that respects your pace:** sounds start only from a user action. Motion can be disabled; the system’s reduced-motion preference always takes priority. Focus rooms trap keyboard focus, support Escape, and work on mobile without requiring the browser’s fullscreen permission.
+Three optional island curiosities provide little musical discoveries and 10 XP each, once per save. Musical challenges award 20–50 XP per attempt; completing the finale awards a one-time 100 XP bonus.
 
-Soundscape settings live in `cadence-soundscape`; display preferences live in `cadence-experience`. No audio files, external APIs, analytics, or additional rendering dependencies are needed.
+## World controls
+
+- Drag the island to move the camera; use + / − to zoom or the reset-camera button to reframe the selected chapter.
+- Left/right arrows select available chapters. Enter begins the selected chapter when a control is not already focused.
+- **J:** journal. **M:** sound on/off. **F:** browser fullscreen when supported. **Escape:** leave the current scene or open the pause menu.
+- All chapter markers and actions are keyboard-accessible. On small screens, the camera follows the current chapter and the chapter dock stays reachable.
+- Daylight/night presentation, reduced motion, and optional touch feedback are available through the journey menu. System reduced-motion preferences are respected.
+
+## The field journal and music history
+
+The adventure, the island, the characters, and their dialogue are fictional. Historical facts are stored separately from the story and include source links in the journal. These are selected musical histories, not a complete history of music or a single line of cultural progress. All musical puzzles and performances use original modern synthesis, not purported reconstructions or commercial recordings.
+
+Sources checked for the historical entries:
+
+- [Conard, Malina & Münzel, Nature (2009): New flutes document the earliest musical tradition in southwestern Germany](https://www.nature.com/articles/nature08169). The accessible abstract documents bone and ivory flutes more than 35,000 calendar years old. Surviving instruments do not date the first human music.
+- [Seikilos epitaph](https://en.wikipedia.org/wiki/Seikilos_epitaph). Greek words and notation preserving a complete short song, generally dated to the 1st or 2nd century CE; older fragmentary notation also exists.
+- [Guido of Arezzo](https://en.wikipedia.org/wiki/Guido_of_Arezzo). Staff-based teaching and solmization around 1025. Modern piano-key naming is a separate learning aid in the game.
+- [Johann Sebastian Bach](https://en.wikipedia.org/wiki/Johann_Sebastian_Bach). His 1723 Leipzig appointment and contrapuntal practice. The game teaches single-line memory before more complex listening.
+- [U.S. National Park Service: Jazz Origins in New Orleans](https://www.nps.gov/jazz/learn/historyculture/history_early.htm). Communities and traditions involved in jazz’s development, including the central contribution of Black musicians.
+- [House music](https://en.wikipedia.org/wiki/House_music). Chicago’s early-1980s club culture and the central role of Black and Latino communities, including gay club communities.
+
+The underlying teaching definitions were checked against [Open Music Theory](https://viva.pressbooks.pub/openmusictheory/), including its chapters on [meter](https://viva.pressbooks.pub/openmusictheory/chapter/simple-meter-and-time-signatures/), [the keyboard](https://viva.pressbooks.pub/openmusictheory/chapter/the-keyboard-and-grand-staff/), [triads](https://viva.pressbooks.pub/openmusictheory/chapter/triads/), and [tempo and other notation](https://viva.pressbooks.pub/openmusictheory/chapter/other-aspects-of-notation/). Chord moods are contextual listening cues rather than universal emotional rules.
+
+## The sound camp
+
+The camp is a freely accessible place to experiment between chapters:
+
+- **Soundscape:** four moods with independent rhythm, bass, harmony, and melody layers. Play the melodic pads using A–K, mute or adjust layers, change tempo, and save a room. Its orbit and light ripples react to the actual Web Audio signal.
+- **Piano:** a chromatic octave, warm and soft timbres, short melody recording, replay, and saved ideas. A–K plays white keys; W, E, T, Y, U plays black keys.
+- **Beat maker:** an eight-step kick/snare/hi-hat sequencer with tempo control and saved patterns.
+
+The earlier open practice library remains available at `?mode=practice` for standalone lessons and regression testing. Practice completions do not bypass story progression. Existing XP, saved ideas, and beat patterns are preserved.
+
+## Save data
+
+Everything stays in the current browser on the current device; there is no cross-device sync.
+
+| Key                   | Contents                                                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `cadence-story-v1`    | Started campaign, contiguous cleared chapters, discovered field notes, optional curiosities, prologue choice, and ending |
+| `cadence-progress-v1` | XP, practice history, streaks, and saved-idea count                                                                      |
+| `cadence-ideas`       | The latest 12 recorded note-event ideas                                                                                  |
+| `cadence-beat`        | Saved drum pattern                                                                                                       |
+| `cadence-soundscape`  | Saved mood, tempo, layer levels, and layer mutes                                                                         |
+| `cadence-experience`  | Display, motion, and touch preferences                                                                                   |
+
+Story saves are validated on load. Completing a chapter saves the recovered Echo before its reward scene, so reloading never loses an earned Echo. Clearing browser site data removes these local saves. Recordings store note events rather than microphone audio and are limited to 64 notes or 30 seconds.
 
 ## Install and play offline
 
-The production build includes a Web App Manifest, application icons, and a Workbox service worker generated by `vite-plugin-pwa`. The entire app shell, local fonts, and all runtime assets are precached. Instruments use Web Audio synthesis: there are no remote samples, APIs, or font requests.
+The production build includes a manifest, icons, and a Workbox service worker generated with `vite-plugin-pwa`. The world illustration, all story text, fonts, code, and UI assets are precached. Every sound is synthesized locally using Web Audio.
 
-1. Serve `dist` over **HTTPS** (GitHub Pages does this) or localhost.
-2. Visit once online; the sidebar will say **Ready for offline adventures** when the cache is ready.
-3. Use **Take Cadence with you**, your browser's Install command, or Safari → Share → Add to Home Screen.
-4. Reopen or reload the app offline. All quests, instruments, and saved progress continue to work.
+1. Visit once online over HTTPS or localhost and let the game finish loading.
+2. Open the journey menu → **Take the journey offline**, use the browser’s Install command, or use Safari → Share → Add to Home Screen.
+3. Reload or reopen offline. Chapters, journal entries, the finale, art, and sound camp remain playable.
 
-The app prompts before activating an update and delays the prompt while a quest is open. The development server intentionally does not register a service worker; verify offline support with `npm run preview` after a production build. Sound begins only after a user gesture, and the sound toggle applies everywhere.
+Historical source links lead to external websites and require a connection; the full in-game field notes remain offline. Updates prompt before activation and wait until you are out of a scene, challenge, or menu. The development server does not register a service worker; verify offline behavior with a production build and `npm run preview`.
 
 ## Automatic GitHub Pages publishing
 
-**Every push to `main` automatically checks and publishes the app.** The publishing workflow calls the reusable verification workflow first; a failed production build or browser test blocks deployment. Pull requests and pushes to other branches run the checks without deploying.
+Every push to `main` automatically verifies and publishes the game. The publishing workflow calls the reusable check workflow first. A failing production build or browser test blocks deployment. Pull requests and pushes to other branches run checks without deploying.
 
-1. Push this repository to GitHub when ready.
-2. In **Settings → Pages → Build and deployment**, choose **GitHub Actions**.
-3. Push your changes to `main`. **Publish Cadence to GitHub Pages** runs verification, builds with the correct Pages base path, and deploys. You can also run it manually from the Actions tab.
+1. In GitHub **Settings → Pages → Build and deployment**, choose **GitHub Actions**.
+2. Push to `main`. **Publish Cadence to GitHub Pages** verifies, builds with the correct Pages base path, and deploys.
+3. Manual runs remain available in the Actions tab.
 
-The workflow reads the Pages base path and builds correctly for a project site such as `https://sloth-os.github.io/music/`, an account site, or a configured custom domain. The manifest and service worker are scoped to that path. Local builds use relative asset paths by default. To build a known subpath directly:
+The workflow supports a repository path such as https://sloth-os.github.io/music/, an account site, or a configured custom domain. Manifest and service-worker scope follow the path. To build a known path locally:
 
 ```sh
 BASE_PATH=/music/ npm run build
 ```
-
-`Check Cadence` is a reusable verification workflow. It runs directly for pull requests and pushes to other branches, and is a required job of the Pages workflow for `main`. Deployment uses the protected `github-pages` environment and never runs for a pull request.
 
 ## Verify
 
@@ -71,18 +112,6 @@ npm run build
 npm test
 ```
 
-The browser tests use production preview and cover responsive navigation and quest filtering, grading and persistence, rhythm input, piano and melody recording, the beat maker, and a real offline reload after service-worker activation. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium installation instead of downloading one.
+Browser coverage includes an actual complete six-chapter campaign and finale; character choice and save persistence; chapter gating and failed-attempt recovery; historical journal links; optional rewards; mobile layout and nested focus controls; and offline world art, story, and instruments. The standalone practice suite also checks every musical activity, recorded ideas, beat editing, theme preferences, and synthesized audio output. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium installation.
 
-## Learning design and research
-
-Cadence introduces listening and physical interaction before notation. Each quest teaches one concept, provides repeatable examples, accepts an attempt, and explains the answer. All activities are original; no commercial music recordings are used. Chord moods are presented as contextual listening cues, not universal emotional rules. This initial course focuses on concepts common in Western music.
-
-The lesson definitions were checked against these freely available resources:
-
-- [Open Music Theory: Simple Meter and Time Signatures](https://viva.pressbooks.pub/openmusictheory/chapter/simple-meter-and-time-signatures/) — pulse, beat grouping, meter.
-- [Open Music Theory: The Keyboard and the Grand Staff](https://viva.pressbooks.pub/openmusictheory/chapter/the-keyboard-and-grand-staff/) — key groups, letter names, octave equivalence.
-- [Open Music Theory: Triads](https://viva.pressbooks.pub/openmusictheory/chapter/triads/) — root, third, fifth; major and minor quality.
-- [Open Music Theory: Other Aspects of Notation](https://viva.pressbooks.pub/openmusictheory/chapter/other-aspects-of-notation/) — tempo and the distinction between speed, pitch, and loudness.
-- [MDN: Web Audio API best practices](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices) — local synthesis, explicit user control, autoplay restrictions, gain envelopes.
-
-Built with React, TypeScript, Vite, Lucide icons, and locally bundled DM Sans and Fraunces. All illustrations are original SVGs. The layout supports keyboard navigation, labeled piano keys, focus-trapped dialogs, reduced motion, and mobile touch input.
+Built with React, TypeScript, Vite, Lucide, locally bundled DM Sans and Fraunces, original SVG character/glyph art, and a custom generated environment illustration optimized to WebP. No game engine or remote rendering dependency is required. The audio architecture follows [MDN Web Audio best practices](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices).

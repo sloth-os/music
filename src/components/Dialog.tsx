@@ -22,7 +22,13 @@ export function Dialog({
     document.body.style.overflow = 'hidden'
     dialog.current?.focus()
     const handleKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') closeRef.current()
+      if (event.defaultPrevented) return
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        event.stopPropagation()
+        closeRef.current()
+        return
+      }
       if (event.key === 'Tab') {
         const elements = dialog.current?.querySelectorAll<HTMLElement>(
           'button:not(:disabled), a[href], input:not(:disabled), select, [tabindex="0"]',
